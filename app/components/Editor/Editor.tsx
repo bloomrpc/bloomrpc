@@ -105,8 +105,15 @@ const Editor: React.FC<EditorProps> = ({ service, methodName, initialRequest, on
 
   useEffect(() => {
     if (service && methodName && !initialRequest) {
-      const { plain } = service.methodsMocks[methodName]();
-      dispatch(setData(JSON.stringify(plain, null, 2)));
+      try {
+        const { plain } = service.methodsMocks[methodName]();
+        dispatch(setData(JSON.stringify(plain, null, 2)));
+      } catch(e) {
+        console.error(e);
+        dispatch(setData(JSON.stringify({
+          "error": "Error parsing the request message, please report the problem sharing the offending protofile"
+        }, null, 2)));
+      }
     }
 
     if (initialRequest) {
