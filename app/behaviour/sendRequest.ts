@@ -1,10 +1,10 @@
 import { EventEmitter } from "events";
-import { credentials, Metadata } from "grpc";
+import { credentials, Metadata, ServiceError } from "grpc";
 import { ProtoService } from './protobuf';
 // @ts-ignore
 import * as lodashGet from 'lodash.get';
 
-interface GRPCRequestInfo {
+export interface GRPCRequestInfo {
   url: string;
   service: ProtoService;
   methodName: string;
@@ -84,20 +84,16 @@ export class GRPCRequest extends EventEmitter {
     // Gather method information
     const methodDefinition = this.methodDef();
 
-    // Unary call
-    const call = client[this.methodName](inputs, md, (err: any, response: any) => {
-      if (err) {
-        // Request cancelled do nothing
-        if (err.code === 1) {
-          return;
-        } else {
-          this.emit(GRPCEventType.ERROR, err);
-        }
-      } else {
-        this.emit(GRPCEventType.DATA, response);
-      }
-      this.emit(GRPCEventType.END, this);
-    });
+    // TODO: find proper type for call
+    let call: any;
+
+    if (methodDefinition.requestStream) {
+      // Client side streaming
+      call = this.clientStreaming(client, inputs, md);
+    } else {
+      // Unary call
+      call = this.unaryCall(client, inputs, md);
+    }
 
     // Server Streaming.
     if (methodDefinition.responseStream) {
@@ -130,5 +126,40 @@ export class GRPCRequest extends EventEmitter {
       this._call.cancel();
       this.emit(GRPCEventType.END);
     }
+  }
+
+  private clientStreaming(client: any, inputs: any, md: Metadata) {
+    const call = client[this.methodName](md, this.handleUnaryResponse.bind(this));
+
+    if (Array.isArray(inputs)) {
+      inputs.forEach(data => {
+        call.write(data);
+      });
+    } else {
+      call.write(inputs);
+    }
+
+    call.end();
+
+    return call;
+  }
+
+  private unaryCall(client: any, inputs: any, md: Metadata) {
+    return client[this.methodName](inputs, md, this.handleUnaryResponse.bind(this));
+  }
+
+  private handleUnaryResponse(err: ServiceError, response: any) {
+    // Client side streaming handler
+    if (err) {
+      // Request cancelled do nothing
+      if (err.code === 1) {
+        return;
+      } else {
+        this.emit(GRPCEventType.ERROR, err);
+      }
+    } else {
+      this.emit(GRPCEventType.DATA, response);
+    }
+    this.emit(GRPCEventType.END, this);
   }
 }

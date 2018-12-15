@@ -3,12 +3,9 @@ import { ChangeEvent, useEffect, useReducer } from 'react';
 import { Button, Drawer, Icon, Input } from 'antd';
 import {
   actions,
-  setCall,
   setData,
-  setIsLoading,
   setMetadata,
   setMetadataVisibilty,
-  setOutput,
   setProtoVisibility,
   setUrl,
 } from './actions';
@@ -17,9 +14,10 @@ import 'brace/theme/textmate';
 import 'brace/mode/json';
 import 'brace/mode/protobuf';
 import { Response } from './Response';
-import { GRPCEventType, GRPCRequest, ProtoService } from '../../behaviour';
+import { GRPCRequest, ProtoService } from '../../behaviour';
 import { getUrl, storeUrl } from '../../storage';
 import { Metadata } from './Metadata';
+import { PlayControl } from './PlayControl';
 
 export interface EditorAction {
   [key: string]: any
@@ -151,51 +149,15 @@ const Editor: React.FC<EditorProps> = ({ service, methodName, initialRequest, on
       </div>
 
       <div style={{ ...styles.playIconContainer, position: "absolute" }}>
-        <Icon
-          type={state.loading ? "pause-circle" : "play-circle"}
-          theme="filled" style={{ ...styles.playIcon, ...(state.loading ? { color: "#ea5d5d" } : {}) }}
-          onClick={() => {
-            // Do nothing if not set
-            if (!service || !methodName) {
-              return;
-            }
-
-            // Cancel the call if ongoing.
-            if (state.loading && state.call) {
-              state.call.cancel();
-              return;
-            }
-
-            // Play button action:
-            dispatch(setIsLoading(true));
-
-            const grpcRequest = new GRPCRequest({
-              url: state.url,
-              inputs: state.data,
-              metadata: state.metadata,
-              methodName,
-              service,
-            });
-
-            dispatch(setCall(grpcRequest));
-
-            grpcRequest.on(GRPCEventType.ERROR, (e: Error) => {
-              dispatch(setOutput(JSON.stringify({
-                error: e.message,
-              }, null, 2)));
-            });
-
-            grpcRequest.on(GRPCEventType.DATA, (data: object) => {
-              dispatch(setOutput(JSON.stringify(data, null, 2)));
-            });
-
-            grpcRequest.on(GRPCEventType.END, () => {
-              dispatch(setIsLoading(false));
-              dispatch(setCall(undefined));
-            });
-
-            grpcRequest.send();
-          }}
+        <PlayControl
+          dispatch={dispatch}
+          methodName={methodName}
+          service={service}
+          data={state.data}
+          loading={state.loading}
+          metadata={state.metadata}
+          url={state.url}
+          call={state.call}
         />
       </div>
 
@@ -308,15 +270,6 @@ const styles = {
     left: "50%",
     marginLeft: "-25px",
     top: "50%",
-  },
-  playIcon: {
-    fontSize: 50,
-    marginTop: 17,
-    color: "#28d440",
-    border: "3px solid rgb(238, 238, 238)",
-    borderRadius: "50%",
-    cursor: "pointer",
-    background: "#fff",
   },
   inputContainer: {
     display: "flex",
