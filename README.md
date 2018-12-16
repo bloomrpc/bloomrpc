@@ -9,7 +9,7 @@ Inspired by **Postman** and **GraphQL Playground**. <br/>
 **BloomRPC** aim to give the simplest and efficient developer experience for exploring
 and querying your GRPC services.
 
-Download the client, select your protobuf files and start make requests! <br/> 
+Install the client, select your protobuf files and start making requests! <br/> 
 **No extra** steps or configuration **needed**.
 
 ## Features
@@ -24,7 +24,7 @@ Download the client, select your protobuf files and start make requests! <br/>
 - Request Cancellation
 - Much more...
 
-## Downloads
+## Installation
 
 #### MacOS and Linux Users:
 
@@ -51,7 +51,7 @@ npm run package-win
 
 ## Planned Features
 
-- [ ] Client-Side Streaming and Bi-Directional Streaming Support
+- [x] Client-Side Streaming and Bi-Directional Streaming Support
 - [ ] Draggable tabs
 - [ ] Multi theme Editor
 - [ ] Web Version with GRPC-WEB

@@ -1,15 +1,13 @@
 import { EventEmitter } from "events";
 import { credentials, Metadata, ServiceError } from "grpc";
-import { ProtoService } from './protobuf';
-// @ts-ignore
-import * as lodashGet from 'lodash.get';
+import { ProtoInfo } from './protoInfo';
 
 export interface GRPCRequestInfo {
   url: string;
-  service: ProtoService;
-  methodName: string;
+  protoInfo: ProtoInfo;
   metadata: string;
   inputs: string;
+  interactive?: boolean;
 }
 
 export const GRPCEventType = {
@@ -20,58 +18,33 @@ export const GRPCEventType = {
 
 export class GRPCRequest extends EventEmitter {
   url: string;
-  service: ProtoService;
-  methodName: string;
+  protoInfo: ProtoInfo;
   metadata: string;
   inputs: string;
-  _call: any;
+  interactive?: boolean;
+  _call?: any;
 
-  constructor({ url, service, methodName, metadata, inputs }: GRPCRequestInfo) {
+  constructor({ url, protoInfo, metadata, inputs, interactive }: GRPCRequestInfo) {
     super();
     this.url = url;
-    this.service = service;
-    this.methodName = methodName;
+    this.protoInfo = protoInfo;
     this.metadata = metadata;
     this.inputs = inputs;
+    this.interactive = interactive;
     this._call = undefined;
   }
 
-  client(): any {
-    return lodashGet(this.service.proto.ast, this.service.serviceName);
-  }
-
-  serviceDef() {
-    return this.service.proto.root.lookupService(this.service.serviceName);
-  }
-
-  methodDef() {
-    const serviceDefinition = this.serviceDef();
-    return serviceDefinition.methods[this.methodName];
-  }
-
   send(): GRPCRequest {
-    const serviceClient: any = this.client();
-
+    const serviceClient: any = this.protoInfo.client();
+    const client = new serviceClient(this.url, credentials.createInsecure());
     let inputs = {};
     let metadata: {[key: string]: any} = {};
 
-    const client = new serviceClient(this.url, credentials.createInsecure());
-
     try {
-      inputs = JSON.parse(this.inputs || "{}")
-    } catch (e) {
-      e.message = "Couldn't parse JSON inputs Invalid json";
-      this.emit(GRPCEventType.ERROR, e);
-      this.emit(GRPCEventType.END);
-      return this;
-    }
-
-    try {
-      metadata = JSON.parse(this.metadata || "{}")
-    } catch (e) {
-      e.message = "Couldn't parse JSON metadata Invalid json";
-      this.emit(GRPCEventType.ERROR, e);
-      this.emit(GRPCEventType.END);
+      const reqInfo = this.parseRequestInfo(this.inputs, this.metadata);
+      inputs = reqInfo.inputs;
+      metadata = reqInfo.metadata;
+    } catch(e) {
       return this;
     }
 
@@ -82,7 +55,7 @@ export class GRPCRequest extends EventEmitter {
     });
 
     // Gather method information
-    const methodDefinition = this.methodDef();
+    const methodDefinition = this.protoInfo.methodDef();
 
     // TODO: find proper type for call
     let call: any;
@@ -121,6 +94,22 @@ export class GRPCRequest extends EventEmitter {
     return this;
   }
 
+  write(data: string) {
+    if (this._call) {
+      // Add metadata
+      let inputs = {};
+
+      try {
+        const reqInfo = this.parseRequestInfo(data);
+        inputs = reqInfo.inputs;
+      } catch(e) {
+        return this;
+      }
+      this._call.write(inputs);
+    }
+    return this;
+  }
+
   cancel() {
     if (this._call) {
       this._call.cancel();
@@ -128,24 +117,32 @@ export class GRPCRequest extends EventEmitter {
     }
   }
 
-  private clientStreaming(client: any, inputs: any, md: Metadata) {
-    const call = client[this.methodName](md, this.handleUnaryResponse.bind(this));
+  commitStream() {
+    if (this._call) {
+      this._call.end();
+    }
+  }
 
-    if (Array.isArray(inputs)) {
-      inputs.forEach(data => {
+  private clientStreaming(client: any, inputs: any, md: Metadata) {
+    const call = client[this.protoInfo.methodName](md, this.handleUnaryResponse.bind(this));
+
+    if (Array.isArray(inputs.stream)) {
+      inputs.stream.forEach((data: object) => {
         call.write(data);
       });
     } else {
       call.write(inputs);
     }
 
-    call.end();
+    if (!this.interactive) {
+      call.end();
+    }
 
     return call;
   }
 
   private unaryCall(client: any, inputs: any, md: Metadata) {
-    return client[this.methodName](inputs, md, this.handleUnaryResponse.bind(this));
+    return client[this.protoInfo.methodName](inputs, md, this.handleUnaryResponse.bind(this));
   }
 
   private handleUnaryResponse(err: ServiceError, response: any) {
@@ -161,5 +158,32 @@ export class GRPCRequest extends EventEmitter {
       this.emit(GRPCEventType.DATA, response);
     }
     this.emit(GRPCEventType.END, this);
+  }
+
+  private parseRequestInfo(data: string, userMetadata?: string): { inputs: object, metadata: object } {
+    let inputs = {};
+    let metadata: {[key: string]: any} = {};
+
+    try {
+      inputs = JSON.parse(data || "{}")
+    } catch (e) {
+      e.message = "Couldn't parse JSON inputs Invalid json";
+      this.emit(GRPCEventType.ERROR, e);
+      this.emit(GRPCEventType.END);
+      throw new Error(e);
+    }
+
+    if (userMetadata) {
+      try {
+        metadata = JSON.parse(userMetadata || "{}")
+      } catch (e) {
+        e.message = "Couldn't parse JSON metadata Invalid json";
+        this.emit(GRPCEventType.ERROR, e);
+        this.emit(GRPCEventType.END);
+        throw new Error(e);
+      }
+    }
+
+    return { inputs, metadata };
   }
 }

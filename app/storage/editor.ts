@@ -13,6 +13,7 @@ const KEYS = {
   PROTOS: "protos",
   TABS: "tabs",
   REQUESTS: "requests",
+  INTERACTIVE: "interactive",
 };
 
 /**
@@ -21,6 +22,14 @@ const KEYS = {
  */
 export function storeUrl(url: string) {
   EditorStore.set(KEYS.URL, url);
+}
+
+export function storeInteractive(interactive: boolean) {
+  EditorStore.set(KEYS.INTERACTIVE, interactive);
+}
+
+export function getInteractive() {
+  return Boolean(EditorStore.get(KEYS.INTERACTIVE));
 }
 
 /**
@@ -87,12 +96,13 @@ interface TabRequestInfo extends InitialRequest {
  * @param inputs
  * @param metadata
  */
-export function storeRequestInfo(tabKey: string, url: string, inputs: string, metadata: string) {
+export function storeRequestInfo(tabKey: string, url: string, inputs: string, metadata: string, interactive: boolean) {
   const request = {
     id: tabKey,
     url,
     inputs,
     metadata,
+    interactive,
     createdAt: new Date().toISOString(),
   };
 

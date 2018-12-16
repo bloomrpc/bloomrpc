@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Tabs } from 'antd';
 import { Editor, InitialRequest } from '../Editor';
-import { ProtoService } from '../../behaviour';
+import { ProtoInfo, ProtoService } from '../../behaviour';
 
 interface TabListProps {
   tabs: TabData[]
   activeKey?: string
   onChange?: (activeKey: string) => void
   onDelete?: (activeKey: string | React.MouseEvent<HTMLElement>) => void
-  onEditorRequestChange?: (tabId: string, url: string, inputs: string, metadata: string) => void
+  onEditorRequestChange?: (tabId: string, url: string, inputs: string, metadata: string, interactive: boolean) => void
 }
 
 export interface TabData {
@@ -40,7 +40,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onEditorRequestCh
           closable={false}
           style={{ height: "100%" }}
         >
-          <Editor methodName="" />
+          <Editor />
         </Tabs.TabPane>
       ) : tabs.map((tab) => (
           <Tabs.TabPane
@@ -50,12 +50,11 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onEditorRequestCh
             style={{ height: "100%" }}
           >
             <Editor
-              service={tab.service}
-              methodName={tab.methodName}
+              protoInfo={new ProtoInfo(tab.service, tab.methodName)}
               key={tab.tabKey}
               initialRequest={tab.initialRequest}
-              onRequestChange={(url, inputs, metadata) => {
-                onEditorRequestChange && onEditorRequestChange(tab.tabKey, url, inputs, metadata)
+              onRequestChange={(url, inputs, metadata, interactive) => {
+                onEditorRequestChange && onEditorRequestChange(tab.tabKey, url, inputs, metadata, interactive)
               }}
             />
           </Tabs.TabPane>

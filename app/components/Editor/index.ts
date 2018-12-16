@@ -1,3 +1,3 @@
 export * from './Editor';
 export * from './Metadata';
-export * from './Response';
+export * from './Viewer';

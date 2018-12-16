@@ -64,8 +64,8 @@ export function BloomRPC() {
           <TabList
             tabs={editorTabs.tabs}
             activeKey={editorTabs.activeKey}
-            onEditorRequestChange={(tabId, url, inputs, metadata) => {
-              storeRequestInfo(tabId, url, inputs, metadata);
+            onEditorRequestChange={(tabId, url, inputs, metadata, interactive) => {
+              storeRequestInfo(tabId, url, inputs, metadata, interactive);
             }}
             onDelete={(activeKey: string) => {
               let newActiveKey = "0";

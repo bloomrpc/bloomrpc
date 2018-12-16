@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChangeEvent, useEffect, useReducer } from 'react';
-import { Button, Drawer, Icon, Input } from 'antd';
+import { Drawer, Icon, Input } from 'antd';
 import {
   actions,
   setData,
@@ -10,17 +10,22 @@ import {
   setUrl,
 } from './actions';
 import AceEditor from 'react-ace';
+import { Response } from './Response';
+import { Metadata } from './Metadata';
+import { Controls } from './Controls';
+import { Request } from './Request';
+import { GRPCRequest, ProtoInfo } from '../../behaviour';
+import { getInteractive, getUrl, storeUrl } from '../../storage';
+
 import 'brace/theme/textmate';
 import 'brace/mode/json';
 import 'brace/mode/protobuf';
-import { Response } from './Response';
-import { GRPCRequest, ProtoService } from '../../behaviour';
-import { getUrl, storeUrl } from '../../storage';
-import { Metadata } from './Metadata';
-import { PlayControl } from './PlayControl';
+import { Options } from './Options';
+import { RequestType } from './RequestType';
 
 export interface EditorAction {
   [key: string]: any
+
   type: string
 }
 
@@ -31,33 +36,39 @@ export interface EditorState {
   output: string
   call?: GRPCRequest
   metadataOpened: boolean
-  protoViewVisibile: boolean
+  protoViewVisible: boolean
   metadata: string
-  streamData: string[]
+  requestStreamData: string[]
+  responseStreamData: string[]
+  interactive: boolean
+  streamCommitted: boolean
 }
 
 export interface InitialRequest {
   url: string
   inputs: string
   metadata: string
+  interactive: boolean
 }
 
 export interface EditorProps {
-  methodName: string
-  service?: ProtoService
-  onRequestChange?: (url: string, inputs: string, metadata: string) => void
+  protoInfo?: ProtoInfo
+  onRequestChange?: (url: string, inputs: string, metadata: string, interactive: boolean) => void
   initialRequest?: InitialRequest
 }
 
 const INITIAL_STATE: EditorState = {
   url: "0.0.0.0:3009",
   data: "",
-  streamData: [],
+  requestStreamData: [],
+  responseStreamData: [],
+  interactive: false,
   loading: false,
   output: "",
   call: undefined,
   metadataOpened: false,
-  protoViewVisibile: false,
+  protoViewVisible: false,
+  streamCommitted: false,
   metadata: "",
 };
 
@@ -91,22 +102,40 @@ const reducer = (state: EditorState, action: EditorAction) => {
       return { ...state, metadata: action.metadata };
 
     case actions.SET_PROTO_VISIBILITY:
-      return { ...state, protoViewVisibile: action.visible };
+      return { ...state, protoViewVisible: action.visible };
+
+    case actions.SET_INTERACTIVE:
+      return { ...state, interactive: action.interactive };
+
+    case actions.SET_REQUEST_STREAM_DATA:
+      return { ...state, requestStreamData: action.requestData };
+
+    case actions.SET_RESPONSE_STREAM_DATA:
+      return { ...state, responseStreamData: action.responseData };
+
+    case actions.ADD_RESPONSE_STREAM_DATA:
+      return { ...state, responseStreamData: [...state.responseStreamData, action.responseData] };
+
+    case actions.SET_STREAM_COMMITTED:
+      return { ...state, streamCommitted: action.committed };
     default:
       return state
   }
 };
 
-const Editor: React.FC<EditorProps> = ({ service, methodName, initialRequest, onRequestChange }: EditorProps) => {
-  INITIAL_STATE.url = (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url;
-  const [state, dispatch] = useReducer<EditorState, EditorAction>(reducer, INITIAL_STATE);
+export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorProps) {
+  const [state, dispatch] = useReducer<EditorState, EditorAction>(reducer, {
+    ...INITIAL_STATE,
+    url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,
+    interactive: (initialRequest && initialRequest.interactive) || getInteractive() || INITIAL_STATE.interactive,
+  });
 
   useEffect(() => {
-    if (service && methodName && !initialRequest) {
+    if (protoInfo && !initialRequest) {
       try {
-        const { plain } = service.methodsMocks[methodName]();
+        const { plain } = protoInfo.service.methodsMocks[protoInfo.methodName]();
         dispatch(setData(JSON.stringify(plain, null, 2)));
-      } catch(e) {
+      } catch (e) {
         console.error(e);
         dispatch(setData(JSON.stringify({
           "error": "Error parsing the request message, please report the problem sharing the offending protofile"
@@ -126,66 +155,55 @@ const Editor: React.FC<EditorProps> = ({ service, methodName, initialRequest, on
         <div style={{ width: "50%" }}>
           <Input
             className="server-url"
-            addonAfter={state.loading ? <Icon type="loading"/> : <Icon type="database"/>}
+            addonAfter={(
+              <div style={{display: "flex", alignItems: "center", width: "125px"}}>
+                {state.loading ? <Icon type="loading"/> : <Icon type="database"/>}
+                <RequestType protoInfo={protoInfo} />
+              </div>
+            )}
             defaultValue={state.url}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               dispatch(setUrl(e.target.value));
               storeUrl(e.target.value);
-              onRequestChange && onRequestChange(e.target.value, state.data, state.metadata);
+              onRequestChange && onRequestChange(e.target.value, state.data, state.metadata, state.interactive);
             }}/>
         </div>
 
-        {service && (
-          <div>
-            <Button
-              icon={"file-ppt"}
-              type="dashed"
-              onClick={() => dispatch(setProtoVisibility(true))}
-            >
-              Proto File
-            </Button>
-          </div>
+        {protoInfo && (
+          <Options
+            protoInfo={protoInfo}
+            dispatch={dispatch}
+            interactiveChecked={state.interactive}
+            onInteractiveChange={(checked) => {
+              onRequestChange && onRequestChange(state.url, state.data, state.metadata, checked);
+            }}
+          />
         )}
       </div>
 
-      <div style={{ ...styles.playIconContainer, position: "absolute" }}>
-        <PlayControl
+      <div style={styles.playIconContainer}>
+        <Controls
           dispatch={dispatch}
-          methodName={methodName}
-          service={service}
-          data={state.data}
-          loading={state.loading}
-          metadata={state.metadata}
-          url={state.url}
-          call={state.call}
+          state={state}
+          protoInfo={protoInfo}
         />
       </div>
 
       <div style={styles.editorContainer}>
-        <AceEditor
-          style={{ marginTop: "10px", background: "#fff" }}
-          width={"50%"}
-          height={"calc(100vh - 155px)"}
-          mode="json"
-          theme="textmate"
-          name="inputs"
-          fontSize={13}
-          cursorStart={2}
-          onChange={(value) => {
+        <Request
+          data={state.data}
+          streamData={state.requestStreamData}
+          onChangeData={(value) => {
             dispatch(setData(value));
-            onRequestChange && onRequestChange(state.url, value, state.metadata);
-          }}
-          showPrintMargin
-          showGutter
-          highlightActiveLine={false}
-          value={state.data}
-          setOptions={{
-            useWorker: true
+            onRequestChange && onRequestChange(state.url, value, state.metadata, state.interactive);
           }}
         />
 
         <div style={styles.responseContainer}>
-          <Response loading={state.loading} output={state.output}/>
+          <Response
+            streamResponse={state.responseStreamData}
+            output={state.output}
+          />
         </div>
       </div>
 
@@ -195,57 +213,53 @@ const Editor: React.FC<EditorProps> = ({ service, methodName, initialRequest, on
         }}
         onMetadataChange={(value) => {
           dispatch(setMetadata(value));
-          onRequestChange && onRequestChange(state.url, state.data, value);
+          onRequestChange && onRequestChange(state.url, state.data, value, state.interactive);
         }}
         value={state.metadata}
         visibile={state.metadataOpened}
       />
 
-      {service && <Drawer
-          title={service.proto.fileName.split('/').pop()}
+      {protoInfo && (
+        <Drawer
+          title={protoInfo.service.proto.fileName.split('/').pop()}
           placement={"right"}
           width={"50%"}
           closable={false}
           onClose={() => dispatch(setProtoVisibility(false))}
-          visible={state.protoViewVisibile}
-      >
+          visible={state.protoViewVisible}
+        >
           <AceEditor
-              style={{ marginTop: "10px", background: "#fff" }}
-              width={"100%"}
-              height={"calc(100vh - 115px)"}
-              mode="protobuf"
-              theme="textmate"
-              name="output"
-              fontSize={13}
-              showPrintMargin={false}
-              wrapEnabled
+            style={{ marginTop: "10px", background: "#fff" }}
+            width={"100%"}
+            height={"calc(100vh - 115px)"}
+            mode="protobuf"
+            theme="textmate"
+            name="output"
+            fontSize={13}
+            showPrintMargin={false}
+            wrapEnabled
 
-              showGutter={false}
-              readOnly
-              highlightActiveLine={false}
-              value={service.proto.protoText}
-              onLoad={(editor: any) => {
-                editor.renderer.$cursorLayer.element.style.display = "none";
-                editor.gotoLine(0, 0, true);
-              }}
-              setOptions={{
-                useWorker: true,
-                showLineNumbers: false,
-                highlightGutterLine: false,
-                fixedWidthGutter: true,
-                tabSize: 1,
-              }}
+            showGutter={false}
+            readOnly
+            highlightActiveLine={false}
+            value={protoInfo.service.proto.protoText}
+            onLoad={(editor: any) => {
+              editor.renderer.$cursorLayer.element.style.display = "none";
+              editor.gotoLine(0, 0, true);
+            }}
+            setOptions={{
+              useWorker: true,
+              showLineNumbers: false,
+              highlightGutterLine: false,
+              fixedWidthGutter: true,
+              tabSize: 1,
+            }}
           />
-      </Drawer>}
+        </Drawer>
+      )}
     </div>
   )
 };
-
-Editor.defaultProps = {
-  methodName: "",
-};
-
-export { Editor }
 
 const styles = {
   tabContainer: {
@@ -266,6 +280,7 @@ const styles = {
     overflow: "auto"
   },
   playIconContainer: {
+    position: "absolute" as "absolute",
     zIndex: 10,
     left: "50%",
     marginLeft: "-25px",

@@ -1,10 +1,15 @@
 @import '~antd/dist/antd.css';
 
-.ace-tm .ace_gutter {
-    background: #fff !important;
+.root {
+    background: #f0f2f5;
 }
 
-.ant-tabs-content {
+.ace-tm .ace_gutter {
+   background: #fff !important;
+}
+
+
+.ant-layout-content > .ant-tabs:not(.ant-tabs-vertical) > .ant-tabs-content {
     height: 100%;
     padding-bottom: 145px;
 }
@@ -68,4 +73,35 @@
         color: #fff;
         font-weight: 700;
     }
+}
+
+.ant-tabs-nav-scroll {
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.ant-tabs-nav-wrap {
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.ant-tabs-nav .ant-tabs-tab {
+ padding: 4px;
+ padding-left: 17px;
+ user-select: none;
+}
+
+.ant-tabs-nav .ant-tabs-tab-active {
+    border-bottom-color: #eee;
+    color: #014f9a;
+}
+
+.ant-tabs-bar {
+    margin: 0 0 8px 0;
+}
+
+.ant-tabs-ink-bar {
+    height: 0;
+}
+
+#metadata > .ace_gutter {
+    background: #f0f2f5 !important;
 }
