@@ -11,7 +11,9 @@ interface MetadataProps {
 
 export function Metadata({ onClickMetadata, onMetadataChange, value, visibile }: MetadataProps) {
   return (
-    <div style={{
+    <div
+      className="meatada-panel"
+      style={{
       ...styles.optionContainer,
       ...(visibile ? styles.openedOption : {}),
       ...(visibile ? { position: "relative" } : {})
@@ -24,7 +26,7 @@ export function Metadata({ onClickMetadata, onMetadataChange, value, visibile }:
         > {visibile ? <Icon type="down"/> : <Icon type="up"/>} METADATA </a>
       </div>
 
-      <div style={{ paddingLeft: "10px" }}>
+      <div>
         <AceEditor
           width={"100%"}
           style={{ background: "#f5f5f5" }}
@@ -38,7 +40,7 @@ export function Metadata({ onClickMetadata, onMetadataChange, value, visibile }:
             onMetadataChange(value);
           }}
           showPrintMargin={false}
-          showGutter={false}
+          showGutter
           highlightActiveLine={false}
           value={value}
           setOptions={{
@@ -54,21 +56,21 @@ const styles = {
   optionLabel: {
     background: "#001529",
     padding: "7px 10px",
-    marginBottom: "10px"
+    marginBottom: "5px"
   },
   optionContainer: {
     fontWeight: 900,
     fontSize: "13px",
     borderRight: "1px solid rgba(0, 21, 41, 0.18)",
     borderLeft: "1px solid rgba(0, 21, 41, 0.18)",
-    background: "#f5f5f5"
+    background: "#f0f2f5"
   },
   optionLink: {
     color: "#fff",
     textDecoration: "none",
   },
   openedOption: {
-    marginTop: "-125px",
+    marginTop: "-118px",
     width: "100%",
     height: "150px",
     maxHeight: "150px",
