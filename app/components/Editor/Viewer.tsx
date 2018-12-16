@@ -7,9 +7,10 @@ import { Input } from 'antd';
 
 interface ResponseProps {
   output: string,
+  emptyContent?: Node | Element | JSX.Element
 }
 
-export function Viewer({ output }: ResponseProps) {
+export function Viewer({ output, emptyContent }: ResponseProps) {
 
   const editorRef: any = useRef(null);
   const inputSearch: any = useRef(null);
@@ -45,12 +46,8 @@ export function Viewer({ output }: ResponseProps) {
           });
         }}/>
 
-      {!output && (
-        <div style={styles.introContainer}>
-          <h1 style={styles.introTitle}>Hit the play button to get a response here</h1>
-          <img src={require('./../../../resources/blue/128x128.png')} style={{ opacity: 0.1 }}/>
-        </div>
-      )}
+      {!output && emptyContent}
+
       <AceEditor
         ref={editorRef}
         className={"response-edit"}
@@ -91,20 +88,6 @@ export function Viewer({ output }: ResponseProps) {
 }
 
 const styles = {
-  introContainer: {
-    textAlign: "center" as "center",
-    position: "absolute" as "absolute",
-    left: "25%",
-    top: "35%",
-    width: "45%",
-    zIndex: 7,
-  },
-  introTitle: {
-    position: "absolute" as "absolute",
-    color: "rgba(17, 112, 134, 0.58)",
-    fontSize: "25px",
-    top: "120px",
-  },
   responseContainer: {
     background: "white",
     position: "relative" as "relative",
