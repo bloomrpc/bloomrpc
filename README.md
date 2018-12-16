@@ -16,7 +16,7 @@ Install the client, select your protobuf files and start making requests! <br/>
 
 - Native GRPC calls
 - Unary Calls and Server Side Streaming Support
-- Client side and Bi-directional Streaming (**Coming soon!**)
+- Client side and Bi-directional Streaming
 - Automatic Input recognition
 - Multi tabs operations
 - Metadata support
