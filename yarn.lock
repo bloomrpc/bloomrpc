@@ -934,10 +934,10 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bloomrpc-mock@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/bloomrpc-mock/-/bloomrpc-mock-0.2.0.tgz#49625c0fb95d9872cdb3868f745380cd9f4fa9df"
-  integrity sha512-6k2xhwkPBJtmdbnC2YUHrfpkDV0rQ+lhmvL3ROg4MyiIN0Ho/t4oZ2wSMp0f13UDHS2MyF2ov0gs0YbWIk9Svg==
+bloomrpc-mock@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/bloomrpc-mock/-/bloomrpc-mock-0.2.2.tgz#8eff61ae73aa1969b6c33fab53bd497b46c2a605"
+  integrity sha512-WF3r6q11biTLcxfZHjG1tECe6OA7AfKtsUkCQfPqHoUNLM27k3PdoJTcomJZ95wX5wSMzfKMB/FCwTQ6dWwObg==
   dependencies:
     "@grpc/proto-loader" "^0.3.0"
     "@oclif/command" "^1"
@@ -947,6 +947,7 @@ bloomrpc-mock@^0.2.0:
     colors "^1.3.2"
     google-protobuf "^3.6.1"
     grpc "^1.16.1"
+    lodash "^4.17.11"
     protobufjs "^6.8.8"
     tslib "^1"
     uuid "^3.3.2"
