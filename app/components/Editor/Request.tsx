@@ -30,7 +30,7 @@ export function Request({onChangeData, data, streamData}: RequestProps) {
             fontSize={13}
             cursorStart={2}
             onChange={onChangeData}
-            showPrintMargin
+            showPrintMargin={false}
             showGutter
             highlightActiveLine={false}
             value={data}
