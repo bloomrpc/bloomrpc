@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import { credentials, Metadata, ServiceError } from "grpc";
 import { ProtoInfo } from './protoInfo';
+import * as grpc from 'grpc';
 
 export interface GRPCRequestInfo {
   url: string;
@@ -36,7 +37,7 @@ export class GRPCRequest extends EventEmitter {
 
   send(): GRPCRequest {
     const serviceClient: any = this.protoInfo.client();
-    const client = new serviceClient(this.url, credentials.createInsecure());
+    const client: grpc.Client = new serviceClient(this.url, credentials.createInsecure());
     let inputs = {};
     let metadata: {[key: string]: any} = {};
 
@@ -91,6 +92,10 @@ export class GRPCRequest extends EventEmitter {
 
     this._call = call;
 
+    this.on(GRPCEventType.END, () => {
+      client.close();
+    });
+
     return this;
   }
 
@@ -126,7 +131,7 @@ export class GRPCRequest extends EventEmitter {
   private clientStreaming(client: any, inputs: any, md: Metadata) {
     const call = client[this.protoInfo.methodName](md, this.handleUnaryResponse.bind(this));
 
-    if (Array.isArray(inputs.stream)) {
+    if (inputs && Array.isArray(inputs.stream)) {
       inputs.stream.forEach((data: object) => {
         call.write(data);
       });
