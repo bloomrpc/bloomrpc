@@ -19,6 +19,13 @@ export interface TabData {
 }
 
 export function TabList({ tabs, activeKey, onChange, onDelete, onEditorRequestChange }: TabListProps) {
+  const tabsWithMatchingKey =
+    tabs.filter(tab => tab.tabKey === activeKey);
+
+  const tabActiveKey = tabsWithMatchingKey.length === 0
+    ? [...tabs.map(tab => tab.tabKey)].pop()
+    : [...tabsWithMatchingKey.map(tab => tab.tabKey)].pop();
+
   return (
     <Tabs
       onEdit={(targetKey, action) => {
@@ -29,7 +36,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onEditorRequestCh
       onChange={onChange}
       tabBarStyle={styles.tabBarStyle}
       style={styles.tabList}
-      activeKey={activeKey || "0"}
+      activeKey={tabActiveKey || "0"}
       hideAdd
       type="editable-card"
     >
