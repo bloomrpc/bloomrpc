@@ -28,8 +28,8 @@ install:
 - ./node_modules/.bin/electron-rebuild
 
 script:
-- if [ "$TRAVIS_OS_NAME" == "linux" ] && ["$TRAVIS_BRANCH" == "master"]; then npm run package-linux; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ] && ["$TRAVIS_BRANCH" == "master"]; then npm run package; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_BRANCH" == "fixing-travis-script-branch" ]]; then npm run package-linux; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_BRANCH" == "fixing-travis-script-branch" ]]; then npm run package; fi
 
 before_cache:
 - rm -rf $HOME/.cache/electron-builder/wine
