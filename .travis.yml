@@ -1,0 +1,35 @@
+osx_image: xcode9.1
+
+dist: trusty
+sudo: false
+
+language: node_js
+node_js: "8"
+
+env:
+  global:
+  - ELECTRON_CACHE=$HOME/.cache/electron
+  - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+matrix:
+  include:
+  - os: linux
+  - os: osx
+
+cache:
+  directories:
+  - node_modules
+  - $HOME/.cache/electron
+  - $HOME/.cache/electron-builder
+  - $HOME/.npm/_prebuilds
+
+install:
+- yarn
+- ./node_modules/.bin/electron-rebuild
+
+script:
+- if [ "$TRAVIS_OS_NAME" == "linux" ] && ["$TRAVIS_BRANCH" == "master"]; then npm run package-linux; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ] && ["$TRAVIS_BRANCH" == "master"]; then npm run package; fi
+
+before_cache:
+- rm -rf $HOME/.cache/electron-builder/wine
