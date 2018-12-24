@@ -66,6 +66,7 @@ export function Viewer({ output, emptyContent }: ResponseProps) {
         value={output}
         onLoad={(editor: any) => {
           editor.renderer.$cursorLayer.element.style.display = "none";
+          editor.$blockScrolling = Infinity;
         }}
         commands={[{
           name: 'find',

@@ -934,10 +934,10 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bloomrpc-mock@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/bloomrpc-mock/-/bloomrpc-mock-0.2.3.tgz#623b875f28e2707e7d9029a5a711e7f07988f0df"
-  integrity sha512-bXakSb2dLs68AKJd6VCKACl8v8RtOTtYi4/awBDJWRNu0RR66nDlk0YfPP7UzIQQZT05w12Z/wuuWPVn3k9a2w==
+bloomrpc-mock@^0.2.4-alpha-1:
+  version "0.2.4-alpha-1"
+  resolved "https://registry.yarnpkg.com/bloomrpc-mock/-/bloomrpc-mock-0.2.4-alpha-1.tgz#1835c60a6af6be0d7777a9e13fb73e1b0507dba5"
+  integrity sha512-GSaahr9C4Wf79GmpDVvEm57M+RX7J39gJbw/S1uMtLfcFJded62x6ddq7XsUodCdtUDtFBddWo++OfgUYbCCEw==
   dependencies:
     "@grpc/proto-loader" "^0.3.0"
     "@oclif/command" "^1"
@@ -946,7 +946,7 @@ bloomrpc-mock@^0.2.3:
     "@types/protobufjs" "^6.0.0"
     colors "^1.3.2"
     google-protobuf "^3.6.1"
-    grpc "^1.16.1"
+    grpc "^1.17.0"
     lodash "^4.17.11"
     protobufjs "^6.8.8"
     tslib "^1"
@@ -3374,6 +3374,17 @@ grpc@^1.16.1:
     node-pre-gyp "^0.12.0"
     protobufjs "^5.0.3"
 
+grpc@^1.17.0:
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/grpc/-/grpc-1.17.0.tgz#d7971dd39bd4eec90c69a048f7727795ab504876"
+  integrity sha512-5zb5ilwHlsiWfE2Abq/IN5SkHQ2zi4QF/u9Gewcw5DO3y+hGTtzZUiMK52MX3YZHAIRjqxDcO3fx0jLhPjT8Zw==
+  dependencies:
+    lodash.camelcase "^4.3.0"
+    lodash.clone "^4.5.0"
+    nan "^2.0.0"
+    node-pre-gyp "^0.12.0"
+    protobufjs "^5.0.3"
+
 gud@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
@@ -4680,6 +4691,11 @@ lodash.assign@^4.2.0:
 lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
+
+lodash.clone@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clone/-/lodash.clone-4.5.0.tgz#195870450f5a13192478df4bc3d23d2dea1907b6"
+  integrity sha1-GVhwRQ9aExkkeN9Lw9I9LeoZB7Y=
 
 lodash.clonedeep@^4.3.2:
   version "4.5.0"

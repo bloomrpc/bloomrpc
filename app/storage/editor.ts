@@ -137,7 +137,7 @@ export function deleteRequestInfo(tabKey: string) {
   EditorStore.set('requests', requests);
 }
 
-export function clearAll() {
+export function clearEditor() {
   EditorStore.clear();
 }
 

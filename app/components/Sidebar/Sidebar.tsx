@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { Button, Icon, Tooltip, Tree } from 'antd';
+import { useEffect, useState } from "react";
+import { Button, Icon, Modal, Tooltip, Tree } from 'antd';
 import { Badge } from '../Badge/Badge';
 import { OnProtoUpload, ProtoFile, ProtoService, importProtos } from '../../behaviour';
+import { PathResolution } from "./PathResolution";
+import { getImportPaths } from "../../storage";
 
 interface SidebarProps {
   protos: ProtoFile[]
@@ -13,6 +16,13 @@ interface SidebarProps {
 
 export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload }: SidebarProps) {
 
+  const [importPaths, setImportPaths] = useState<string[]>([""]);
+  const [importPathVisible, setImportPathsVisible] = useState(false);
+
+  useEffect(() => {
+    setImportPaths(getImportPaths());
+  }, []);
+
   return (
     <>
       <div style={styles.sidebarTitleContainer}>
@@ -21,7 +31,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
         <Tooltip placement="bottom" title="Import protos">
           <Icon
             onClick={() => {
-              importProtos(onProtoUpload)
+              importProtos(onProtoUpload, importPaths)
             }}
             type="plus-circle"
             theme="filled"
@@ -29,14 +39,45 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
           />
         </Tooltip>
       </div>
-      {/*TODO: extract*/}
-      <div style={{ background: "#fafafa", padding: "3px 6px", display: "flex", alignContent: "space-between", borderBottom: "1px solid #e0e0e0"}}>
+      <div style={styles.optionsContainer}>
         <div style={{width: "50%"}}>
           <Tooltip title="Reload" placement="bottomLeft" align={{offset: [-8, 0]}}>
             <Button type="ghost" style={{height: 22, paddingRight: 5, paddingLeft: 5}} onClick={onReload}>
               <Icon type="reload" style={{cursor: "pointer", color: "#1d93e6"}}/>
             </Button>
           </Tooltip>
+
+          <Tooltip title="Import Paths" placement="bottomLeft" align={{offset: [-8, 0]}}>
+            <Button
+                type="ghost"
+                style={{height: 22, paddingRight: 5, paddingLeft: 5, marginLeft: 5}}
+                onClick={() => setImportPathsVisible(true)}
+            >
+              <Icon type="file-search" style={{cursor: "pointer", color: "#1d93e6"}}/>
+            </Button>
+          </Tooltip>
+
+          <Modal
+              title={(
+                  <div>
+                    <Icon type="file-search" />
+                    <span style={{marginLeft: 10}}> Import Paths </span>
+                  </div>
+              )}
+              visible={importPathVisible}
+              onCancel={() => setImportPathsVisible(false)}
+              onOk={() => setImportPathsVisible(false)}
+              bodyStyle={{padding: 0}}
+              width={750}
+              footer={[
+                <Button key="back" onClick={() => setImportPathsVisible(false)}>Close</Button>
+              ]}
+          >
+            <PathResolution
+                onImportsChange={setImportPaths}
+                importPaths={importPaths}
+            />
+          </Modal>
         </div>
         <div style={{width: "50%", textAlign: "right"}}>
           <Tooltip title="Delete all" placement="bottomRight" align={{offset: [10, 0]}}>
@@ -102,7 +143,6 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
               ))}
             </Tree.TreeNode>
           ))}
-
         </Tree.DirectoryTree>}
       </div>
     </>
@@ -132,4 +172,11 @@ const styles = {
     borderRadius: "50%",
     cursor: "pointer"
   },
+  optionsContainer: {
+    background: "#fafafa",
+    padding: "3px 6px",
+    display: "flex",
+    alignContent: "space-between",
+    borderBottom: "1px solid #e0e0e0",
+  }
 };

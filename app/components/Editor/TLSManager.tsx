@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Button, Icon, Input, Radio, Table } from "antd";
 import { Certificate, importCertChain, importPrivateKey, importRootCert } from "../../behaviour";
-import { getTLSList, storeTLSList } from "../../storage/tls";
+import { getTLSList, storeTLSList } from "../../storage";
 
 interface TLSManagerProps {
     selected?: Certificate

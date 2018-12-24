@@ -156,9 +156,8 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
-    "@grpc/proto-loader": "^0.3.0",
     "antd": "^3.10.8",
-    "bloomrpc-mock": "^0.2.3",
+    "bloomrpc-mock": "^0.2.4-alpha-1",
     "electron-debug": "^1.1.0",
     "electron-store": "^2.0.0",
     "grpc": "^1.16.1",
