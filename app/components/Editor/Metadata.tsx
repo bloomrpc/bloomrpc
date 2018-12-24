@@ -61,7 +61,6 @@ const styles = {
   optionContainer: {
     fontWeight: 900,
     fontSize: "13px",
-    borderRight: "1px solid rgba(0, 21, 41, 0.18)",
     borderLeft: "1px solid rgba(0, 21, 41, 0.18)",
     background: "#f0f2f5"
   },
