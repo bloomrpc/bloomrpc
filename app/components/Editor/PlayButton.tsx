@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon } from 'antd';
+import { Icon, notification } from 'antd';
 import {
   setCall,
   setIsLoading,
@@ -36,7 +36,8 @@ export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
           inputs: state.data,
           metadata: state.metadata,
           protoInfo,
-          interactive: state.interactive
+          interactive: state.interactive,
+          tlsCertificate: state.tlsCertificate,
         });
 
         dispatch(setCall(grpcRequest));
@@ -74,7 +75,22 @@ export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
           dispatch(setStreamCommitted(false));
         });
 
-        grpcRequest.send();
+        try {
+          grpcRequest.send();
+        } catch(e) {
+          console.error(e);
+          notification.error({
+            message: "Error constructing the request",
+            description: e.message,
+            duration: 5,
+            placement: "bottomRight",
+            style: {
+              width: "100%",
+              wordBreak: "break-all",
+            }
+          });
+          grpcRequest.emit(GRPCEventType.END);
+        }
       }}
     />
   )

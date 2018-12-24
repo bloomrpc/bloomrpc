@@ -2,6 +2,8 @@ import { EventEmitter } from "events";
 import { credentials, Metadata, ServiceError } from "grpc";
 import { ProtoInfo } from './protoInfo';
 import * as grpc from 'grpc';
+import * as fs from "fs";
+import { Certificate } from "./importCertificates";
 
 export interface GRPCRequestInfo {
   url: string;
@@ -9,6 +11,7 @@ export interface GRPCRequestInfo {
   metadata: string;
   inputs: string;
   interactive?: boolean;
+  tlsCertificate?: Certificate
 }
 
 export const GRPCEventType = {
@@ -23,21 +26,23 @@ export class GRPCRequest extends EventEmitter {
   metadata: string;
   inputs: string;
   interactive?: boolean;
+  tlsCertificate?: Certificate;
   _call?: any;
 
-  constructor({ url, protoInfo, metadata, inputs, interactive }: GRPCRequestInfo) {
+  constructor({ url, protoInfo, metadata, inputs, interactive, tlsCertificate }: GRPCRequestInfo) {
     super();
     this.url = url;
     this.protoInfo = protoInfo;
     this.metadata = metadata;
     this.inputs = inputs;
     this.interactive = interactive;
+    this.tlsCertificate = tlsCertificate;
     this._call = undefined;
   }
 
   send(): GRPCRequest {
     const serviceClient: any = this.protoInfo.client();
-    const client: grpc.Client = new serviceClient(this.url, credentials.createInsecure());
+    const client: grpc.Client = this.getClient(serviceClient);
     let inputs = {};
     let metadata: {[key: string]: any} = {};
 
@@ -126,6 +131,28 @@ export class GRPCRequest extends EventEmitter {
     if (this._call) {
       this._call.end();
     }
+  }
+
+  private getClient(serviceClient: any): grpc.Client {
+    let creds = credentials.createInsecure();
+    let options = {};
+
+    if (this.tlsCertificate) {
+      if (this.tlsCertificate.sslTargetHost) {
+        options = {
+          ...options,
+          'grpc.ssl_target_name_override' : this.tlsCertificate.sslTargetHost,
+          'grpc.default_authority': this.tlsCertificate.sslTargetHost,
+        }
+      }
+      creds = credentials.createSsl(
+          fs.readFileSync(this.tlsCertificate.rootCert.filePath),
+          this.tlsCertificate.privateKey && fs.readFileSync(this.tlsCertificate.rootCert.filePath),
+          this.tlsCertificate.certChain && fs.readFileSync(this.tlsCertificate.certChain.filePath),
+      );
+    }
+
+    return new serviceClient(this.url, creds, options);
   }
 
   private clientStreaming(client: any, inputs: any, md: Metadata) {

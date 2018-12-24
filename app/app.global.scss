@@ -105,3 +105,21 @@
 #metadata > .ace_gutter {
     background: #f0f2f5 !important;
 }
+
+.ant-modal-header {
+  background: #001529;
+  border-bottom: none;
+  .ant-modal-title {
+    color: #fff;
+  }
+}
+
+.ant-modal-footer {
+
+}
+
+.ant-modal-content {
+  .ant-modal-close-x {
+      color: #fff;
+  }
+}

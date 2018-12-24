@@ -10,7 +10,7 @@ export type OnProtoUpload = (protoFiles: ProtoFile[], err?: Error) => void
  * Upload protofiles
  * @param onProtoUploaded
  */
-export function uploadProtos(onProtoUploaded: OnProtoUpload) {
+export function importProtos(onProtoUploaded: OnProtoUpload) {
   remote.dialog.showOpenDialog({
     properties: ['openFile', 'multiSelections'],
     filters: [

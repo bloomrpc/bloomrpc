@@ -170,7 +170,6 @@
     "react-dom": "^v16.7.0-alpha.2",
     "react-sortablejs": "^1.4.0",
     "source-map-support": "^0.5.9",
-    "uuid": "^3.3.2",
     "yarn": "^1.12.3"
   },
   "devEngines": {

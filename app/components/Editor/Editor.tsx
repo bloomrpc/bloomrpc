@@ -6,7 +6,7 @@ import {
   setData,
   setMetadata,
   setMetadataVisibilty,
-  setProtoVisibility,
+  setProtoVisibility, setTSLCertificate,
   setUrl,
 } from './actions';
 import AceEditor from 'react-ace';
@@ -14,14 +14,15 @@ import { Response } from './Response';
 import { Metadata } from './Metadata';
 import { Controls } from './Controls';
 import { Request } from './Request';
-import { GRPCRequest, ProtoInfo } from '../../behaviour';
+import { Options } from './Options';
+import { RequestType } from './RequestType';
+import {Certificate, GRPCRequest, ProtoInfo} from '../../behaviour';
 import { getInteractive, getUrl, storeUrl } from '../../storage';
 
 import 'brace/theme/textmate';
 import 'brace/mode/json';
 import 'brace/mode/protobuf';
-import { Options } from './Options';
-import { RequestType } from './RequestType';
+
 
 export interface EditorAction {
   [key: string]: any
@@ -34,7 +35,6 @@ export interface EditorState {
   data: string
   loading: boolean
   output: string
-  call?: GRPCRequest
   metadataOpened: boolean
   protoViewVisible: boolean
   metadata: string
@@ -42,19 +42,23 @@ export interface EditorState {
   responseStreamData: string[]
   interactive: boolean
   streamCommitted: boolean
+  call?: GRPCRequest
+  tlsCertificate?: Certificate
 }
 
-export interface InitialRequest {
+export interface EditorRequest {
   url: string
-  inputs: string
+  data: string
+  inputs?: string // @deprecated
   metadata: string
   interactive: boolean
+  tlsCertificate?: Certificate
 }
 
 export interface EditorProps {
   protoInfo?: ProtoInfo
-  onRequestChange?: (url: string, inputs: string, metadata: string, interactive: boolean) => void
-  initialRequest?: InitialRequest
+  onRequestChange?: (editorRequest: EditorRequest & EditorState) => void
+  initialRequest?: EditorRequest
 }
 
 const INITIAL_STATE: EditorState = {
@@ -65,11 +69,12 @@ const INITIAL_STATE: EditorState = {
   interactive: false,
   loading: false,
   output: "",
-  call: undefined,
   metadataOpened: false,
   protoViewVisible: false,
   streamCommitted: false,
   metadata: "",
+  call: undefined,
+  tlsCertificate: undefined,
 };
 
 /**
@@ -118,6 +123,9 @@ const reducer = (state: EditorState, action: EditorAction) => {
 
     case actions.SET_STREAM_COMMITTED:
       return { ...state, streamCommitted: action.committed };
+
+    case actions.SET_SSL_CERTIFICATE:
+      return { ...state, tlsCertificate: action.certificate };
     default:
       return state
   }
@@ -144,8 +152,9 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
     }
 
     if (initialRequest) {
-      dispatch(setData(initialRequest.inputs));
+      dispatch(setData(initialRequest.inputs || initialRequest.data));
       dispatch(setMetadata(initialRequest.metadata));
+      dispatch(setTSLCertificate(initialRequest.tlsCertificate));
     }
   }, []);
 
@@ -165,7 +174,10 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               dispatch(setUrl(e.target.value));
               storeUrl(e.target.value);
-              onRequestChange && onRequestChange(e.target.value, state.data, state.metadata, state.interactive);
+              onRequestChange && onRequestChange({
+                ...state,
+                url: e.target.value,
+              });
             }}/>
         </div>
 
@@ -175,7 +187,18 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
             dispatch={dispatch}
             interactiveChecked={state.interactive}
             onInteractiveChange={(checked) => {
-              onRequestChange && onRequestChange(state.url, state.data, state.metadata, checked);
+              onRequestChange && onRequestChange({
+                ...state,
+                interactive: checked,
+              });
+            }}
+            tlsSelected={state.tlsCertificate}
+            onTLSSelected={(certificate) => {
+              dispatch(setTSLCertificate(certificate));
+              onRequestChange && onRequestChange({
+                ...state,
+                tlsCertificate: certificate,
+              });
             }}
           />
         )}
@@ -195,7 +218,10 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
           streamData={state.requestStreamData}
           onChangeData={(value) => {
             dispatch(setData(value));
-            onRequestChange && onRequestChange(state.url, value, state.metadata, state.interactive);
+            onRequestChange && onRequestChange({
+              ...state,
+              data: value,
+            });
           }}
         />
 
@@ -213,7 +239,10 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
         }}
         onMetadataChange={(value) => {
           dispatch(setMetadata(value));
-          onRequestChange && onRequestChange(state.url, state.data, value, state.interactive);
+          onRequestChange && onRequestChange({
+            ...state,
+            metadata: value,
+          });
         }}
         value={state.metadata}
         visibile={state.metadataOpened}
@@ -259,7 +288,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
       )}
     </div>
   )
-};
+}
 
 const styles = {
   tabContainer: {

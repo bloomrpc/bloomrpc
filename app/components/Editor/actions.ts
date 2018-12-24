@@ -1,4 +1,4 @@
-import { GRPCRequest } from '../../behaviour';
+import { Certificate, GRPCRequest } from '../../behaviour';
 
 const actions = {
   SET_URL: "SET_URL",
@@ -14,6 +14,7 @@ const actions = {
   SET_RESPONSE_STREAM_DATA: "SET_RESPONSE_STREAM_DATA",
   ADD_RESPONSE_STREAM_DATA: "ADD_RESPONSE_STREAM_DATA",
   SET_STREAM_COMMITTED: "SET_STREAM_COMMITTED",
+  SET_SSL_CERTIFICATE: "SET_SSL_CERTIFICATE",
 };
 
 export function setUrl(value: string) {
@@ -66,6 +67,10 @@ export function addResponseStreamData(responseData: string) {
 
 export function setStreamCommitted(committed: boolean) {
   return { type: actions.SET_STREAM_COMMITTED, committed };
+}
+
+export function setTSLCertificate(certificate?: Certificate) {
+  return { type: actions.SET_SSL_CERTIFICATE, certificate }
 }
 
 export { actions };

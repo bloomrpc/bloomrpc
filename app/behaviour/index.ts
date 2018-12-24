@@ -1,4 +1,5 @@
 export * from './protobuf';
 export * from './sendRequest';
-export * from './uploadProtos';
+export * from './importProtos';
 export * from './protoInfo';
+export * from './importCertificates';
