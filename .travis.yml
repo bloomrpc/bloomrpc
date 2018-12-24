@@ -15,6 +15,7 @@ matrix:
   include:
   - os: linux
   - os: osx
+  - os: windows
 
 cache:
   directories:
@@ -30,6 +31,7 @@ install:
 script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]]; then npm run package-linux; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]]; then npm run package; fi
+- if [[ "$TRAVIS_OS_NAME" == "windows" && "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]]; then npm run package-win; fi
 
 before_cache:
 - rm -rf $HOME/.cache/electron-builder/wine
