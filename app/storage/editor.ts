@@ -2,7 +2,8 @@
 import * as Store from 'electron-store';
 import { ProtoFile } from '../behaviour';
 import { EditorTabs } from '../components/BloomRPC';
-import { InitialRequest } from '../components/Editor';
+import { EditorRequest } from '../components/Editor';
+import { EditorTabRequest } from "../components/TabList";
 
 const EditorStore = new Store({
   name: "editor",
@@ -85,29 +86,33 @@ export function getTabs(): EditorTabsStorage | void {
   return EditorStore.get(KEYS.TABS);
 }
 
-interface TabRequestInfo extends InitialRequest {
+interface TabRequestInfo extends EditorRequest {
   id: string
 }
 
 /**
  * Store editor request info
- * @param tabKey
+ * @param id
  * @param url
+ * @param data
  * @param inputs
  * @param metadata
+ * @param interactive
+ * @param tlsCertificate
  */
-export function storeRequestInfo(tabKey: string, url: string, inputs: string, metadata: string, interactive: boolean) {
+export function storeRequestInfo({id, url, data, inputs, metadata, interactive, tlsCertificate}: EditorTabRequest) {
   const request = {
-    id: tabKey,
+    id,
     url,
-    inputs,
+    data: inputs || data,
     metadata,
     interactive,
+    tlsCertificate,
     createdAt: new Date().toISOString(),
   };
 
   const requestList = EditorStore.get('requests', [])
-    .filter((requestItem: TabRequestInfo) => requestItem.id !== tabKey);
+    .filter((requestItem: TabRequestInfo) => requestItem.id !== id);
 
   EditorStore.set(KEYS.REQUESTS, [...requestList, request]);
 }
@@ -116,7 +121,7 @@ export function storeRequestInfo(tabKey: string, url: string, inputs: string, me
  * Get editor request info
  * @param tabKey
  */
-export function getRequestInfo(tabKey: string): InitialRequest | undefined {
+export function getRequestInfo(tabKey: string): EditorRequest | undefined {
   const requests = EditorStore.get(KEYS.REQUESTS, []);
   return requests.find((request: TabRequestInfo) => request.id === tabKey);
 }

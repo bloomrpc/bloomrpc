@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Icon, Tooltip, Tree } from 'antd';
 import { Badge } from '../Badge/Badge';
-import { OnProtoUpload, ProtoFile, ProtoService, uploadProtos } from '../../behaviour';
+import { OnProtoUpload, ProtoFile, ProtoService, importProtos } from '../../behaviour';
 
 interface SidebarProps {
   protos: ProtoFile[]
@@ -21,7 +21,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
         <Tooltip placement="bottom" title="Import protos">
           <Icon
             onClick={() => {
-              uploadProtos(onProtoUpload)
+              importProtos(onProtoUpload)
             }}
             type="plus-circle"
             theme="filled"

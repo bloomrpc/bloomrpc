@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tabs } from 'antd';
-import { Editor, InitialRequest } from '../Editor';
+import { Editor, EditorRequest } from '../Editor';
 import { ProtoInfo, ProtoService } from '../../behaviour';
 
 interface TabListProps {
@@ -8,14 +8,18 @@ interface TabListProps {
   activeKey?: string
   onChange?: (activeKey: string) => void
   onDelete?: (activeKey: string | React.MouseEvent<HTMLElement>) => void
-  onEditorRequestChange?: (tabId: string, url: string, inputs: string, metadata: string, interactive: boolean) => void
+  onEditorRequestChange?: (requestInfo: EditorTabRequest) => void
 }
 
 export interface TabData {
   tabKey: string
   methodName: string
   service: ProtoService
-  initialRequest?: InitialRequest,
+  initialRequest?: EditorRequest,
+}
+
+export interface EditorTabRequest extends EditorRequest {
+  id: string
 }
 
 export function TabList({ tabs, activeKey, onChange, onDelete, onEditorRequestChange }: TabListProps) {
@@ -60,8 +64,11 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onEditorRequestCh
               protoInfo={new ProtoInfo(tab.service, tab.methodName)}
               key={tab.tabKey}
               initialRequest={tab.initialRequest}
-              onRequestChange={(url, inputs, metadata, interactive) => {
-                onEditorRequestChange && onEditorRequestChange(tab.tabKey, url, inputs, metadata, interactive)
+              onRequestChange={(editorRequest: EditorRequest) => {
+                onEditorRequestChange && onEditorRequestChange({
+                  id: tab.tabKey,
+                  ...editorRequest
+                })
               }}
             />
           </Tabs.TabPane>
