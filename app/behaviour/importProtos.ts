@@ -9,8 +9,9 @@ export type OnProtoUpload = (protoFiles: ProtoFile[], err?: Error) => void
 /**
  * Upload protofiles
  * @param onProtoUploaded
+ * @param importPaths
  */
-export function importProtos(onProtoUploaded: OnProtoUpload) {
+export function importProtos(onProtoUploaded: OnProtoUpload, importPaths?: string[]) {
   remote.dialog.showOpenDialog({
     properties: ['openFile', 'multiSelections'],
     filters: [
@@ -20,19 +21,19 @@ export function importProtos(onProtoUploaded: OnProtoUpload) {
     if (!filePaths) {
       return;
     }
-    await loadProtos(filePaths, onProtoUploaded);
+    await loadProtos(filePaths, importPaths, onProtoUploaded);
   });
 }
 
 /**
  * Load protocol buffer files
  * @param filePaths
+ * @param importPaths
  * @param onProtoUploaded
  */
-export async function loadProtos(filePaths: string[], onProtoUploaded?: OnProtoUpload): Promise<ProtoFile[]> {
+export async function loadProtos(filePaths: string[], importPaths?: string[], onProtoUploaded?: OnProtoUpload): Promise<ProtoFile[]> {
   try {
-
-    const protos = await Promise.all(filePaths.map(fromFileName));
+    const protos = await Promise.all(filePaths.map((fileName) => fromFileName(fileName, importPaths)));
 
     const protoList = protos.reduce((list: ProtoFile[], proto: Proto) => {
 
@@ -82,4 +83,19 @@ function parseServices(proto: Proto) {
   });
 
   return services;
+}
+
+export function importResolvePath(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    remote.dialog.showOpenDialog({
+      properties: ['openDirectory'],
+      filters: []
+    }, (filePaths) => {
+      if (!filePaths) {
+        return reject("No folder selected");
+      }
+      resolve(filePaths[0]);
+    });
+  })
+
 }

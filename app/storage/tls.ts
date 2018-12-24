@@ -19,3 +19,7 @@ export function storeTLSList(certs: Certificate[]) {
 export function getTLSList() {
   return TLSStore.get(TLS_KEYS.CERTIFICATES, []);
 }
+
+export function clearTLS() {
+  return TLSStore.clear();
+}

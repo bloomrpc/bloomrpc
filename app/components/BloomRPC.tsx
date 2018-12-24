@@ -5,14 +5,15 @@ import { Sidebar } from './Sidebar';
 import { TabData, TabList } from './TabList';
 import { loadProtos, ProtoFile, ProtoService } from '../behaviour';
 import {
-  deleteRequestInfo,
   EditorTabsStorage,
+  deleteRequestInfo,
+  getImportPaths,
   getProtos,
   getRequestInfo,
   getTabs,
   storeProtos,
   storeRequestInfo,
-  storeTabs
+  storeTabs,
 } from '../storage';
 
 export interface EditorTabs {
@@ -48,11 +49,11 @@ export function BloomRPC() {
       <Layout>
         <Layout.Sider style={styles.sider} width={250}>
           <Sidebar
+            protos={protos}
+            onProtoUpload={handleProtoUpload(setProtos, protos)}
             onReload={() => {
               hydrateEditor(setProtos, setEditorTabs);
             }}
-            protos={protos}
-            onProtoUpload={handleProtoUpload(setProtos, protos)}
             onMethodSelected={handleMethodSelected(editorTabs, setTabs)}
             onDeleteAll={() => {
               setProtos([]);
@@ -116,9 +117,11 @@ export function BloomRPC() {
 async function hydrateEditor(setProtos: React.Dispatch<ProtoFile[]>, setEditorTabs: React.Dispatch<EditorTabs>) {
   const hydration = [];
   const savedProtos = getProtos();
+  const importPaths = getImportPaths();
+
   if (savedProtos) {
     hydration.push(
-      loadProtos(savedProtos, handleProtoUpload(setProtos, []))
+      loadProtos(savedProtos, importPaths, handleProtoUpload(setProtos, []))
         .then(() => true)
     );
 
@@ -126,6 +129,7 @@ async function hydrateEditor(setProtos: React.Dispatch<ProtoFile[]>, setEditorTa
     if (savedEditorTabs) {
       hydration.push(
         loadTabs(savedEditorTabs)
+          .catch(() => setEditorTabs({activeKey: "0", tabs: []}))
           .then(setEditorTabs)
           .then(() => true)
       );
@@ -145,9 +149,11 @@ async function loadTabs(editorTabs: EditorTabsStorage): Promise<EditorTabs> {
     tabs: [],
   };
 
+  const importPaths = getImportPaths();
+
   const protos = await loadProtos(editorTabs.tabs.map((tab) => {
     return tab.protoPath;
-  }));
+  }), importPaths);
 
 
   storedEditTabs.tabs = editorTabs.tabs.map((tab) => {

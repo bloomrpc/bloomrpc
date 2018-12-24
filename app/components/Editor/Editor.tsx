@@ -6,7 +6,8 @@ import {
   setData,
   setMetadata,
   setMetadataVisibilty,
-  setProtoVisibility, setTSLCertificate,
+  setProtoVisibility,
+  setTSLCertificate,
   setUrl,
 } from './actions';
 import AceEditor from 'react-ace';
@@ -16,17 +17,15 @@ import { Controls } from './Controls';
 import { Request } from './Request';
 import { Options } from './Options';
 import { RequestType } from './RequestType';
-import {Certificate, GRPCRequest, ProtoInfo} from '../../behaviour';
+import { Certificate, GRPCRequest, ProtoInfo } from '../../behaviour';
 import { getInteractive, getUrl, storeUrl } from '../../storage';
 
 import 'brace/theme/textmate';
 import 'brace/mode/json';
 import 'brace/mode/protobuf';
 
-
 export interface EditorAction {
   [key: string]: any
-
   type: string
 }
 

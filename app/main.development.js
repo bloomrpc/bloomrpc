@@ -1,3 +1,4 @@
+
 const { app, BrowserWindow, Menu, shell } = require('electron');
 const path = require('path');
 
@@ -132,6 +133,13 @@ app.on('ready', () =>
         label: 'Select All',
         accelerator: 'Command+A',
         selector: 'selectAll:'
+      },
+      {
+          label: 'Clear Storage',
+          accelerator: 'Ctrl+Command+D',
+          click() {
+              require('./storage').clearAll();
+          }
       }]
     }, {
       label: 'View',
