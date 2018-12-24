@@ -60,7 +60,7 @@ export function importPrivateKey(): Promise<CertFile> {
 export function importCertChain(): Promise<CertFile> {
     return new Promise((resolve, reject) => {
         remote.dialog.showOpenDialog({
-            properties: ['openFile', 'multiSelections'],
+            properties: ['openFile'],
             filters: [
                 { name: 'All', extensions: ['*'] },
             ]
