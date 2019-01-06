@@ -64,7 +64,7 @@ We are welcome to any kind of feedback and contributions.
 
 Run this 2 commands in two different terminals
 ```
-npm run server-hot
+npm run hot-server
 npm run start-hot
 ```
 

@@ -934,10 +934,10 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bloomrpc-mock@^0.2.4-alpha-1:
-  version "0.2.4-alpha-1"
-  resolved "https://registry.yarnpkg.com/bloomrpc-mock/-/bloomrpc-mock-0.2.4-alpha-1.tgz#1835c60a6af6be0d7777a9e13fb73e1b0507dba5"
-  integrity sha512-GSaahr9C4Wf79GmpDVvEm57M+RX7J39gJbw/S1uMtLfcFJded62x6ddq7XsUodCdtUDtFBddWo++OfgUYbCCEw==
+bloomrpc-mock@^0.2.5-alpha-2:
+  version "0.2.5-alpha-2"
+  resolved "https://registry.yarnpkg.com/bloomrpc-mock/-/bloomrpc-mock-0.2.5-alpha-2.tgz#b1db68426d3445e5e4ec5c052e1bce6f374e08e4"
+  integrity sha512-oNftUw70Jiql0mDWQoSJG2CYooC40gA9TmDtTs53Be0WjIgNY24VBnHjdOIL8u97lRj9rGGtQEbBlOnciLBQvQ==
   dependencies:
     "@grpc/proto-loader" "^0.3.0"
     "@oclif/command" "^1"
