@@ -4,6 +4,10 @@ import * as path from "path";
 import { ProtoFile, ProtoService } from './protobuf';
 import { Service } from 'protobufjs';
 
+const commonProtosPath = [
+  path.join(process.cwd(), "node_modules/bloomrpc-mock/common"),
+];
+
 export type OnProtoUpload = (protoFiles: ProtoFile[], err?: Error) => void
 
 /**
@@ -33,7 +37,12 @@ export function importProtos(onProtoUploaded: OnProtoUpload, importPaths?: strin
  */
 export async function loadProtos(filePaths: string[], importPaths?: string[], onProtoUploaded?: OnProtoUpload): Promise<ProtoFile[]> {
   try {
-    const protos = await Promise.all(filePaths.map((fileName) => fromFileName(fileName, importPaths)));
+    const protos = await Promise.all(filePaths.map((fileName) =>
+      fromFileName(fileName, [
+        ...(importPaths ? importPaths : []),
+        ...commonProtosPath,
+      ])
+    ));
 
     const protoList = protos.reduce((list: ProtoFile[], proto: Proto) => {
 
