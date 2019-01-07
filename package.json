@@ -1,7 +1,7 @@
 {
   "name": "bloomrpc",
   "productName": "BloomRPC",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "GRPC GUI client",
   "main": "main.js",
   "scripts": {
