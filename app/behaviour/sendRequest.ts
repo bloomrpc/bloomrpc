@@ -229,7 +229,7 @@ export class GRPCRequest extends EventEmitter {
       errorObject = {
         code: parsedError.getCode(),
         message: parsedError.getMessage(),
-        details: parsedError.getDetailsList()[0].toObject()
+        details: parsedError.getDetailsList().map((details: any) => details.toObject())
       };
     } catch (e) {
       errorObject = { message: serviceError.message, code: serviceError.code };
