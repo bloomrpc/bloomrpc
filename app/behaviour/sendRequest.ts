@@ -4,6 +4,9 @@ import { ProtoInfo } from './protoInfo';
 import * as grpc from 'grpc';
 import * as fs from "fs";
 import { Certificate } from "./importCertificates";
+import { ResponseError } from './responseError';
+
+const grpcStatus = require("grpc-error-status");
 
 export interface GRPCRequestInfo {
   url: string;
@@ -80,9 +83,9 @@ export class GRPCRequest extends EventEmitter {
         this.emit(GRPCEventType.DATA, data, true);
       });
 
-      call.on('error', (err: { [key: string]: any }) => {
+      call.on('error', (err: ServiceError) => {
         if (err && err.code !== 1) {
-          this.emit(GRPCEventType.ERROR, err);
+          this.emitError(err);
 
           if (err.code === 2 || err.code === 14) { // Stream Removed.
             this.emit(GRPCEventType.END, call);
@@ -184,7 +187,7 @@ export class GRPCRequest extends EventEmitter {
       if (err.code === 1) {
         return;
       } else {
-        this.emit(GRPCEventType.ERROR, err);
+        this.emitError(err);
       }
     } else {
       this.emit(GRPCEventType.DATA, response);
@@ -217,5 +220,20 @@ export class GRPCRequest extends EventEmitter {
     }
 
     return { inputs, metadata };
+  }
+
+  private emitError(serviceError: ServiceError) {
+    const parsedError = grpcStatus.parse(serviceError);
+    let errorObject: ResponseError;
+    try {
+      errorObject = {
+        code: parsedError.getCode(),
+        message: parsedError.getMessage(),
+        details: parsedError.getDetailsList()[0].toObject()
+      };
+    } catch (e) {
+      errorObject = { message: serviceError.message, code: serviceError.code };
+    }
+    this.emit(GRPCEventType.ERROR, errorObject)
   }
 }

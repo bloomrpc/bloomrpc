@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Icon, notification } from 'antd';
+import * as React from "react";
+import { Icon, notification } from "antd";
 import {
   setCall,
   setIsLoading,
@@ -7,15 +7,15 @@ import {
   setResponseStreamData,
   setRequestStreamData,
   addResponseStreamData, setStreamCommitted
-} from './actions';
-import { ControlsStateProps } from './Controls';
-import { GRPCEventType, GRPCRequest } from '../../behaviour';
+} from "./actions";
+import { ControlsStateProps } from "./Controls";
+import { GRPCEventType, GRPCRequest, ResponseError } from '../../behaviour';
 
-export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
+export function PlayButton({dispatch, state, protoInfo}: ControlsStateProps) {
   return (
     <Icon
       type={state.loading ? "pause-circle" : "play-circle"}
-      theme="filled" style={{ ...styles.playIcon, ...(state.loading ? { color: "#ea5d5d" } : {}) }}
+      theme="filled" style={{...styles.playIcon, ...(state.loading ? {color: "#ea5d5d"} : {})}}
       onClick={() => {
         // Do nothing if not set
         if (!protoInfo) {
@@ -53,10 +53,8 @@ export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
 
         dispatch(setResponseStreamData([]));
 
-        grpcRequest.on(GRPCEventType.ERROR, (e: Error) => {
-          dispatch(setOutput(JSON.stringify({
-            error: e.message,
-          }, null, 2)));
+        grpcRequest.on(GRPCEventType.ERROR, (responseError: ResponseError) => {
+          dispatch(setOutput(JSON.stringify(responseError, null, 2)));
         });
 
         grpcRequest.on(GRPCEventType.DATA, (data: object, stream?: boolean) => {
@@ -77,7 +75,7 @@ export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
 
         try {
           grpcRequest.send();
-        } catch(e) {
+        } catch (e) {
           console.error(e);
           notification.error({
             message: "Error constructing the request",
