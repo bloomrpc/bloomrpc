@@ -21,6 +21,9 @@
     "package-win": "npm run build && build --win --x64",
     "package-linux": "npm run build && build --linux",
     "package-all": "npm run build && build -mwl",
+    "proto:merge-protos": "pbjs -t proto3 app/proto/code.proto app/proto/status.proto app/proto/error_details.proto > app/proto/all.proto",
+    "proto:build-js-ts": "pbjs -t static-module -w commonjs -o app/proto/all.js app/proto/all.proto && pbts -o app/proto/all.d.ts app/proto/all.js",
+    "proto": "npm run proto:merge-protos && npm run proto:build-js-ts",
     "cleanup": "mop -v"
   },
   "jest": {
@@ -122,7 +125,7 @@
     "css-loader": "^0.28.4",
     "css-modules-require-hook": "^4.0.6",
     "devtron": "^1.4.0",
-    "electron": "^1.8.8",
+    "electron": "1.8.8",
     "electron-builder": "^19.8.0",
     "electron-builder-http": "^19.15.0",
     "electron-devtools-installer": "^2.0.1",
@@ -161,7 +164,6 @@
     "electron-debug": "^1.1.0",
     "electron-store": "^2.0.0",
     "grpc": "^1.16.1",
-    "grpc-error-status": "^1.0.1",
     "lodash.get": "^4.4.2",
     "mousetrap": "^1.6.2",
     "protobufjs": "^6.8.8",

@@ -5,8 +5,7 @@ import * as grpc from 'grpc';
 import * as fs from "fs";
 import { Certificate } from "./importCertificates";
 import { ResponseError } from './responseError';
-
-const grpcStatus = require("grpc-error-status");
+import { GrpcErrorParser } from './grpcErrorParser';
 
 export interface GRPCRequestInfo {
   url: string;
@@ -223,14 +222,9 @@ export class GRPCRequest extends EventEmitter {
   }
 
   private emitError(serviceError: ServiceError) {
-    const parsedError = grpcStatus.parse(serviceError);
     let errorObject: ResponseError;
     try {
-      errorObject = {
-        code: parsedError.getCode(),
-        message: parsedError.getMessage(),
-        details: parsedError.getDetailsList().map((details: any) => details.toObject())
-      };
+      errorObject = GrpcErrorParser.parse(serviceError);
     } catch (e) {
       errorObject = { message: serviceError.message, code: serviceError.code };
     }
