@@ -21,9 +21,6 @@
     "package-win": "npm run build && build --win --x64",
     "package-linux": "npm run build && build --linux",
     "package-all": "npm run build && build -mwl",
-    "proto:merge-protos": "pbjs -t proto3 app/proto/code.proto app/proto/status.proto app/proto/error_details.proto > app/proto/all.proto",
-    "proto:build-js-ts": "pbjs -t static-module -w commonjs -o app/proto/all.js app/proto/all.proto && pbts -o app/proto/all.d.ts app/proto/all.js",
-    "proto": "npm run proto:merge-protos && npm run proto:build-js-ts",
     "cleanup": "mop -v"
   },
   "jest": {
