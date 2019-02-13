@@ -4,8 +4,7 @@ import { ProtoInfo } from './protoInfo';
 import * as grpc from 'grpc';
 import * as fs from "fs";
 import { Certificate } from "./importCertificates";
-import { ResponseError } from './responseError';
-import { GrpcErrorParser } from './grpcErrorParser';
+import { parse as parseError } from './grpcErrorParser';
 
 export interface GRPCRequestInfo {
   url: string;
@@ -222,12 +221,11 @@ export class GRPCRequest extends EventEmitter {
   }
 
   private emitError(serviceError: ServiceError) {
-    let errorObject: ResponseError;
-    try {
-      errorObject = GrpcErrorParser.parse(serviceError);
-    } catch (e) {
-      errorObject = { message: serviceError.message, code: serviceError.code };
-    }
-    this.emit(GRPCEventType.ERROR, errorObject)
+    parseError(serviceError).then((errorObject) => {
+      this.emit(GRPCEventType.ERROR, errorObject)
+    }).catch((e) => {
+      console.warn(e);
+      this.emit(GRPCEventType.ERROR, { message: serviceError.message, code: serviceError.code });
+    });
   }
 }
