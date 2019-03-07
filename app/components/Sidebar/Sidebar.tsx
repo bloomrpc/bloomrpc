@@ -139,7 +139,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
                     <Tree.TreeNode
                       icon={<Badge type="method"> M </Badge>}
                       title={method}
-                      key={`${proto.fileName}/method:${method}/service:${service}`}
+                      key={`${proto.proto.filePath}/method:${method}/service:${service}`}
                     >
                     </Tree.TreeNode>
                   ))}
