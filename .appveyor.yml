@@ -1,0 +1,29 @@
+branches:
+  only:
+    - master
+
+environment:
+  ELECTRON_CACHE: "%LOCALAPPDATA%\\cache\\electron"
+  ELECTRON_BUILDER_CACHE: "%LOCALAPPDATA%\\cache\\electron-builder"
+
+install:
+  - yarn install && .\\node_modules\\.bin\\electron-rebuild
+
+test_script:
+  - node --version
+  - npm --version
+  - yarn --version
+
+cache:
+ - node_modules
+ - "%LOCALAPPDATA%\\Yarn"
+ - "%LOCALAPPDATA%\\.npm\\_prebuilds"
+ - "%LOCALAPPDATA%\\cache\\electron"
+ - "%LOCALAPPDATA%\\cache\\electron-builder"
+
+build_script:
+ - npm run package-win
+
+artifacts:
+  - path: "release\\*"
+    name: BloomRPC
