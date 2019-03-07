@@ -937,7 +937,6 @@ block-stream@*:
 bloomrpc-mock@^0.2.5-alpha-2:
   version "0.2.5-alpha-2"
   resolved "https://registry.yarnpkg.com/bloomrpc-mock/-/bloomrpc-mock-0.2.5-alpha-2.tgz#b1db68426d3445e5e4ec5c052e1bce6f374e08e4"
-  integrity sha512-oNftUw70Jiql0mDWQoSJG2CYooC40gA9TmDtTs53Be0WjIgNY24VBnHjdOIL8u97lRj9rGGtQEbBlOnciLBQvQ==
   dependencies:
     "@grpc/proto-loader" "^0.3.0"
     "@oclif/command" "^1"
@@ -2398,6 +2397,14 @@ electron-devtools-installer@^2.0.1:
     rimraf "^2.5.2"
     semver "^5.3.0"
 
+electron-dl@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/electron-dl/-/electron-dl-1.13.0.tgz#410981363fcee6909860acfd2b376f31ce0faa59"
+  dependencies:
+    ext-name "^5.0.0"
+    pupa "^1.0.0"
+    unused-filename "^1.0.0"
+
 electron-download-tf@4.3.4:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/electron-download-tf/-/electron-download-tf-4.3.4.tgz#b03740b2885aa2ad3f8784fae74df427f66d5165"
@@ -2507,7 +2514,6 @@ electron-to-chromium@^1.2.7:
 electron@1.8.8:
   version "1.8.8"
   resolved "https://registry.yarnpkg.com/electron/-/electron-1.8.8.tgz#a90cddb075291f49576993e6f5c8bb4439301cae"
-  integrity sha512-1f9zJehcTTGjrkb06o6ds+gsRq6SYhZJyxOk6zIWjRH8hVy03y/RzUDELzNas71f5vcvXmfGVvyjeEsadDI8tg==
   dependencies:
     "@types/node" "^8.0.24"
     electron-download "^3.0.1"
@@ -2875,6 +2881,19 @@ express@^4.14.0:
     type-is "~1.6.16"
     utils-merge "1.0.1"
     vary "~1.1.2"
+
+ext-list@^2.0.0:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/ext-list/-/ext-list-2.2.2.tgz#0b98e64ed82f5acf0f2931babf69212ef52ddd37"
+  dependencies:
+    mime-db "^1.28.0"
+
+ext-name@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ext-name/-/ext-name-5.0.0.tgz#70781981d183ee15d13993c8822045c506c8f0a6"
+  dependencies:
+    ext-list "^2.0.0"
+    sort-keys-length "^1.0.0"
 
 extend-shallow@^2.0.1:
   version "2.0.1"
@@ -3377,7 +3396,6 @@ grpc@^1.16.1:
 grpc@^1.17.0:
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/grpc/-/grpc-1.17.0.tgz#d7971dd39bd4eec90c69a048f7727795ab504876"
-  integrity sha512-5zb5ilwHlsiWfE2Abq/IN5SkHQ2zi4QF/u9Gewcw5DO3y+hGTtzZUiMK52MX3YZHAIRjqxDcO3fx0jLhPjT8Zw==
   dependencies:
     lodash.camelcase "^4.3.0"
     lodash.clone "^4.5.0"
@@ -4695,7 +4713,6 @@ lodash.camelcase@^4.3.0:
 lodash.clone@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clone/-/lodash.clone-4.5.0.tgz#195870450f5a13192478df4bc3d23d2dea1907b6"
-  integrity sha1-GVhwRQ9aExkkeN9Lw9I9LeoZB7Y=
 
 lodash.clonedeep@^4.3.2:
   version "4.5.0"
@@ -4974,6 +4991,10 @@ miller-rabin@^4.0.0:
     bn.js "^4.0.0"
     brorand "^1.0.1"
 
+mime-db@^1.28.0:
+  version "1.38.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.38.0.tgz#1a2aab16da9eb167b49c6e4df2d9c68d63d8e2ad"
+
 mime-db@~1.37.0:
   version "1.37.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.37.0.tgz#0b6a0ce6fdbe9576e25f1f2d2fde8830dc0ad0d8"
@@ -5085,6 +5106,10 @@ mksnapshot@^0.3.0:
     decompress-zip "0.3.0"
     fs-extra "0.26.7"
     request "^2.79.0"
+
+modify-filename@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/modify-filename/-/modify-filename-1.1.0.tgz#9a2dec83806fbb2d975f22beec859ca26b393aa1"
 
 moment@2.x, moment@^2.22.2:
   version "2.22.2"
@@ -6221,6 +6246,10 @@ punycode@^1.2.4, punycode@^1.4.1:
 punycode@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
+
+pupa@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pupa/-/pupa-1.0.0.tgz#9a9568a5af7e657b8462a6e9d5328743560ceff6"
 
 q@^1.1.2, q@~1.5.0:
   version "1.5.1"
@@ -7421,6 +7450,12 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
+sort-keys-length@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/sort-keys-length/-/sort-keys-length-1.0.1.tgz#9cb6f4f4e9e48155a6aa0671edd336ff1479a188"
+  dependencies:
+    sort-keys "^1.0.0"
+
 sort-keys@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-1.1.2.tgz#441b6d4d346798f1b4e49e8920adfba0e543f9ad"
@@ -8147,6 +8182,13 @@ unset-value@^1.0.0:
   dependencies:
     has-value "^0.3.1"
     isobject "^3.0.0"
+
+unused-filename@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/unused-filename/-/unused-filename-1.0.0.tgz#d340880f71ae2115ebaa1325bef05cc6684469c6"
+  dependencies:
+    modify-filename "^1.1.0"
+    path-exists "^3.0.0"
 
 unzip-response@^2.0.1:
   version "2.0.1"

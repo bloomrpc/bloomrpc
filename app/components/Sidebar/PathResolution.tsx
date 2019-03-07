@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon, Input, Table, Tooltip } from "antd";
 import { useState } from "react";
 import { importResolvePath } from "../../behaviour";
-import { storeImportPaths } from "../../storage";
+import { storeImportPaths } from "../../storage/importPaths";
 
 interface PathResolutionProps {
   onImportsChange?: (paths: string[]) => void

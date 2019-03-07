@@ -160,6 +160,7 @@
     "antd": "^3.10.8",
     "bloomrpc-mock": "^0.2.5-alpha-2",
     "electron-debug": "^1.1.0",
+    "electron-dl": "^1.13.0",
     "electron-store": "^2.0.0",
     "grpc": "^1.16.1",
     "lodash.get": "^4.4.2",

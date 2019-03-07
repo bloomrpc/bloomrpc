@@ -14,6 +14,7 @@ import {
   storeProtos,
   storeRequestInfo,
   storeTabs,
+  getProtoUrls,
 } from '../storage';
 
 export interface EditorTabs {
@@ -118,6 +119,8 @@ async function hydrateEditor(setProtos: React.Dispatch<ProtoFile[]>, setEditorTa
   const hydration = [];
   const savedProtos = getProtos();
   const importPaths = getImportPaths();
+  const protoUrls = getProtoUrls();
+  console.log("Hydrate URLs: "+protoUrls);
 
   if (savedProtos) {
     hydration.push(
@@ -150,7 +153,8 @@ async function loadTabs(editorTabs: EditorTabsStorage): Promise<EditorTabs> {
   };
 
   const importPaths = getImportPaths();
-
+  const protoUrls = getProtoUrls();
+  console.log("URLs: "+protoUrls);
   const protos = await loadProtos(editorTabs.tabs.map((tab) => {
     return tab.protoPath;
   }), importPaths);

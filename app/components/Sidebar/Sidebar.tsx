@@ -2,9 +2,10 @@ import * as React from 'react';
 import { useEffect, useState } from "react";
 import { Button, Icon, Modal, Tooltip, Tree } from 'antd';
 import { Badge } from '../Badge/Badge';
-import { OnProtoUpload, ProtoFile, ProtoService, importProtos } from '../../behaviour';
+import {OnProtoUpload, ProtoFile, ProtoService, importProtoFiles, importProtoUrl} from '../../behaviour';
 import { PathResolution } from "./PathResolution";
-import { getImportPaths } from "../../storage";
+import { getImportPaths, getProtoUrls } from "../../storage";
+import { UrlResolution } from "./UrlResolution";
 
 interface SidebarProps {
   protos: ProtoFile[]
@@ -18,26 +19,37 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
 
   const [importPaths, setImportPaths] = useState<string[]>([""]);
   const [importPathVisible, setImportPathsVisible] = useState(false);
+  const [loadProtoUrlVisible, setLoadProtoUrlVisible] = useState(false);
+  const [protoUrls, setProtoUrls] = useState<string[]>([""]);
 
   useEffect(() => {
     setImportPaths(getImportPaths());
+    setProtoUrls(getProtoUrls());
   }, []);
 
   return (
     <>
       <div style={styles.sidebarTitleContainer}>
         <h3 style={styles.sidebarTitle}>Protos</h3>
-
-        <Tooltip placement="bottom" title="Import protos">
-          <Icon
-            onClick={() => {
-              importProtos(onProtoUpload, importPaths)
-            }}
-            type="plus-circle"
-            theme="filled"
-            style={styles.icon}
-          />
-        </Tooltip>
+        <div style={styles.sidebarActionContainer}>
+          <Tooltip placement="bottom" title="Import protos from file">
+            <Icon
+              onClick={() => {
+                importProtoFiles(onProtoUpload, importPaths)
+              }}
+              type="plus-circle"
+              theme="filled"
+              style={styles.icon}
+            />
+          </Tooltip>
+          <Tooltip placement="bottom" title="Import protos from URL">
+            <Icon
+                onClick={() => setLoadProtoUrlVisible(true)}
+                type="global"
+                style={styles.icon}
+            />
+          </Tooltip>
+        </div>
       </div>
       <div style={styles.optionsContainer}>
         <div style={{width: "50%"}}>
@@ -76,6 +88,31 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
             <PathResolution
                 onImportsChange={setImportPaths}
                 importPaths={importPaths}
+            />
+          </Modal>
+
+          <Modal
+              title={(
+                  <div>
+                    <Icon type="global" />
+                    <span style={{marginLeft: 10}}> Import protos from URL </span>
+                  </div>
+              )}
+              visible={loadProtoUrlVisible}
+              onCancel={() => setLoadProtoUrlVisible(false)}
+              onOk={() => setLoadProtoUrlVisible(false)}
+              bodyStyle={{padding: 0}}
+              width={750}
+              footer={[
+                <Button key="back" onClick={() => {
+                  setLoadProtoUrlVisible(false);
+                  importProtoUrl(onProtoUpload, importPaths)
+                }}>Close</Button>
+              ]}
+          >
+            <UrlResolution
+                onProtoUrlsChange={setProtoUrls}
+                protoUrls={protoUrls}
             />
           </Modal>
         </div>
@@ -158,6 +195,10 @@ const styles = {
     paddingLeft: 20,
     borderBottom: "1px solid #eee",
     background: "#001529"
+  },
+  sidebarActionContainer: {
+    display: "flex",
+    justifyContent: "space-between",
   },
   sidebarTitle: {
     color: "#fff",

@@ -5,6 +5,7 @@ import {clearTLS} from './tls';
 
 export * from './editor';
 export * from './importPaths';
+export * from './importUrls';
 export * from './tls';
 
 
