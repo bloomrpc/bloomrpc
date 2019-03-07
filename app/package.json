@@ -11,7 +11,7 @@
   },
   "scripts": {
     "electron-rebuild": "node ../internals/scripts/ElectronRebuild.js",
-    "postinstall": "yarn electron-rebuild --version=4.0.4"
+    "postinstall": "yarn electron-rebuild --version=4.0.3"
   },
   "externals": ["grpc"],
   "license": "LGPL3",

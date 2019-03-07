@@ -1,7 +1,7 @@
 {
   "name": "bloomrpc",
   "productName": "BloomRPC",
-  "version": "1.2.",
+  "version": "1.2.1",
   "description": "GRPC GUI client",
   "main": "main.js",
   "scripts": {
@@ -9,13 +9,12 @@
     "build-main": "cross-env NODE_ENV=production node --trace-warnings ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
     "build-renderer": "cross-env NODE_ENV=production node --trace-warnings ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
     "dev": "cross-env START_HOT=1 node ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev",
-    "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --version 4.0.4 --module-dir app",
+    "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --version 4.0.3 --module-dir app",
     "package": "yarn build && electron-builder build --publish never",
     "package-all": "yarn build && electron-builder build -mwl",
     "package-linux": "yarn build && electron-builder build --linux",
     "package-win": "yarn build && electron-builder build --win --x64",
     "postinstall": "node internals/scripts/CheckNativeDep.js && electron-builder install-app-deps package.json",
-    "precommit": "lint-staged",
     "prestart": "yarn build",
     "start": "cross-env NODE_ENV=production electron ./app/",
     "start-server-dev": "cross-env NODE_ENV=development node --trace-warnings ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
@@ -25,7 +24,6 @@
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./internals/scripts/RunTests.js e2e",
     "test-watch": "yarn test --watch"
   },
-  "browserslist": "electron 4.0.4",
   "lint-staged": {
     "*.(js|jsx)": [
       "prettier --ignore-path .eslintignore --single-quote --write",
@@ -70,7 +68,8 @@
     "linux": {
       "target": [
         "deb",
-        "AppImage"
+        "AppImage",
+        "pacman"
       ],
       "category": "Development"
     },
@@ -151,7 +150,7 @@
     "css-loader": "^1.0.0",
     "detect-port": "^1.2.3",
     "devtron": "^1.4.0",
-    "electron": "^4.0.4",
+    "electron": "4.0.3",
     "electron-builder": "^20.38.5",
     "electron-debug": "^2.1.0",
     "electron-devtools-installer": "^2.2.4",
