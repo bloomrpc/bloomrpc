@@ -5,7 +5,7 @@ import { ProtoFile, ProtoService } from './protobuf';
 import { Service } from 'protobufjs';
 
 const commonProtosPath = [
-  path.join(process.cwd(), "node_modules/bloomrpc-mock/common"),
+  path.join(process.cwd(), "app/node_modules/bloomrpc-mock/common"),
 ];
 
 export type OnProtoUpload = (protoFiles: ProtoFile[], err?: Error) => void
@@ -16,6 +16,7 @@ export type OnProtoUpload = (protoFiles: ProtoFile[], err?: Error) => void
  * @param importPaths
  */
 export function importProtos(onProtoUploaded: OnProtoUpload, importPaths?: string[]) {
+
   remote.dialog.showOpenDialog({
     properties: ['openFile', 'multiSelections'],
     filters: [

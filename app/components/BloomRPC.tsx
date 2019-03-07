@@ -45,8 +45,8 @@ export function BloomRPC() {
   }, []);
 
   return (
-    <Layout style={styles.layout}>
-      <Layout>
+    <Layout style={styles.layout} tagName="main">
+      <Layout tagName="section">
         <Layout.Sider style={styles.sider} width={250}>
           <Sidebar
             protos={protos}
@@ -61,7 +61,7 @@ export function BloomRPC() {
           />
         </Layout.Sider>
 
-        <Layout.Content>
+        <Layout.Content tagName="section">
           <TabList
             tabs={editorTabs.tabs}
             activeKey={editorTabs.activeKey}

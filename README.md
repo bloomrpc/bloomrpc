@@ -53,7 +53,6 @@ npm run package-win
 
 - [x] Client-Side Streaming and Bi-Directional Streaming Support
 - [ ] Draggable tabs
-- [ ] Multi theme Editor
 - [ ] Web Version with GRPC-WEB
 
 ## Contributing
@@ -64,8 +63,8 @@ We are welcome to any kind of feedback and contributions.
 
 Run this 2 commands in two different terminals
 ```
-npm run hot-server
-npm run start-hot
+npm run start-server-dev
+npm run start-main-dev
 ```
 
 ## Built with amazing technologies

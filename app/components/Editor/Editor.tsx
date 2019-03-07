@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChangeEvent, useEffect, useReducer } from 'react';
-import { Drawer, Icon, Input } from 'antd';
+import { Icon, Input } from 'antd';
 import {
   actions,
   setData,
@@ -10,13 +10,13 @@ import {
   setTSLCertificate,
   setUrl,
 } from './actions';
-import AceEditor from 'react-ace';
 import { Response } from './Response';
 import { Metadata } from './Metadata';
 import { Controls } from './Controls';
 import { Request } from './Request';
 import { Options } from './Options';
 import { RequestType } from './RequestType';
+import { ProtoFileViewer } from './ProtoFileViewer';
 import { Certificate, GRPCRequest, ProtoInfo } from '../../behaviour';
 import { getInteractive, getUrl, storeUrl } from '../../storage';
 
@@ -29,22 +29,6 @@ export interface EditorAction {
   type: string
 }
 
-export interface EditorState {
-  url: string
-  data: string
-  loading: boolean
-  output: string
-  metadataOpened: boolean
-  protoViewVisible: boolean
-  metadata: string
-  requestStreamData: string[]
-  responseStreamData: string[]
-  interactive: boolean
-  streamCommitted: boolean
-  call?: GRPCRequest
-  tlsCertificate?: Certificate
-}
-
 export interface EditorRequest {
   url: string
   data: string
@@ -52,6 +36,17 @@ export interface EditorRequest {
   metadata: string
   interactive: boolean
   tlsCertificate?: Certificate
+}
+
+export interface EditorState extends EditorRequest {
+  loading: boolean
+  output: string
+  metadataOpened: boolean
+  protoViewVisible: boolean
+  requestStreamData: string[]
+  responseStreamData: string[]
+  streamCommitted: boolean
+  call?: GRPCRequest
 }
 
 export interface EditorProps {
@@ -248,42 +243,11 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
       />
 
       {protoInfo && (
-        <Drawer
-          title={protoInfo.service.proto.fileName.split('/').pop()}
-          placement={"right"}
-          width={"50%"}
-          closable={false}
-          onClose={() => dispatch(setProtoVisibility(false))}
+        <ProtoFileViewer
+          protoInfo={protoInfo}
           visible={state.protoViewVisible}
-        >
-          <AceEditor
-            style={{ marginTop: "10px", background: "#fff" }}
-            width={"100%"}
-            height={"calc(100vh - 115px)"}
-            mode="protobuf"
-            theme="textmate"
-            name="output"
-            fontSize={13}
-            showPrintMargin={false}
-            wrapEnabled
-
-            showGutter={false}
-            readOnly
-            highlightActiveLine={false}
-            value={protoInfo.service.proto.protoText}
-            onLoad={(editor: any) => {
-              editor.renderer.$cursorLayer.element.style.display = "none";
-              editor.gotoLine(0, 0, true);
-            }}
-            setOptions={{
-              useWorker: true,
-              showLineNumbers: false,
-              highlightGutterLine: false,
-              fixedWidthGutter: true,
-              tabSize: 1,
-            }}
-          />
-        </Drawer>
+          onClose={() => dispatch(setProtoVisibility(false))}
+        />
       )}
     </div>
   )

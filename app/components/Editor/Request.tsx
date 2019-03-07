@@ -35,7 +35,8 @@ export function Request({onChangeData, data, streamData}: RequestProps) {
             highlightActiveLine={false}
             value={data}
             setOptions={{
-              useWorker: true
+              useWorker: true,
+              displayIndentGuides: true
             }}
           />
         </Tabs.TabPane>

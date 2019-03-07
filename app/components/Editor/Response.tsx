@@ -19,9 +19,11 @@ export function Response({output, streamResponse}: ResponseProps) {
         {streamResponse.length === 0 && (
           <Tabs.TabPane tab={"Response"} key={"unaryResponse"}>
               <Viewer output={output} emptyContent={(
-                <div style={styles.introContainer}>
-                  <h1 style={styles.introTitle}>Hit the play button to get a response here</h1>
-                  <img src={require('./../../../resources/blue/128x128.png')} style={{ opacity: 0.1 }}/>
+                <div style={{position: "relative", height: "325px"}}>
+                  <div style={styles.introContainer}>
+                    <img src={require('./../../../resources/blue/128x128.png')} style={{ opacity: 0.1 }}/>
+                    <h1 style={styles.introTitle}>Hit the play button to get a response here</h1>
+                  </div>
                 </div>
               )}/>
           </Tabs.TabPane>
@@ -39,14 +41,12 @@ export function Response({output, streamResponse}: ResponseProps) {
 const styles = {
   introContainer: {
     textAlign: "center" as "center",
-    position: "absolute" as "absolute",
-    left: "25%",
-    top: "35%",
+    margin: "20% 30% auto",
     width: "45%",
+    position: "absolute" as "absolute",
     zIndex: 7,
   },
   introTitle: {
-    position: "absolute" as "absolute",
     color: "rgba(17, 112, 134, 0.58)",
     fontSize: "25px",
     top: "120px",

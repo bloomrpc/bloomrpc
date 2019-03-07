@@ -48,42 +48,45 @@ export function Viewer({ output, emptyContent }: ResponseProps) {
 
       {!output && emptyContent}
 
-      <AceEditor
-        ref={editorRef}
-        className={"response-edit"}
-        style={{ background: "#fff" }}
-        width={"100%"}
-        height={"calc(100vh - 188px)"}
-        mode="json"
-        theme="textmate"
-        name="output"
-        fontSize={13}
-        showPrintMargin={false}
-        wrapEnabled
-        showGutter
-        readOnly
-        highlightActiveLine={false}
-        value={output}
-        onLoad={(editor: any) => {
-          editor.renderer.$cursorLayer.element.style.display = "none";
-          editor.$blockScrolling = Infinity;
-        }}
-        commands={[{
-          name: 'find',
-          bindKey: { win: 'Ctrl-f', mac: 'Command-f' }, //key combination used for the command.
-          exec: () => {
-            setShowFind(!showFind);
-            inputSearch.current.focus();
-          }
-        }]}
-        setOptions={{
-          useWorker: true,
-          showLineNumbers: false,
-          highlightGutterLine: false,
-          fixedWidthGutter: true,
-          tabSize: 1,
-        }}
-      />
+      {output && (
+        <AceEditor
+          ref={editorRef}
+          className={"response-edit"}
+          style={{ background: "#fff" }}
+          width={"100%"}
+          height={"calc(100vh - 188px)"}
+          mode="json"
+          theme="textmate"
+          name="output"
+          fontSize={13}
+          showPrintMargin={false}
+          wrapEnabled
+          showGutter
+          readOnly
+          highlightActiveLine={false}
+          value={output}
+          onLoad={(editor: any) => {
+            editor.renderer.$cursorLayer.element.style.display = "none";
+            editor.$blockScrolling = Infinity;
+          }}
+          commands={[{
+            name: 'find',
+            bindKey: { win: 'Ctrl-f', mac: 'Command-f' }, //key combination used for the command.
+            exec: () => {
+              setShowFind(!showFind);
+              inputSearch.current.focus();
+            }
+          }]}
+          setOptions={{
+            useWorker: true,
+            showLineNumbers: false,
+            highlightGutterLine: false,
+            fixedWidthGutter: true,
+            tabSize: 1,
+            displayIndentGuides: false
+          }}
+        />
+      )}
     </div>
   )
 }
