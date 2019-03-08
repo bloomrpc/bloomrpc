@@ -27,11 +27,13 @@ export class ProtoInfo {
   }
 
   isClientStreaming() {
-    return this.methodDef().requestStream;
+    const method = this.methodDef();
+    return method && method.requestStream;
   }
 
   isServerStreaming() {
-    return this.methodDef().responseStream;
+    const method = this.methodDef();
+    return method && method.responseStream;
   }
 
   isBiDirectionalStreaming() {

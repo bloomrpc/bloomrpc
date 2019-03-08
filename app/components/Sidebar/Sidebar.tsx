@@ -103,11 +103,15 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
             }
 
             const fragments = selected.split('/');
+            const fileName = fragments[0];
             const methodName = fragments[1].replace('method:', '');
             const serviceName = fragments[2].replace('service:', '');
 
             const protodef = protos.find((protoFile) => {
-              const match = Object.keys(protoFile.services).find((service) => service === serviceName);
+              const match = Object.keys(protoFile.services).find(
+                (service) => service === serviceName &&
+                  fileName === protoFile.services[serviceName].proto.filePath
+              );
               return Boolean(match);
             });
 
@@ -135,7 +139,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
                     <Tree.TreeNode
                       icon={<Badge type="method"> M </Badge>}
                       title={method}
-                      key={`${proto.fileName}/method:${method}/service:${service}`}
+                      key={`${proto.proto.filePath}/method:${method}/service:${service}`}
                     >
                     </Tree.TreeNode>
                   ))}
