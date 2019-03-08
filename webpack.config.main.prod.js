@@ -4,7 +4,7 @@
 
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const baseConfig = require('./webpack.config.base');
 const CheckNodeEnv = require('./internals/scripts/CheckNodeEnv');
@@ -27,7 +27,7 @@ module.exports = merge.smart(baseConfig, {
 
   optimization: {
     minimizer: [
-      new UglifyJSPlugin({
+      new TerserPlugin({
         parallel: true,
         sourceMap: true
       })

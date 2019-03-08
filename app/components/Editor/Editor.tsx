@@ -126,11 +126,11 @@ const reducer = (state: EditorState, action: EditorAction) => {
 };
 
 export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorProps) {
-  const [state, dispatch] = useReducer<EditorState, EditorAction>(reducer, {
+  const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,
     interactive: (initialRequest && initialRequest.interactive) || getInteractive() || INITIAL_STATE.interactive,
-  });
+  }, undefined);
 
   useEffect(() => {
     if (protoInfo && !initialRequest) {
