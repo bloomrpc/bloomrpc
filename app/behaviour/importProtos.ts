@@ -6,6 +6,7 @@ import { Service } from 'protobufjs';
 
 const commonProtosPath = [
   path.join(process.cwd(), "app/node_modules/bloomrpc-mock/common"),
+  path.join(process.cwd(), "app/node_modules/protobufjs"),
 ];
 
 export type OnProtoUpload = (protoFiles: ProtoFile[], err?: Error) => void
