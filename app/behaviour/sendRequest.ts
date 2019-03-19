@@ -147,7 +147,7 @@ export class GRPCRequest extends EventEmitter {
       }
       creds = credentials.createSsl(
           fs.readFileSync(this.tlsCertificate.rootCert.filePath),
-          this.tlsCertificate.privateKey && fs.readFileSync(this.tlsCertificate.rootCert.filePath),
+          this.tlsCertificate.privateKey && fs.readFileSync(this.tlsCertificate.privateKey.filePath),
           this.tlsCertificate.certChain && fs.readFileSync(this.tlsCertificate.certChain.filePath),
       );
     }
