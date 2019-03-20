@@ -2,6 +2,7 @@
  * Webpack config for production electron main process
  */
 
+const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -53,7 +54,10 @@ module.exports = merge.smart(baseConfig, {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
       DEBUG_PROD: 'false'
-    })
+    }),
+    new webpack.DefinePlugin({
+      __static: `process.resourcesPath + "/static"`
+    }),
   ],
 
   /**

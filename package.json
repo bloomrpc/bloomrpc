@@ -37,6 +37,12 @@
   "build": {
     "productName": "BloomRPC",
     "appId": "io.github.utilitywarehouse.BloomRPC",
+    "extraResources": [
+      {
+        "from": "static",
+        "to": "static"
+      }
+    ],
     "files": [
       "dist/",
       "node_modules/",

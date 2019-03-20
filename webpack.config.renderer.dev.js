@@ -192,7 +192,10 @@ module.exports = merge.smart(baseConfig, {
 
     new webpack.LoaderOptionsPlugin({
       debug: true
-    })
+    }),
+    new webpack.DefinePlugin({
+      __static: `"${path.join(configurator.projectDir, "static").replace(/\\/g, "\\\\")}"`,
+    }),
   ],
 
   externals: ['grpc'],
