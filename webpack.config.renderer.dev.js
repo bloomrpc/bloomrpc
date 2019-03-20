@@ -194,7 +194,7 @@ module.exports = merge.smart(baseConfig, {
       debug: true
     }),
     new webpack.DefinePlugin({
-      __static: `"${path.join(configurator.projectDir, "static").replace(/\\/g, "\\\\")}"`,
+      __static: `"${path.join(process.cwd(), "static").replace(/\\/g, "\\\\")}"`,
     }),
   ],
 

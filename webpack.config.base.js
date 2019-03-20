@@ -62,11 +62,6 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production'
     }),
-
-    new webpack.DefinePlugin({
-      __static: `process.resourcesPath + "/static"`
-    }),
-
     new webpack.NamedModulesPlugin()
   ]
 };
