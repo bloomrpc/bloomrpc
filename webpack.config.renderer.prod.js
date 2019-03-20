@@ -209,6 +209,9 @@ module.exports = merge.smart(baseConfig, {
       analyzerMode:
         process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
       openAnalyzer: process.env.OPEN_ANALYZER === 'true'
-    })
+    }),
+    new webpack.DefinePlugin({
+      __static: `process.resourcesPath + "/static"`
+    }),
   ]
 });
