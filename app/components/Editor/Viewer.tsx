@@ -7,10 +7,11 @@ import { Input } from 'antd';
 
 interface ResponseProps {
   output: string,
+  responseTime?: number
   emptyContent?: Node | Element | JSX.Element
 }
 
-export function Viewer({ output, emptyContent }: ResponseProps) {
+export function Viewer({ output, responseTime, emptyContent }: ResponseProps) {
 
   const editorRef: any = useRef(null);
   const inputSearch: any = useRef(null);
@@ -47,6 +48,8 @@ export function Viewer({ output, emptyContent }: ResponseProps) {
         }}/>
 
       {!output && emptyContent}
+
+      { responseTime && <div style={styles.responseTime}>{responseTime.toFixed(3)}s</div> }
 
       {output && (
         <AceEditor
@@ -95,5 +98,14 @@ const styles = {
   responseContainer: {
     background: "white",
     position: "relative" as "relative",
+  },
+  responseTime: {
+    fontSize: 11,
+    padding: "3px 7px",
+    background: '#f3f6f7',
+    position: "absolute" as "absolute",
+    top: "5px",
+    right: "0px",
+    zIndex: 30,
   }
 };

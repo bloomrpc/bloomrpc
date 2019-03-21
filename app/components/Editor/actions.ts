@@ -1,10 +1,11 @@
 import { Certificate, GRPCRequest } from '../../behaviour';
+import { EditorResponse } from "./Editor";
 
 const actions = {
   SET_URL: "SET_URL",
   SET_DATA: "SET_DATA",
   SET_IS_LOADING: "SET_IS_LOADING",
-  SET_OUTPUT: "SET_OUTPUT",
+  SET_RESPONSE: "SET_RESPONSE",
   SET_CALL: "SET_CALL",
   SET_METADATA: "SET_METADATA",
   SET_METADATA_VISIBILITY: "SET_METADATA_VISIBILITY",
@@ -22,47 +23,47 @@ export function setUrl(value: string) {
 }
 
 export function setData(data: string) {
-  return { type: actions.SET_DATA, data }
+  return { type: actions.SET_DATA, data };
 }
 
 export function setIsLoading(isLoading: boolean) {
-  return { type: actions.SET_IS_LOADING, isLoading }
+  return { type: actions.SET_IS_LOADING, isLoading };
 }
 
-export function setOutput(output: string) {
-  return { type: actions.SET_OUTPUT, output }
+export function setResponse(response: EditorResponse) {
+  return { type: actions.SET_RESPONSE, response };
 }
 
 export function setCall(call?: GRPCRequest) {
-  return { type: actions.SET_CALL, call }
+  return { type: actions.SET_CALL, call };
 }
 
 export function setMetadata(metadata: string) {
-  return { type: actions.SET_METADATA, metadata }
+  return { type: actions.SET_METADATA, metadata };
 }
 
 export function setMetadataVisibilty(visible: boolean) {
-  return { type: actions.SET_METADATA_VISIBILITY, visible }
+  return { type: actions.SET_METADATA_VISIBILITY, visible };
 }
 
 export function setProtoVisibility(visible: boolean) {
-  return { type: actions.SET_PROTO_VISIBILITY, visible }
+  return { type: actions.SET_PROTO_VISIBILITY, visible };
 }
 
 export function setInteractive(interactive: boolean) {
-  return { type: actions.SET_INTERACTIVE, interactive }
+  return { type: actions.SET_INTERACTIVE, interactive };
 }
 
 export function setRequestStreamData(requestData: string[]) {
-  return { type: actions.SET_REQUEST_STREAM_DATA, requestData }
+  return { type: actions.SET_REQUEST_STREAM_DATA, requestData };
 }
 
-export function setResponseStreamData(responseData: string[]) {
-  return { type: actions.SET_RESPONSE_STREAM_DATA, responseData }
+export function setResponseStreamData(responseData: EditorResponse[]) {
+  return { type: actions.SET_RESPONSE_STREAM_DATA, responseData };
 }
 
-export function addResponseStreamData(responseData: string) {
-  return { type: actions.ADD_RESPONSE_STREAM_DATA, responseData }
+export function addResponseStreamData(responseData: EditorResponse) {
+  return { type: actions.ADD_RESPONSE_STREAM_DATA, responseData };
 }
 
 export function setStreamCommitted(committed: boolean) {
@@ -70,7 +71,7 @@ export function setStreamCommitted(committed: boolean) {
 }
 
 export function setTSLCertificate(certificate?: Certificate) {
-  return { type: actions.SET_SSL_CERTIFICATE, certificate }
+  return { type: actions.SET_SSL_CERTIFICATE, certificate };
 }
 
 export { actions };
