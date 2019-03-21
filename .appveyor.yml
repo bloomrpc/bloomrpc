@@ -5,8 +5,10 @@ branches:
 environment:
   ELECTRON_CACHE: "%LOCALAPPDATA%\\cache\\electron"
   ELECTRON_BUILDER_CACHE: "%LOCALAPPDATA%\\cache\\electron-builder"
+  nodejs_version: "10.14"
 
 install:
+  - ps: Install-Product node $env:nodejs_version
   - yarn install && .\\node_modules\\.bin\\electron-rebuild
 
 test_script:
