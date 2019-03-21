@@ -40,11 +40,11 @@ export interface EditorRequest {
 
 export interface EditorState extends EditorRequest {
   loading: boolean
-  output: string
+  response: EditorResponse
   metadataOpened: boolean
   protoViewVisible: boolean
   requestStreamData: string[]
-  responseStreamData: string[]
+  responseStreamData: EditorResponse[]
   streamCommitted: boolean
   call?: GRPCRequest
 }
@@ -55,6 +55,11 @@ export interface EditorProps {
   initialRequest?: EditorRequest
 }
 
+export interface EditorResponse {
+  output: string;
+  responseTime?: number;
+}
+
 const INITIAL_STATE: EditorState = {
   url: "0.0.0.0:3009",
   data: "",
@@ -62,7 +67,10 @@ const INITIAL_STATE: EditorState = {
   responseStreamData: [],
   interactive: false,
   loading: false,
-  output: "",
+  response: {
+    output: "",
+    responseTime: undefined,
+  },
   metadataOpened: false,
   protoViewVisible: false,
   streamCommitted: false,
@@ -88,8 +96,8 @@ const reducer = (state: EditorState, action: EditorAction) => {
     case actions.SET_IS_LOADING:
       return { ...state, loading: action.isLoading };
 
-    case actions.SET_OUTPUT:
-      return { ...state, output: action.output };
+    case actions.SET_RESPONSE:
+      return { ...state, response: action.response };
 
     case actions.SET_CALL:
       return { ...state, call: action.call };
@@ -222,7 +230,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
         <div style={styles.responseContainer}>
           <Response
             streamResponse={state.responseStreamData}
-            output={state.output}
+            response={state.response}
           />
         </div>
       </div>

@@ -14,6 +14,11 @@ export interface GRPCRequestInfo {
   tlsCertificate?: Certificate
 }
 
+export interface ResponseMetaInformation {
+  responseTime?: number;
+  stream?: boolean;
+}
+
 export const GRPCEventType = {
   DATA: "DATA",
   ERROR: "ERROR",
@@ -65,34 +70,19 @@ export class GRPCRequest extends EventEmitter {
 
     // TODO: find proper type for call
     let call: any;
+    const requestStartTime = new Date();
 
     if (methodDefinition.requestStream) {
       // Client side streaming
-      call = this.clientStreaming(client, inputs, md);
+      call = this.clientSideStreaming(client, inputs, md, requestStartTime);
     } else {
       // Unary call
-      call = this.unaryCall(client, inputs, md);
+      call = this.unaryCall(client, inputs, md, requestStartTime);
     }
 
     // Server Streaming.
     if (methodDefinition.responseStream) {
-      call.on('data', (data: object) => {
-        this.emit(GRPCEventType.DATA, data, true);
-      });
-
-      call.on('error', (err: { [key: string]: any }) => {
-        if (err && err.code !== 1) {
-          this.emit(GRPCEventType.ERROR, err);
-
-          if (err.code === 2 || err.code === 14) { // Stream Removed.
-            this.emit(GRPCEventType.END, call);
-          }
-        }
-      });
-
-      call.on('end', () => {
-        this.emit(GRPCEventType.END, this);
-      });
+      this.handleServerStreaming(call, requestStartTime);
     }
 
     this._call = call;
@@ -104,6 +94,10 @@ export class GRPCRequest extends EventEmitter {
     return this;
   }
 
+  /**
+   * Write to a stream
+   * @param data
+   */
   write(data: string) {
     if (this._call) {
       // Add metadata
@@ -120,6 +114,9 @@ export class GRPCRequest extends EventEmitter {
     return this;
   }
 
+  /**
+   * Cancel request
+   */
   cancel() {
     if (this._call) {
       this._call.cancel();
@@ -127,12 +124,19 @@ export class GRPCRequest extends EventEmitter {
     }
   }
 
+  /**
+   * Commit stream
+   */
   commitStream() {
     if (this._call) {
       this._call.end();
     }
   }
 
+  /**
+   * Get grpc client for this relevant request
+   * @param serviceClient
+   */
   private getClient(serviceClient: any): grpc.Client {
     let creds = credentials.createInsecure();
     let options = {};
@@ -155,8 +159,17 @@ export class GRPCRequest extends EventEmitter {
     return new serviceClient(this.url, creds, options);
   }
 
-  private clientStreaming(client: any, inputs: any, md: Metadata) {
-    const call = client[this.protoInfo.methodName](md, this.handleUnaryResponse.bind(this));
+  /**
+   * Issue a client side streaming request
+   * @param client
+   * @param inputs
+   * @param md
+   * @param requestStartTime
+   */
+  private clientSideStreaming(client: any, inputs: any, md: Metadata, requestStartTime?: Date) {
+    const call = client[this.protoInfo.methodName](md, (err: ServiceError, response: any) => {
+      this.handleUnaryResponse(err, response, requestStartTime);
+    });
 
     if (inputs && Array.isArray(inputs.stream)) {
       inputs.stream.forEach((data: object) => {
@@ -173,25 +186,91 @@ export class GRPCRequest extends EventEmitter {
     return call;
   }
 
-  private unaryCall(client: any, inputs: any, md: Metadata) {
-    return client[this.protoInfo.methodName](inputs, md, this.handleUnaryResponse.bind(this));
+  /**
+   * Handle server side streaming response
+   * @param call
+   * @param streamStartTime
+   */
+  private handleServerStreaming(call: any, streamStartTime?: Date) {
+
+    call.on('data', (data: object) => {
+      const responseMetaInformation = this.responseMetaInformation(streamStartTime, true);
+      this.emit(GRPCEventType.DATA, data, responseMetaInformation);
+      streamStartTime = new Date();
+    });
+
+    call.on('error', (err: { [key: string]: any }) => {
+      const responseMetaInformation = this.responseMetaInformation(streamStartTime, true);
+      if (err && err.code !== 1) {
+        this.emit(GRPCEventType.ERROR, err, responseMetaInformation);
+
+        if (err.code === 2 || err.code === 14) { // Stream Removed.
+          this.emit(GRPCEventType.END, call);
+        }
+      }
+      streamStartTime = new Date();
+    });
+
+    call.on('end', () => {
+      this.emit(GRPCEventType.END, this);
+    });
   }
 
-  private handleUnaryResponse(err: ServiceError, response: any) {
+  /**
+   * Send a unary call
+   * @param client
+   * @param inputs
+   * @param md
+   * @param requestStartTime
+   */
+  private unaryCall(client: any, inputs: any, md: Metadata, requestStartTime?: Date) {
+    return client[this.protoInfo.methodName](inputs, md, (err: ServiceError, response: any) => {
+      this.handleUnaryResponse(err, response, requestStartTime);
+    });
+  }
+
+  /**
+   * Handle unary response
+   * @param err
+   * @param response
+   * @param requestStartTime
+   */
+  private handleUnaryResponse(err: ServiceError, response: any, requestStartTime?: Date) {
+    const responseMetaInformation = this.responseMetaInformation(requestStartTime);
+
     // Client side streaming handler
     if (err) {
       // Request cancelled do nothing
       if (err.code === 1) {
         return;
       } else {
-        this.emit(GRPCEventType.ERROR, err);
+        this.emit(GRPCEventType.ERROR, err, responseMetaInformation);
       }
     } else {
-      this.emit(GRPCEventType.DATA, response);
+      this.emit(GRPCEventType.DATA, response, responseMetaInformation);
     }
-    this.emit(GRPCEventType.END, this);
+    this.emit(GRPCEventType.END);
   }
 
+  /**
+   * Response meta information
+   * @param startTime
+   * @param stream
+   */
+  private responseMetaInformation(startTime?: Date, stream?: boolean) {
+    const responseDate = new Date();
+
+    return {
+      responseTime: startTime && (responseDate.getTime() - startTime.getTime()) / 1000,
+      stream,
+    };
+  }
+
+  /**
+   * Parse JSON to request inputs / metadata
+   * @param data
+   * @param userMetadata
+   */
   private parseRequestInfo(data: string, userMetadata?: string): { inputs: object, metadata: object } {
     let inputs = {};
     let metadata: {[key: string]: any} = {};
@@ -200,7 +279,7 @@ export class GRPCRequest extends EventEmitter {
       inputs = JSON.parse(data || "{}")
     } catch (e) {
       e.message = "Couldn't parse JSON inputs Invalid json";
-      this.emit(GRPCEventType.ERROR, e);
+      this.emit(GRPCEventType.ERROR, e, {});
       this.emit(GRPCEventType.END);
       throw new Error(e);
     }
@@ -210,7 +289,7 @@ export class GRPCRequest extends EventEmitter {
         metadata = JSON.parse(userMetadata || "{}")
       } catch (e) {
         e.message = "Couldn't parse JSON metadata Invalid json";
-        this.emit(GRPCEventType.ERROR, e);
+        this.emit(GRPCEventType.ERROR, e, {});
         this.emit(GRPCEventType.END);
         throw new Error(e);
       }

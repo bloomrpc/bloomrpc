@@ -3,13 +3,13 @@ import { Icon, notification } from 'antd';
 import {
   setCall,
   setIsLoading,
-  setOutput,
+  setResponse,
   setResponseStreamData,
   setRequestStreamData,
   addResponseStreamData, setStreamCommitted
 } from './actions';
 import { ControlsStateProps } from './Controls';
-import { GRPCEventType, GRPCRequest } from '../../behaviour';
+import { GRPCEventType, GRPCRequest, ResponseMetaInformation } from '../../behaviour';
 
 export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
   return (
@@ -53,19 +53,26 @@ export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
 
         dispatch(setResponseStreamData([]));
 
-        grpcRequest.on(GRPCEventType.ERROR, (e: Error) => {
-          dispatch(setOutput(JSON.stringify({
-            error: e.message,
-          }, null, 2)));
+        grpcRequest.on(GRPCEventType.ERROR, (e: Error, metaInfo: ResponseMetaInformation) => {
+          dispatch(setResponse({
+            responseTime: metaInfo.responseTime,
+            output: JSON.stringify({
+              error: e.message,
+            }, null, 2)
+          }));
         });
 
-        grpcRequest.on(GRPCEventType.DATA, (data: object, stream?: boolean) => {
-          if (stream && state.interactive) {
-            dispatch(addResponseStreamData(
-              JSON.stringify(data, null, 2)
-            ));
+        grpcRequest.on(GRPCEventType.DATA, (data: object, metaInfo: ResponseMetaInformation) => {
+          if (metaInfo.stream && state.interactive) {
+            dispatch(addResponseStreamData({
+              output: JSON.stringify(data, null, 2),
+              responseTime: metaInfo.responseTime,
+            }));
           } else {
-            dispatch(setOutput(JSON.stringify(data, null, 2)));
+            dispatch(setResponse({
+              responseTime: metaInfo.responseTime,
+              output: JSON.stringify(data, null, 2),
+            }));
           }
         });
 

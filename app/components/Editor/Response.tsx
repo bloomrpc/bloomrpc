@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Tabs } from 'antd';
 import { Viewer } from './Viewer';
+import { EditorResponse } from "./Editor";
 
 interface ResponseProps {
-  streamResponse: string[]
-  output: string
+  streamResponse: EditorResponse[]
+  response: EditorResponse
 }
 
-export function Response({output, streamResponse}: ResponseProps) {
+export function Response({response, streamResponse}: ResponseProps) {
   const defaultKey = `responseTab`;
   return (
     <>
@@ -18,19 +19,26 @@ export function Response({output, streamResponse}: ResponseProps) {
       >
         {streamResponse.length === 0 && (
           <Tabs.TabPane tab={"Response"} key={"unaryResponse"}>
-              <Viewer output={output} emptyContent={(
-                <div style={{position: "relative", height: "325px"}}>
-                  <div style={styles.introContainer}>
-                    <img src={require('./../../../resources/blue/128x128.png')} style={{ opacity: 0.1 }}/>
-                    <h1 style={styles.introTitle}>Hit the play button to get a response here</h1>
-                  </div>
-                </div>
-              )}/>
+              <Viewer
+                  output={response.output}
+                  responseTime={response.responseTime}
+                  emptyContent={(
+                    <div style={{position: "relative", height: "325px"}}>
+                      <div style={styles.introContainer}>
+                        <img src={require('./../../../resources/blue/128x128.png')} style={{ opacity: 0.1 }}/>
+                        <h1 style={styles.introTitle}>Hit the play button to get a response here</h1>
+                      </div>
+                    </div>
+                )}
+              />
           </Tabs.TabPane>
         )}
         {streamResponse.map((data, key) => (
           <Tabs.TabPane tab={`Stream ${key + 1}`} key={`response-${key}`}>
-            <Viewer output={data} />
+            <Viewer
+                output={data.output}
+                responseTime={data.responseTime}
+            />
           </Tabs.TabPane>
         ))}
       </Tabs>
