@@ -74,8 +74,7 @@
     "linux": {
       "target": [
         "deb",
-        "AppImage",
-        "pacman"
+        "AppImage"
       ],
       "category": "Development"
     },
