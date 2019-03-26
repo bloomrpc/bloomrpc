@@ -1,16 +1,26 @@
 <p align="center">
   <img src="./resources/blue/256x256.png" />
 </p>
+<h1 align="center">BloomRPC</h1>
 
-# BloomRPC
-The missing GUI Client for GRPC services. 
+<p align="center">
+  <a href="https://uw-labs.slack.com/">
+    <img src="https://img.shields.io/badge/Join-Slack-e44a61.svg" />
+  </a>
+</p>
+<p align="center">The missing GUI Client for GRPC services. 🌸 </p>
 
-Inspired by **Postman** and **GraphQL Playground**. <br/>
-**BloomRPC** aim to give the simplest and efficient developer experience for exploring
+<p align="center">Inspired by <b>Postman</b> and <b>GraphQL Playground</b> <br/>
+  <b>BloomRPC</b> aim to give the simplest and efficient developer experience for exploring
 and querying your GRPC services.
+</p>
 
-Install the client, select your protobuf files and start making requests! <br/> 
-**No extra** steps or configuration **needed**.
+<br/>
+
+<p align="center">
+  Install the client, select your protobuf files and start making requests! <br/> 
+  <b>No extra</b> steps or configuration <b>needed</b>.
+</p>
 
 ## Features
 
@@ -25,24 +35,26 @@ Install the client, select your protobuf files and start making requests! <br/>
 - Much more...
 
 ## Installation
+We support all the major operation systems, **MacOS / Windows / Linux Deb - Arch Linux**
 
-#### MacOS and Linux Users:
+You can install the client downloading the installer directly from the [Releases Page](https://github.com/uw-labs/bloomrpc/releases)
 
-Download the installer from the [Releases Page](https://github.com/uw-labs/bloomrpc/releases)
+#### For MacOS and Homebrew users:
 
-#### Windows
-We currently don't officially support Windows, because we haven't
-setup CI for building the Windows installer just yet.
+```
+brew cask install bloomrpc
+```
 
-**Build from source:**
+### Build from source:
 
 ```
 git clone https://github.com/uw-labs/bloomrpc.git
 cd bloomrpc
 
 yarn install && ./node_modules/.bin/electron-rebuild
-npm run package-win
+npm run package
 ```
+The installer will be located in the `release` folder
 
 ## Preview
 
