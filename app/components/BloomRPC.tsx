@@ -155,15 +155,15 @@ async function loadTabs(editorTabs: EditorTabsStorage): Promise<EditorTabs> {
     return tab.protoPath;
   }), importPaths);
 
-
-  storedEditTabs.tabs = editorTabs.tabs.map((tab) => {
+  const previousTabs = editorTabs.tabs.map((tab) => {
     const def = protos.find((protoFile) => {
       const match = Object.keys(protoFile.services).find((service) => service === tab.serviceName);
       return Boolean(match);
     });
 
+    // Old Definition Not found
     if (!def) {
-      throw new Error("Not found.");
+      return false;
     }
 
     const tabKey = `${tab.serviceName}${tab.methodName}`;
@@ -175,6 +175,8 @@ async function loadTabs(editorTabs: EditorTabsStorage): Promise<EditorTabs> {
       initialRequest: getRequestInfo(tabKey),
     }
   });
+
+  storedEditTabs.tabs = previousTabs.filter((tab) => tab) as TabData[];
 
   return storedEditTabs;
 }
