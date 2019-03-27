@@ -25,14 +25,6 @@ export function storeUrl(url: string) {
   EditorStore.set(KEYS.URL, url);
 }
 
-export function storeInteractive(interactive: boolean) {
-  EditorStore.set(KEYS.INTERACTIVE, interactive);
-}
-
-export function getInteractive() {
-  return Boolean(EditorStore.get(KEYS.INTERACTIVE));
-}
-
 /**
  * Get URL
  */

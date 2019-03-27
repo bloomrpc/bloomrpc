@@ -5,7 +5,6 @@ import { EditorAction } from './Editor';
 import {useState} from "react";
 import {TLSManager} from "./TLSManager";
 import { ProtoInfo, Certificate } from '../../behaviour';
-import { storeInteractive } from '../../storage';
 
 interface OptionsProps {
   protoInfo: ProtoInfo
@@ -75,7 +74,6 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
             unCheckedChildren="Manual &nbsp; &nbsp; &nbsp;"
             onChange={(checked) => {
               dispatch(setInteractive(checked));
-              storeInteractive(checked);
               onInteractiveChange && onInteractiveChange(checked);
             }}
           />
