@@ -15,6 +15,7 @@ const KEYS = {
   TABS: "tabs",
   REQUESTS: "requests",
   INTERACTIVE: "interactive",
+  METADATA: "metadata",
 };
 
 /**
@@ -23,14 +24,6 @@ const KEYS = {
  */
 export function storeUrl(url: string) {
   EditorStore.set(KEYS.URL, url);
-}
-
-export function storeInteractive(interactive: boolean) {
-  EditorStore.set(KEYS.INTERACTIVE, interactive);
-}
-
-export function getInteractive() {
-  return Boolean(EditorStore.get(KEYS.INTERACTIVE));
 }
 
 /**
@@ -115,6 +108,14 @@ export function storeRequestInfo({id, url, data, inputs, metadata, interactive, 
     .filter((requestItem: TabRequestInfo) => requestItem.id !== id);
 
   EditorStore.set(KEYS.REQUESTS, [...requestList, request]);
+}
+
+export function storeMetadata(metadata: string) {
+  EditorStore.set(KEYS.METADATA, metadata);
+}
+
+export function getMetadata() {
+  return EditorStore.get(KEYS.METADATA);
 }
 
 /**

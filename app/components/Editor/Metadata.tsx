@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Icon } from 'antd';
 import AceEditor from 'react-ace';
+import { storeMetadata } from "../../storage";
 
 interface MetadataProps {
   onClickMetadata: () => void,
@@ -37,6 +38,7 @@ export function Metadata({ onClickMetadata, onMetadataChange, value, visibile }:
           fontSize={13}
           name="metadata"
           onChange={(value) => {
+            storeMetadata(value);
             onMetadataChange(value);
           }}
           showPrintMargin={false}
