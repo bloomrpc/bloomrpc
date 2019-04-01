@@ -49,7 +49,11 @@ export function Viewer({ output, responseTime, emptyContent }: ResponseProps) {
 
       {!output && emptyContent}
 
-      { responseTime && <div style={styles.responseTime}>{responseTime.toFixed(3)}s</div> }
+      { responseTime && (
+          <div style={styles.responseTime}>
+            {responseTime.toFixed(3)}s
+          </div>
+      )}
 
       {output && (
         <AceEditor

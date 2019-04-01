@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, Icon, Tooltip, Switch, Modal} from 'antd';
+import { Button, Icon, Tooltip, Switch, Modal, Menu, Dropdown } from 'antd';
 import { setInteractive, setProtoVisibility } from './actions';
 import { EditorAction } from './Editor';
 import {useState} from "react";
@@ -13,9 +13,10 @@ interface OptionsProps {
   onInteractiveChange?: (chcked: boolean) => void
   tlsSelected?: Certificate
   onTLSSelected?: (selected: Certificate) => void
+  onClickExport?: () => void
 }
 
-export function Options({ protoInfo, dispatch, interactiveChecked, onInteractiveChange, tlsSelected, onTLSSelected }: OptionsProps) {
+export function Options({ protoInfo, dispatch, interactiveChecked, onInteractiveChange, tlsSelected, onTLSSelected, onClickExport }: OptionsProps) {
 
   const [tlsModalVisible, setTlsModalVisible] = useState(false);
 
@@ -44,29 +45,43 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
             </span>
           </div>
 
-        <Modal
-            title={(
-                <div>
-                  <Icon type="lock" />
-                  <span style={{marginLeft: 10}}> TLS / SSL Manager </span>
-                </div>
-            )}
-            visible={tlsModalVisible}
-            onCancel={() => setTlsModalVisible(false)}
-            onOk={() => setTlsModalVisible(false)}
-            bodyStyle={{padding: 0}}
-            width={750}
-            okText={"Done"}
-            cancelText={"Close"}
-        >
-          <TLSManager
-              selected={tlsSelected}
-              onSelected={onTLSSelected}
-          />
-        </Modal>
+          <Modal
+              title={(
+                  <div>
+                    <Icon type="lock" />
+                    <span style={{marginLeft: 10}}> TLS / SSL Manager </span>
+                  </div>
+              )}
+              visible={tlsModalVisible}
+              onCancel={() => setTlsModalVisible(false)}
+              onOk={() => setTlsModalVisible(false)}
+              bodyStyle={{padding: 0}}
+              width={750}
+              okText={"Done"}
+              cancelText={"Close"}
+          >
+            <TLSManager
+                selected={tlsSelected}
+                onSelected={onTLSSelected}
+            />
+          </Modal>
       </div>
 
       <div style={{ ...styles.inline }}>
+        <Dropdown overlay={(
+            <Menu>
+              <Menu.Item key="0">
+                <a href="#" onClick={(e) => {
+                  e.preventDefault();
+                  onClickExport && onClickExport()
+                }}>Export response</a>
+              </Menu.Item>
+            </Menu>
+        )} trigger={['click']}>
+          <div style={{ marginRight: 5, marginTop: 2, cursor: 'pointer', color: "#b5b5b5"}} >
+            <Icon type="caret-down" />
+          </div>
+        </Dropdown>
         <div style={{paddingRight: 10}}>
           <Switch
             checkedChildren="Interactive"
