@@ -23,6 +23,7 @@ import { getMetadata, getUrl, storeUrl } from '../../storage';
 import 'brace/theme/textmate';
 import 'brace/mode/json';
 import 'brace/mode/protobuf';
+import { exportResponseToJSONFile } from "../../behaviour/response";
 
 export interface EditorAction {
   [key: string]: any
@@ -189,6 +190,9 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
             protoInfo={protoInfo}
             dispatch={dispatch}
             interactiveChecked={state.interactive}
+            onClickExport={async () => {
+              await exportResponseToJSONFile(protoInfo, state)
+            }}
             onInteractiveChange={(checked) => {
               onRequestChange && onRequestChange({
                 ...state,
