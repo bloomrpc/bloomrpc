@@ -18,7 +18,7 @@ import { Options } from './Options';
 import { RequestType } from './RequestType';
 import { ProtoFileViewer } from './ProtoFileViewer';
 import { Certificate, GRPCRequest, ProtoInfo } from '../../behaviour';
-import { getUrl, storeUrl } from '../../storage';
+import { getMetadata, getUrl, storeUrl } from '../../storage';
 
 import 'brace/theme/textmate';
 import 'brace/mode/json';
@@ -138,6 +138,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,
     interactive: initialRequest ? initialRequest.interactive : (protoInfo && protoInfo.isServerStreaming()) || INITIAL_STATE.interactive,
+    metadata: (initialRequest && initialRequest.metadata) || getMetadata() || INITIAL_STATE.metadata,
   }, undefined);
 
   useEffect(() => {

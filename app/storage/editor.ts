@@ -15,6 +15,7 @@ const KEYS = {
   TABS: "tabs",
   REQUESTS: "requests",
   INTERACTIVE: "interactive",
+  METADATA: "metadata",
 };
 
 /**
@@ -107,6 +108,14 @@ export function storeRequestInfo({id, url, data, inputs, metadata, interactive, 
     .filter((requestItem: TabRequestInfo) => requestItem.id !== id);
 
   EditorStore.set(KEYS.REQUESTS, [...requestList, request]);
+}
+
+export function storeMetadata(metadata: string) {
+  EditorStore.set(KEYS.METADATA, metadata);
+}
+
+export function getMetadata() {
+  return EditorStore.get(KEYS.METADATA);
 }
 
 /**
