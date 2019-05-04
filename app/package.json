@@ -16,7 +16,7 @@
   "externals": ["grpc"],
   "license": "LGPL3",
   "dependencies": {
-    "bloomrpc-mock": "^0.2.7",
+    "bloomrpc-mock": "^0.2.8",
     "grpc": "^1.19.0"
   }
 }
