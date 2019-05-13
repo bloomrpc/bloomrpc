@@ -17,7 +17,7 @@
     "postinstall": "node internals/scripts/CheckNativeDep.js && electron-builder install-app-deps package.json",
     "prestart": "yarn build",
     "start": "cross-env NODE_ENV=production electron ./app/",
-    "start-server-dev": "cross-env NODE_ENV=development node --trace-warnings ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
+    "start-server-dev": "cross-env NODE_ENV=development node --experimental-worker --trace-warnings ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron ./app/main.dev.js",
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./internals/scripts/RunTests.js",
     "test-all": "yarn lint && yarn flow && yarn build && yarn test && yarn test-e2e",

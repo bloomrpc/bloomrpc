@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <title>About This App</title>
+    <link rel="stylesheet" href="./about.css">
+  </head>
+  <body>
+    <div class="logo">
+      <img id="app-icon" alt="App icon" height="200">
+    </div>
+    <h2 class="title"></h2>
+    <h3 class="description"></h3>
+    <div class="copyright"></div>
+    <table class="versions"></table>
+    <footer class="footer">
+      <div class="link bug-report-link"></div>
+    </footer>
+
+    <!-- https://github.com/electron/electron/issues/2863 -->
+    <script>var exports = exports || {};</script>
+
+    <script src="./about-renderer.js"></script>
+  </body>
+</html>

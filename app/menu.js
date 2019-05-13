@@ -1,4 +1,6 @@
 const { app, Menu, shell } = require('electron');
+const openAboutWindow = require('./about');
+const { join } = require('path');
 
 module.exports = class MenuBuilder {
 
@@ -200,6 +202,11 @@ module.exports = class MenuBuilder {
             click: () => {
               this.mainWindow.close();
             }
+          },
+          {
+            label: '&Quit',
+            accelerator: 'Ctrl+Q',
+            click: app.quit,
           }
         ]
       },
@@ -271,6 +278,12 @@ module.exports = class MenuBuilder {
             label: 'Search Issues',
             click() {
               shell.openExternal('https://github.com/uw-labs/bloomrpc/issues');
+            }
+          },
+          {
+            label: 'About BloomRPC',
+            click: () => {
+              openAboutWindow(this.mainWindow);
             }
           }
         ]

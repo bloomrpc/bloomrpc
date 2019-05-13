@@ -62,6 +62,14 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production'
     }),
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
+    new webpack.DefinePlugin({
+      PRODUCT_NAME: JSON.stringify(pkgDep.productName),
+      COPYRIGHT: JSON.stringify(pkgDep.license),
+      HOMEPAGE: JSON.stringify(pkgDep.homepage),
+      DESCRIPTION: JSON.stringify(pkgDep.description),
+      LICENSE: JSON.stringify(pkgDep.license),
+      BUG_REPORT_URL: JSON.stringify(pkgDep.bugs.url),
+    })
   ]
 };
