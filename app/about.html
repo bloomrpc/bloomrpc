@@ -4,7 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
     <title>About This App</title>
-    <link rel="stylesheet" href="./about.css">
+    <script>
+      (function() {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        if (!process.env.HOT) {
+          link.href = './dist/about.css';
+          // HACK: Writing the script path should be done with webpack
+        } else {
+          link.href = './about.css'
+        }
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }());
+    </script>
   </head>
   <body>
     <div class="logo">
@@ -17,10 +29,22 @@
     <footer class="footer">
       <div class="link bug-report-link"></div>
     </footer>
+    <script>
+      {
+        const scripts = [];
 
-    <!-- https://github.com/electron/electron/issues/2863 -->
-    <script>var exports = exports || {};</script>
+        scripts.push(
+          (process.env.HOT)
+            ? './about.js'
+            : './dist/about.renderer.prod.js'
+        );
 
-    <script src="./about-renderer.js"></script>
+        document.write(
+          scripts
+            .map(script => `<script defer src="${script}"><\/script>`)
+            .join('')
+        );
+      }
+    </script>
   </body>
 </html>

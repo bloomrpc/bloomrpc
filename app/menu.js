@@ -1,6 +1,5 @@
 const { app, Menu, shell } = require('electron');
-const openAboutWindow = require('./about');
-const { join } = require('path');
+const openAboutWindow = require('./about-window');
 
 module.exports = class MenuBuilder {
 

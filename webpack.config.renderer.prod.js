@@ -7,6 +7,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CopyPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
 const baseConfig = require('./webpack.config.base');
@@ -21,13 +22,16 @@ module.exports = merge.smart(baseConfig, {
 
   target: 'electron-renderer',
 
-  entry: './app/index',
+  entry: {
+    'app': './app/index',
+    'about': './app/about'
+  },
   externals: ['grpc'],
 
   output: {
     path: path.join(__dirname, 'app/dist'),
     publicPath: './dist/',
-    filename: 'renderer.prod.js'
+    filename: '[name].renderer.prod.js'
   },
 
   module: {
@@ -204,6 +208,10 @@ module.exports = merge.smart(baseConfig, {
     new MiniCssExtractPlugin({
       filename: 'style.css'
     }),
+
+    new CopyPlugin([
+      { from: './app/about.css', to: 'about.css' },
+    ]),
 
     new BundleAnalyzerPlugin({
       analyzerMode:

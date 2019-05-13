@@ -43,10 +43,17 @@
         "to": "static"
       }
     ],
+    "extraFiles": [
+      {
+        "from": "resources/icon.ico",
+        "to": "resources/icon.ico"
+      }
+    ],
     "files": [
       "dist/",
       "node_modules/",
       "app.html",
+      "about.html",
       "main.prod.js",
       "main.prod.js.map",
       "package.json"
@@ -150,6 +157,7 @@
     "asar": "^1.0.0",
     "chalk": "^2.4.2",
     "concurrently": "^4.1.0",
+    "copy-webpack-plugin": "^5.0.3",
     "cross-env": "^5.2.0",
     "cross-spawn": "^6.0.5",
     "css-loader": "^2.1.1",

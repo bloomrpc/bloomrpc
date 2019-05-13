@@ -70,6 +70,7 @@ module.exports = {
       DESCRIPTION: JSON.stringify(pkgDep.description),
       LICENSE: JSON.stringify(pkgDep.license),
       BUG_REPORT_URL: JSON.stringify(pkgDep.bugs.url),
+      VERSION: JSON.stringify(pkgDep.version)
     })
   ]
 };
