@@ -9,7 +9,7 @@
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         if (!process.env.HOT) {
-          link.href = './dist/about.css';
+          link.href = '../dist/about.css';
           // HACK: Writing the script path should be done with webpack
         } else {
           link.href = './about.css'
@@ -35,8 +35,8 @@
 
         scripts.push(
           (process.env.HOT)
-            ? './about.js'
-            : './dist/about.renderer.prod.js'
+            ? './about-window-renderer.js'
+            : '../dist/about.renderer.prod.js'
         );
 
         document.write(

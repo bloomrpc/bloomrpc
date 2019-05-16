@@ -1,8 +1,8 @@
 const { BrowserWindow, remote, shell } = require('electron');
 const path = require('path');
-const icon = process.env.NODE_ENV !== 'production'
-    ? path.join(__dirname, '../resources/icon.ico')
-    : path.join(process.resourcesPath, 'icon.ico') 
+const icon = process.env.HOT
+    ? path.join(__dirname, '../../resources/icon.ico')
+    : path.join(process.resourcesPath, 'icon.ico')
 
 let aboutWin = null;
 
@@ -27,7 +27,10 @@ module.exports = function openAboutWindow(parentWindow) {
         aboutWin = null;
     });
 
-    aboutWin.loadURL(`file://${__dirname}/about.html`);
+    const aboutHTML = process.env.NODE_ENV !== 'production'
+        ? `file://${__dirname}/about.html`
+        : `file://${__dirname}/about/about.html`
+    aboutWin.loadURL(aboutHTML);
 
     aboutWin.webContents.on('will-navigate', (e, url) => {
         e.preventDefault();
@@ -41,7 +44,7 @@ module.exports = function openAboutWindow(parentWindow) {
     aboutWin.webContents.once('dom-ready', () => {
         let info;
         if (process.env.NODE_ENV !== 'production') {
-            const pkgDep = require('../package.json')
+            const pkgDep = require('../../package.json')
             info = {
                 icon_path: icon,
                 product_name: pkgDep.productName,

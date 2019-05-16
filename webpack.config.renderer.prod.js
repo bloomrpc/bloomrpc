@@ -24,7 +24,7 @@ module.exports = merge.smart(baseConfig, {
 
   entry: {
     'app': './app/index',
-    'about': './app/about'
+    'about': './app/about/about-window-renderer'
   },
   externals: ['grpc'],
 
@@ -210,7 +210,7 @@ module.exports = merge.smart(baseConfig, {
     }),
 
     new CopyPlugin([
-      { from: './app/about.css', to: 'about.css' },
+      { from: './app/about/about.css', to: 'about.css' },
     ]),
 
     new BundleAnalyzerPlugin({

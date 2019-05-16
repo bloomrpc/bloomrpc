@@ -53,7 +53,7 @@
       "dist/",
       "node_modules/",
       "app.html",
-      "about.html",
+      "about/about.html",
       "main.prod.js",
       "main.prod.js.map",
       "package.json"
