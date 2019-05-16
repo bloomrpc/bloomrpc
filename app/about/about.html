@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <title>About This App</title>
+    <script>
+      (function() {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        if (!process.env.HOT) {
+          link.href = '../dist/about.css';
+          // HACK: Writing the script path should be done with webpack
+        } else {
+          link.href = './about.css'
+        }
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }());
+    </script>
+  </head>
+  <body>
+    <div class="logo">
+      <img id="app-icon" alt="App icon" height="200">
+    </div>
+    <h2 class="title"></h2>
+    <h3 class="description"></h3>
+    <div class="copyright"></div>
+    <table class="versions"></table>
+    <footer class="footer">
+      <div class="link bug-report-link"></div>
+    </footer>
+    <script>
+      {
+        const scripts = [];
+
+        scripts.push(
+          (process.env.HOT)
+            ? './about-window-renderer.js'
+            : '../dist/about.renderer.prod.js'
+        );
+
+        document.write(
+          scripts
+            .map(script => `<script defer src="${script}"><\/script>`)
+            .join('')
+        );
+      }
+    </script>
+  </body>
+</html>

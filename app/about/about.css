@@ -1,0 +1,64 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-app-region: drag;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  background-color: #eee;
+  font-size: 12px;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+.logo {
+  width: 200px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.title,
+.copyright,
+.description {
+  margin: 0.2em;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.description {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.versions {
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+
+.copyright,
+.versions {
+  color: #999;
+}
+
+.link {
+  cursor: pointer;
+  color: #80a0c2;
+}
+
+.bug-report-link {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  right: 0.5em;
+  bottom: 0.5em;
+}
+

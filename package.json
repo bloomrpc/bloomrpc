@@ -17,7 +17,7 @@
     "postinstall": "node internals/scripts/CheckNativeDep.js && electron-builder install-app-deps package.json",
     "prestart": "yarn build",
     "start": "cross-env NODE_ENV=production electron ./app/",
-    "start-server-dev": "cross-env NODE_ENV=development node --trace-warnings ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
+    "start-server-dev": "cross-env NODE_ENV=development node --experimental-worker --trace-warnings ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron ./app/main.dev.js",
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./internals/scripts/RunTests.js",
     "test-all": "yarn lint && yarn flow && yarn build && yarn test && yarn test-e2e",
@@ -43,10 +43,17 @@
         "to": "static"
       }
     ],
+    "extraFiles": [
+      {
+        "from": "resources/icon.ico",
+        "to": "resources/icon.ico"
+      }
+    ],
     "files": [
       "dist/",
       "node_modules/",
       "app.html",
+      "about/about.html",
       "main.prod.js",
       "main.prod.js.map",
       "package.json"
@@ -150,6 +157,7 @@
     "asar": "^1.0.0",
     "chalk": "^2.4.2",
     "concurrently": "^4.1.0",
+    "copy-webpack-plugin": "^5.0.3",
     "cross-env": "^5.2.0",
     "cross-spawn": "^6.0.5",
     "css-loader": "^2.1.1",
