@@ -81,6 +81,9 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
                 key="privateKey"
                 render={(text, certificate: Certificate) => {
                     const {privateKey} = certificate;
+                    if(certificate.useSystemDefault === true) {
+                      return <div />
+                    }
                     return (
                         <>
                             {privateKey ? (
@@ -103,6 +106,9 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
                 dataIndex="certChain"
                 key="certChain"
                 render={(text, certificate: Certificate) => {
+                    if(certificate.useSystemDefault === true) {
+                      return <div />
+                    }
                     return (
                         <>
                             {certificate.certChain ? (
@@ -125,6 +131,9 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
             <Table.Column
               key="sslTarget"
               render={(text, certificate: Certificate) => {
+                if(certificate.useSystemDefault === true) {
+                  return <div />
+                }
                 return (
                     <Input placeholder={"ssl target host"} defaultValue={certificate.sslTargetHost} onChange={(e) => {
                       const cert = setSslTargetHost(
@@ -144,6 +153,9 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
             <Table.Column
               key="delete"
               render={(text, certificate: Certificate) => {
+                if(certificate.useSystemDefault === true) {
+                  return <div />
+                }
                 return (
                     <Icon
                         type="close"

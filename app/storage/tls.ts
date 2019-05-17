@@ -17,7 +17,7 @@ export function storeTLSList(certs: Certificate[]) {
 }
 
 export function getTLSList() {
-  return TLSStore.get(TLS_KEYS.CERTIFICATES, []);
+  return [{useSystemDefault: true, rootCert:{fileName: "Use System Default", filePath:""}}].concat(TLSStore.get(TLS_KEYS.CERTIFICATES, []));
 }
 
 export function clearTLS() {

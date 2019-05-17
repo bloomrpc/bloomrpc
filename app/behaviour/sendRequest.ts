@@ -149,11 +149,15 @@ export class GRPCRequest extends EventEmitter {
           'grpc.default_authority': this.tlsCertificate.sslTargetHost,
         }
       }
-      creds = credentials.createSsl(
-          fs.readFileSync(this.tlsCertificate.rootCert.filePath),
-          this.tlsCertificate.privateKey && fs.readFileSync(this.tlsCertificate.privateKey.filePath),
-          this.tlsCertificate.certChain && fs.readFileSync(this.tlsCertificate.certChain.filePath),
-      );
+      if(this.tlsCertificate.useSystemDefault === true) {
+        creds = credentials.createSsl();
+      } else {
+        creds = credentials.createSsl(
+            fs.readFileSync(this.tlsCertificate.rootCert.filePath),
+            this.tlsCertificate.privateKey && fs.readFileSync(this.tlsCertificate.privateKey.filePath),
+            this.tlsCertificate.certChain && fs.readFileSync(this.tlsCertificate.certChain.filePath),
+        );
+      }
     }
 
     return new serviceClient(this.url, creds, options);

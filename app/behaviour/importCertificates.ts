@@ -10,7 +10,8 @@ export interface Certificate {
     rootCert: CertFile;
     privateKey?: CertFile;
     certChain?: CertFile;
-    sslTargetHost?: string
+    sslTargetHost?: string;
+    useSystemDefault?: boolean;
 }
 
 export function importRootCert(): Promise<Certificate> {
