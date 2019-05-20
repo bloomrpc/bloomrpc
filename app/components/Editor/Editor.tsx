@@ -24,6 +24,7 @@ import 'brace/theme/textmate';
 import 'brace/mode/json';
 import 'brace/mode/protobuf';
 import { exportResponseToJSONFile } from "../../behaviour/response";
+import Resizable from "re-resizable";
 
 export interface EditorAction {
   [key: string]: any
@@ -211,28 +212,37 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
         )}
       </div>
 
-      <div style={styles.playIconContainer}>
-        <Controls
-          dispatch={dispatch}
-          state={state}
-          protoInfo={protoInfo}
-        />
-      </div>
-
       <div style={styles.editorContainer}>
-        <Request
-          data={state.data}
-          streamData={state.requestStreamData}
-          onChangeData={(value) => {
-            dispatch(setData(value));
-            onRequestChange && onRequestChange({
-              ...state,
-              data: value,
-            });
-          }}
-        />
+        <Resizable
+            enable={{ right: true }}
+            defaultSize={{
+              width: "50%",
+            }}
+            maxWidth={"80%"}
+            minWidth={"10%"}
+        >
+          <Request
+            data={state.data}
+            streamData={state.requestStreamData}
+            onChangeData={(value) => {
+              dispatch(setData(value));
+              onRequestChange && onRequestChange({
+                ...state,
+                data: value,
+              });
+            }}
+          />
 
-        <div style={styles.responseContainer}>
+          <div style={styles.playIconContainer}>
+            <Controls
+                dispatch={dispatch}
+                state={state}
+                protoInfo={protoInfo}
+            />
+          </div>
+        </Resizable>
+
+        <div style={{...styles.responseContainer}}>
           <Response
             streamResponse={state.responseStreamData}
             response={state.response}
@@ -252,7 +262,6 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
           });
         }}
         value={state.metadata}
-        visibile={state.metadataOpened}
       />
 
       {protoInfo && (
@@ -270,6 +279,7 @@ const styles = {
   tabContainer: {
     width: "100%",
     height: "100%",
+    position: "relative" as "relative",
   },
   editorContainer: {
     display: "flex",
@@ -279,7 +289,10 @@ const styles = {
   },
   responseContainer: {
     background: "white",
-    width: "50%",
+    maxWidth: "inherit",
+    width: "inherit",
+    display: "flex",
+    flex: "1 1 0%",
     borderLeft: "1px solid #eee",
     borderRight: "1px solid rgba(0, 21, 41, 0.18)",
     overflow: "auto"
@@ -287,9 +300,9 @@ const styles = {
   playIconContainer: {
     position: "absolute" as "absolute",
     zIndex: 10,
-    left: "50%",
+    right: "-30px",
     marginLeft: "-25px",
-    top: "50%",
+    top: "calc(50% - 80px)",
   },
   inputContainer: {
     display: "flex",
