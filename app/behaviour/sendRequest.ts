@@ -149,7 +149,7 @@ export class GRPCRequest extends EventEmitter {
           'grpc.default_authority': this.tlsCertificate.sslTargetHost,
         }
       }
-      if(this.tlsCertificate.useSystemDefault === true) {
+      if(this.tlsCertificate.useServerCertificate === true) {
         creds = credentials.createSsl();
       } else {
         creds = credentials.createSsl(
