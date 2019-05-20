@@ -17,7 +17,7 @@ export function Request({onChangeData, data, streamData}: RequestProps) {
       <Tabs
         defaultActiveKey={editorTabKey}
         tabPosition={"top"}
-        style={{width: "50%"}}
+        style={{width: "100%"}}
       >
         <Tabs.TabPane tab="Editor" key={editorTabKey}>
           <AceEditor

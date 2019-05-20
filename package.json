@@ -210,6 +210,7 @@
     "lodash.get": "^4.4.2",
     "mousetrap": "^1.6.3",
     "protobufjs": "^6.8.8",
+    "re-resizable": "^4.11.0",
     "react": "^16.8.4",
     "react-ace": "^6.4.0",
     "react-dom": "^16.8.4",

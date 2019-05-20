@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, useEffect, useReducer } from 'react';
+import { ChangeEvent, useEffect, useReducer, useState } from 'react';
 import { Icon, Input } from 'antd';
 import {
   actions,
@@ -24,6 +24,7 @@ import 'brace/theme/textmate';
 import 'brace/mode/json';
 import 'brace/mode/protobuf';
 import { exportResponseToJSONFile } from "../../behaviour/response";
+import Resizable from "re-resizable";
 
 export interface EditorAction {
   [key: string]: any
@@ -142,6 +143,14 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
     metadata: (initialRequest && initialRequest.metadata) || getMetadata() || INITIAL_STATE.metadata,
   }, undefined);
 
+  const [requestWidth, setRequestWidth] = useState(0);
+  const [responseWidth, setResponseWidth] = useState(0);
+
+  // console.log(requestWidth);
+
+
+  // console.log(requestWidth);
+
   useEffect(() => {
     if (protoInfo && !initialRequest) {
       try {
@@ -220,19 +229,37 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
       </div>
 
       <div style={styles.editorContainer}>
-        <Request
-          data={state.data}
-          streamData={state.requestStreamData}
-          onChangeData={(value) => {
-            dispatch(setData(value));
-            onRequestChange && onRequestChange({
-              ...state,
-              data: value,
-            });
+        <Resizable
+          size={{
+            width: requestWidth == 0 ? "50%" : `calc(50% + ${requestWidth}px)`
           }}
-        />
+          onResize={(e, direction, ref, d) => {
+            setResponseWidth(d.width);
+          }}
+          onResizeStop={(e, direction, ref, d) => {
+            console.log("RRRR", requestWidth + d.width)
+            setRequestWidth((responseWidth + d.width));
 
-        <div style={styles.responseContainer}>
+            console.log("REQUEST W", requestWidth, "RESPO", responseWidth, "D WIE", d.width);
+            setResponseWidth(requestWidth - responseWidth - d.width)
+          }}
+        >
+          <Request
+            data={state.data}
+            streamData={state.requestStreamData}
+            onChangeData={(value) => {
+              dispatch(setData(value));
+              onRequestChange && onRequestChange({
+                ...state,
+                data: value,
+              });
+            }}
+          />
+        </Resizable>
+
+        <div style={{...styles.responseContainer, ...{
+          width: responseWidth == 0 ? "50%" : `calc(50% - ${responseWidth}px)`
+        }}}>
           <Response
             streamResponse={state.responseStreamData}
             response={state.response}
@@ -252,7 +279,6 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
           });
         }}
         value={state.metadata}
-        visibile={state.metadataOpened}
       />
 
       {protoInfo && (
@@ -270,6 +296,7 @@ const styles = {
   tabContainer: {
     width: "100%",
     height: "100%",
+    position: "relative" as "relative",
   },
   editorContainer: {
     display: "flex",
@@ -279,7 +306,7 @@ const styles = {
   },
   responseContainer: {
     background: "white",
-    width: "50%",
+    // width: "100%",
     borderLeft: "1px solid #eee",
     borderRight: "1px solid rgba(0, 21, 41, 0.18)",
     overflow: "auto"
