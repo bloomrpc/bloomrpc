@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, useEffect, useReducer, useState } from 'react';
+import { ChangeEvent, useEffect, useReducer } from 'react';
 import { Icon, Input } from 'antd';
 import {
   actions,
@@ -143,14 +143,6 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
     metadata: (initialRequest && initialRequest.metadata) || getMetadata() || INITIAL_STATE.metadata,
   }, undefined);
 
-  const [requestWidth, setRequestWidth] = useState(0);
-  const [responseWidth, setResponseWidth] = useState(0);
-
-  // console.log(requestWidth);
-
-
-  // console.log(requestWidth);
-
   useEffect(() => {
     if (protoInfo && !initialRequest) {
       try {
@@ -220,29 +212,14 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
         )}
       </div>
 
-      <div style={styles.playIconContainer}>
-        <Controls
-          dispatch={dispatch}
-          state={state}
-          protoInfo={protoInfo}
-        />
-      </div>
-
       <div style={styles.editorContainer}>
         <Resizable
-          size={{
-            width: requestWidth == 0 ? "50%" : `calc(50% + ${requestWidth}px)`
-          }}
-          onResize={(e, direction, ref, d) => {
-            setResponseWidth(d.width);
-          }}
-          onResizeStop={(e, direction, ref, d) => {
-            console.log("RRRR", requestWidth + d.width)
-            setRequestWidth((responseWidth + d.width));
-
-            console.log("REQUEST W", requestWidth, "RESPO", responseWidth, "D WIE", d.width);
-            setResponseWidth(requestWidth - responseWidth - d.width)
-          }}
+            enable={{ right: true }}
+            defaultSize={{
+              width: "50%",
+            }}
+            maxWidth={"80%"}
+            minWidth={"10%"}
         >
           <Request
             data={state.data}
@@ -255,11 +232,17 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
               });
             }}
           />
+
+          <div style={styles.playIconContainer}>
+            <Controls
+                dispatch={dispatch}
+                state={state}
+                protoInfo={protoInfo}
+            />
+          </div>
         </Resizable>
 
-        <div style={{...styles.responseContainer, ...{
-          width: responseWidth == 0 ? "50%" : `calc(50% - ${responseWidth}px)`
-        }}}>
+        <div style={{...styles.responseContainer}}>
           <Response
             streamResponse={state.responseStreamData}
             response={state.response}
@@ -306,7 +289,10 @@ const styles = {
   },
   responseContainer: {
     background: "white",
-    // width: "100%",
+    maxWidth: "inherit",
+    width: "inherit",
+    display: "flex",
+    flex: "1 1 0%",
     borderLeft: "1px solid #eee",
     borderRight: "1px solid rgba(0, 21, 41, 0.18)",
     overflow: "auto"
@@ -314,9 +300,9 @@ const styles = {
   playIconContainer: {
     position: "absolute" as "absolute",
     zIndex: 10,
-    left: "50%",
+    right: "-30px",
     marginLeft: "-25px",
-    top: "50%",
+    top: "calc(50% - 80px)",
   },
   inputContainer: {
     display: "flex",

@@ -89,7 +89,8 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
       </div>
       <div style={{
         overflow: "auto",
-        maxHeight: "calc(100vh - 85px)"
+        maxHeight: "calc(100vh - 85px)",
+        height: "100%"
       }}>
         {protos.length > 0 && <Tree.DirectoryTree
           showIcon
