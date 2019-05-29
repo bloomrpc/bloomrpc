@@ -39,4 +39,8 @@ export class ProtoInfo {
   isBiDirectionalStreaming() {
     return this.isClientStreaming() && this.isServerStreaming();
   }
+
+  usesStream() {
+    return this.isClientStreaming() || this.isServerStreaming();
+  }
 }

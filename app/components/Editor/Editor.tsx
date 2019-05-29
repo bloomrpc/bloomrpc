@@ -12,7 +12,7 @@ import {
 } from './actions';
 import { Response } from './Response';
 import { Metadata } from './Metadata';
-import { Controls } from './Controls';
+import { Controls, isControlVisible } from './Controls';
 import { Request } from './Request';
 import { Options } from './Options';
 import { RequestType } from './RequestType';
@@ -139,7 +139,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,
-    interactive: initialRequest ? initialRequest.interactive : (protoInfo && protoInfo.isServerStreaming()) || INITIAL_STATE.interactive,
+    interactive: initialRequest ? initialRequest.interactive : (protoInfo && protoInfo.usesStream()) || INITIAL_STATE.interactive,
     metadata: (initialRequest && initialRequest.metadata) || getMetadata() || INITIAL_STATE.metadata,
   }, undefined);
 
@@ -233,7 +233,10 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
             }}
           />
 
-          <div style={styles.playIconContainer}>
+          <div style={{
+            ...styles.playIconContainer,
+            ...(isControlVisible(state) ? styles.streamControlsContainer : {}),
+          }}>
             <Controls
                 dispatch={dispatch}
                 state={state}
@@ -303,6 +306,9 @@ const styles = {
     right: "-30px",
     marginLeft: "-25px",
     top: "calc(50% - 80px)",
+  },
+  streamControlsContainer: {
+    right: "-42px",
   },
   inputContainer: {
     display: "flex",
