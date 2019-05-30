@@ -65,7 +65,7 @@ The installer will be located in the `release` folder
 ## Planned Features
 
 - [x] Client-Side Streaming and Bi-Directional Streaming Support
-- [ ] Draggable tabs
+- [x] Draggable tabs
 - [ ] Web Version with GRPC-WEB
 
 ## Contributing

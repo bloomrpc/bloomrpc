@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Layout, notification } from 'antd';
+import arrayMove from 'array-move';
 import { Sidebar } from './Sidebar';
 import { TabData, TabList } from './TabList';
 import { loadProtos, ProtoFile, ProtoService } from '../behaviour';
@@ -64,6 +65,18 @@ export function BloomRPC() {
         <Layout.Content tagName="section">
           <TabList
             tabs={editorTabs.tabs}
+            onDragEnd={({oldIndex, newIndex}) => {
+              const newTab = editorTabs.tabs[oldIndex];
+
+              setTabs({
+                activeKey: newTab && newTab.tabKey || editorTabs.activeKey,
+                tabs: arrayMove(
+                    editorTabs.tabs,
+                    oldIndex,
+                    newIndex,
+                ),
+              })
+            }}
             activeKey={editorTabs.activeKey}
             onEditorRequestChange={(editorRequestInfo) => {
               storeRequestInfo(editorRequestInfo);
