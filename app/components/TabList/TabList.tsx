@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Tabs } from 'antd';
 import { Editor, EditorRequest } from '../Editor';
 import { ProtoInfo, ProtoService } from '../../behaviour';
+import { DraggableItem, DraggableTabs } from "./DraggableTabList";
 
 interface TabListProps {
   tabs: TabData[]
@@ -9,6 +10,7 @@ interface TabListProps {
   onChange?: (activeKey: string) => void
   onDelete?: (activeKey: string | React.MouseEvent<HTMLElement>) => void
   onEditorRequestChange?: (requestInfo: EditorTabRequest) => void
+  onDragEnd: (indexes: {oldIndex: number, newIndex: number}) => void
 }
 
 export interface TabData {
@@ -22,7 +24,7 @@ export interface EditorTabRequest extends EditorRequest {
   id: string
 }
 
-export function TabList({ tabs, activeKey, onChange, onDelete, onEditorRequestChange }: TabListProps) {
+export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange }: TabListProps) {
   const tabsWithMatchingKey =
     tabs.filter(tab => tab.tabKey === activeKey);
 
@@ -32,6 +34,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onEditorRequestCh
 
   return (
     <Tabs
+      className={"draggable-tabs"}
       onEdit={(targetKey, action) => {
         if (action === "remove") {
           onDelete && onDelete(targetKey);
@@ -43,6 +46,32 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onEditorRequestCh
       activeKey={tabActiveKey || "0"}
       hideAdd
       type="editable-card"
+      renderTabBar={(props, DefaultTabBar: any) => {
+        return (
+            <DraggableTabs
+                onSortEnd={onDragEnd}
+                lockAxis={"x"}
+                axis={"x"}
+                pressDelay={120}
+                helperClass={"draggable draggable-tab"}
+            >
+              <DefaultTabBar {...props}>
+                {(node: any) => {
+                  const nodeIndex = tabs.findIndex(tab => tab.tabKey === node.key);
+                  const nodeTab = tabs.find(tab => tab.tabKey === node.key);
+                  return (
+                      <DraggableItem
+                          active={nodeTab && nodeTab.tabKey === activeKey}
+                          index={nodeIndex}
+                      >
+                        {node}
+                      </DraggableItem>
+                  )
+                }}
+              </DefaultTabBar>
+            </DraggableTabs>
+        )
+      }}
     >
       {tabs.length === 0 ? (
         <Tabs.TabPane

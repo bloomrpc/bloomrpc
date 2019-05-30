@@ -109,17 +109,54 @@
 .ant-modal-header {
   background: #001529;
   border-bottom: none;
-.ant-modal-title {
-  color: #fff;
-}
-}
-
-.ant-modal-footer {
-
+  .ant-modal-title {
+    color: #fff;
+  }
 }
 
 .ant-modal-content {
 .ant-modal-close-x {
   color: #fff;
 }
+}
+
+.draggable-tab {
+  position: relative;
+  padding-bottom: 1px;
+  color: #1890ff;
+  background: #fff;
+  font-size: 14px;
+
+  border-color: #e8e8e8;
+
+  height: 40px !important;
+
+  padding: 0px 16px;
+  line-height: 38px;
+  border-radius: 4px 4px 0 0;
+
+  border: 1px solid rgba(0, 21, 41, 0.18);
+  border-bottom: 0;
+
+  .ant-tabs-close-x {
+    width: 16px;
+    height: 16px;
+    height: 14px;
+    margin-right: -5px;
+    margin-left: 3px;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+    vertical-align: middle;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+}
+
+.draggable-tab.active {
+  font-weight: 500;
+}
+
+.inline-item {
+    display: inline-block;
 }

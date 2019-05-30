@@ -205,7 +205,8 @@
     "yarn": "^1.13.0"
   },
   "dependencies": {
-    "antd": "^3.14.1",
+    "antd": "3.14.1",
+    "array-move": "^2.1.0",
     "electron-store": "^2.0.0",
     "lodash.get": "^4.4.2",
     "mousetrap": "^1.6.3",
@@ -214,6 +215,7 @@
     "react": "^16.8.4",
     "react-ace": "^6.4.0",
     "react-dom": "^16.8.4",
+    "react-sortable-hoc": "^1.9.1",
     "react-test-renderer": "^16.8.4",
     "source-map-support": "^0.5.10",
     "terser-webpack-plugin": "^1.2.3"
