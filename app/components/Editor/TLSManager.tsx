@@ -25,6 +25,7 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
         <>
         <div>
             <Button
+                href=""
                 type="primary"
                 onClick={async () => {
                   const cert = await handleImportRootCert(certs, setCerts);

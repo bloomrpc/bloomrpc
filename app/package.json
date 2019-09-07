@@ -13,7 +13,9 @@
     "electron-rebuild": "node ../internals/scripts/ElectronRebuild.js",
     "postinstall": "yarn electron-rebuild --version=4.0.3"
   },
-  "externals": ["grpc"],
+  "externals": [
+    "grpc"
+  ],
   "license": "LGPL3",
   "dependencies": {
     "bloomrpc-mock": "^0.2.9",

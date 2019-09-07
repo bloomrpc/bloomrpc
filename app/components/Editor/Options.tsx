@@ -95,6 +95,7 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
         </div>
 
         <Button
+          href=""
           icon="file-ppt"
           type="dashed"
           onClick={() => dispatch(setProtoVisibility(true))}

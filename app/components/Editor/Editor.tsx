@@ -25,6 +25,8 @@ import 'brace/mode/json';
 import 'brace/mode/protobuf';
 import { exportResponseToJSONFile } from "../../behaviour/response";
 import Resizable from "re-resizable";
+import { Command } from 'react-ace';
+import { makeRequest } from './PlayButton';
 
 export interface EditorAction {
   [key: string]: any
@@ -143,6 +145,16 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
     metadata: (initialRequest && initialRequest.metadata) || getMetadata() || INITIAL_STATE.metadata,
   }, undefined);
 
+  const commands: Command[] = [
+    {
+      name: 'Request',
+      bindKey: { win: 'Ctrl+Enter', mac: 'Command+Enter' },
+      exec: () => {
+        makeRequest({ protoInfo, state, dispatch });
+      },
+    },
+  ];
+
   useEffect(() => {
     if (protoInfo && !initialRequest) {
       try {
@@ -224,6 +236,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
           <Request
             data={state.data}
             streamData={state.requestStreamData}
+            commands={commands}
             onChangeData={(value) => {
               dispatch(setData(value));
               onRequestChange && onRequestChange({

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AceEditor from 'react-ace';
+import AceEditor, { Command } from 'react-ace';
 import { Tabs } from 'antd';
 import { Viewer } from './Viewer';
 
@@ -7,9 +7,10 @@ interface RequestProps {
   data: string
   streamData: string[]
   onChangeData: (value: string) => void
+  commands?: Command[],
 }
 
-export function Request({onChangeData, data, streamData}: RequestProps) {
+export function Request({onChangeData, commands, data, streamData}: RequestProps) {
   const editorTabKey = `editorTab`;
 
   return (
@@ -30,6 +31,7 @@ export function Request({onChangeData, data, streamData}: RequestProps) {
             fontSize={13}
             cursorStart={2}
             onChange={onChangeData}
+            commands={commands}
             showPrintMargin={false}
             showGutter
             highlightActiveLine={false}
