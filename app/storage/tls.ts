@@ -17,10 +17,11 @@ export function storeTLSList(certs: Certificate[]) {
 }
 
 export function getTLSList() {
-  return [{
+  const serverCertificate = {
     useServerCertificate: true,
     rootCert: { fileName: "Server Certificate", filePath: "" },
-  }].concat(TLSStore.get(TLS_KEYS.CERTIFICATES, []));
+  }
+  return TLSStore.get(TLS_KEYS.CERTIFICATES, [serverCertificate]);
 }
 
 export function clearTLS() {
