@@ -62,7 +62,29 @@ export class GRPCRequest extends EventEmitter {
     // Add metadata
     const md = new Metadata();
     Object.keys(metadata).forEach(key => {
-      md.add(key, metadata[key]);
+      if (key.endsWith("-bin")) {
+        let encoding = "utf8";
+        let value = metadata[key];
+
+        // can prefix the value with any encoding that the buffer supports
+        // example:
+        // binary://binaryvalue
+        // utf8://anyvalue
+        // base64://sombase64value
+        const regexEncoding = /(^.*):\/\/(.*)/g;
+        if (regexEncoding.test(value)) {
+          const groups = new RegExp(regexEncoding).exec(value);
+
+          if (groups) {
+            encoding = groups[1];
+            value = groups[2];
+          }
+        }
+
+        md.add(key, Buffer.from(value, encoding));
+      } else {
+        md.add(key, metadata[key]);
+      }
     });
 
     // Gather method information
