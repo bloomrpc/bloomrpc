@@ -1,8 +1,11 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { Tabs } from 'antd';
 import { Editor, EditorRequest } from '../Editor';
 import { ProtoInfo, ProtoService } from '../../behaviour';
 import { DraggableItem, DraggableTabs } from "./DraggableTabList";
+import * as Mousetrap from 'mousetrap';
+import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 
 interface TabListProps {
   tabs: TabData[]
@@ -31,6 +34,19 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
   const tabActiveKey = tabsWithMatchingKey.length === 0
     ? [...tabs.map(tab => tab.tabKey)].pop()
     : [...tabsWithMatchingKey.map(tab => tab.tabKey)].pop();
+
+  useEffect(() => {
+    Mousetrap.bindGlobal(['command+w', 'ctrl+w'], () => {
+      if (tabActiveKey) {
+        onDelete && onDelete(tabActiveKey);
+      }
+      return false;
+    });
+
+    return () => {
+      Mousetrap.unbind(['command+w', 'ctrl+w']);
+    }
+  });
 
   return (
     <Tabs
