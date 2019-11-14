@@ -40,6 +40,7 @@ export function Request({onChangeData, commands, data, streamData}: RequestProps
               useWorker: true,
               displayIndentGuides: true
             }}
+            tabSize={2}
           />
         </Tabs.TabPane>
 
