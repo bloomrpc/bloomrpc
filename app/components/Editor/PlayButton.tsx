@@ -9,7 +9,7 @@ import {
   addResponseStreamData, setStreamCommitted
 } from './actions';
 import { ControlsStateProps } from './Controls';
-import { GRPCEventType, GRPCRequest, ResponseMetaInformation } from '../../behaviour';
+import { GRPCEventType, GRPCRequest, ResponseData, ResponseMetaInformation } from '../../behaviour';
 
 export const makeRequest = ({ dispatch, state, protoInfo }: ControlsStateProps) => {
   // Do nothing if not set
@@ -57,7 +57,12 @@ export const makeRequest = ({ dispatch, state, protoInfo }: ControlsStateProps) 
     }));
   });
 
-  grpcRequest.on(GRPCEventType.DATA, (data: object, metaInfo: ResponseMetaInformation) => {
+  grpcRequest.on(GRPCEventType.DATA, (data: ResponseData , metaInfo: ResponseMetaInformation) => {
+    Object.keys(data).forEach(key => {
+      if(Buffer.isBuffer(data[key])) {
+        data[key] = JSON.parse(data.content.toString('utf8'));
+      }
+    });
     if (metaInfo.stream && state.interactive) {
       dispatch(addResponseStreamData({
         output: JSON.stringify(data, null, 2),

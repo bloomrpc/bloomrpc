@@ -14,6 +14,10 @@ export interface GRPCRequestInfo {
   tlsCertificate?: Certificate
 }
 
+export interface ResponseData {
+  [k: string]: any;
+}
+
 export interface ResponseMetaInformation {
   responseTime?: number;
   stream?: boolean;
