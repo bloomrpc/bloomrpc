@@ -201,6 +201,16 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
               defaultEnvironment={state.environment}
               environments={environmentList}
               onChangeEnvironment={(environment) => {
+
+                if (!environment) {
+                  dispatch(setEnvironment(""));
+                  onRequestChange && onRequestChange({
+                    ...state,
+                    environment: "",
+                  });
+                  return;
+                }
+
                 dispatch(setUrl(environment.url));
                 dispatch(setMetadata(environment.metadata));
                 dispatch(setEnvironment(environment.name));

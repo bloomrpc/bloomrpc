@@ -12,7 +12,7 @@ export interface AddressBarProps {
   protoInfo?: ProtoInfo
   onChangeUrl?: (e: ChangeEvent<HTMLInputElement>) => void
   defaultEnvironment?: string
-  onChangeEnvironment?: (environment: EditorEnvironment) => void
+  onChangeEnvironment?: (environment?: EditorEnvironment) => void
   onEnvironmentSave?: (name: string) => void
   onEnvironmentDelete?: (name: string) => void
 }
@@ -118,7 +118,7 @@ export function AddressBar({loading, url, onChangeUrl, protoInfo, defaultEnviron
                 setCurrentEnvironmentName(value);
 
                 const selectedEnv = (environments || []).find(env => env.name === value);
-                onChangeEnvironment && selectedEnv && onChangeEnvironment(selectedEnv);
+                onChangeEnvironment && onChangeEnvironment(selectedEnv);
               }}
           >
             <Select.Option value="">
