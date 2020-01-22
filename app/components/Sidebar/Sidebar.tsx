@@ -42,13 +42,13 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
       <div style={styles.optionsContainer}>
         <div style={{width: "50%"}}>
           <Tooltip title="Reload" placement="bottomLeft" align={{offset: [-8, 0]}}>
-            <Button href="" type="ghost" style={{height: 22, paddingRight: 5, paddingLeft: 5}} onClick={onReload}>
+            <Button type="ghost" style={{height: 22, paddingRight: 5, paddingLeft: 5}} onClick={onReload}>
               <Icon type="reload" style={{cursor: "pointer", color: "#1d93e6"}}/>
             </Button>
           </Tooltip>
 
           <Tooltip title="Import Paths" placement="bottomLeft" align={{offset: [-8, 0]}}>
-            <Button href=""
+            <Button
                 type="ghost"
                 style={{height: 22, paddingRight: 5, paddingLeft: 5, marginLeft: 5}}
                 onClick={() => setImportPathsVisible(true)}
@@ -70,7 +70,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
               bodyStyle={{padding: 0}}
               width={750}
               footer={[
-                <Button href="" key="back" onClick={() => setImportPathsVisible(false)}>Close</Button>
+                <Button key="back" onClick={() => setImportPathsVisible(false)}>Close</Button>
               ]}
           >
             <PathResolution
@@ -78,11 +78,12 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
                 importPaths={importPaths}
             />
           </Modal>
+
         </div>
         <div style={{width: "50%", textAlign: "right"}}>
           <Tooltip title="Delete all" placement="bottomRight" align={{offset: [10, 0]}}>
-            <Button href="" type="danger" style={{height: 22, paddingRight: 5, paddingLeft: 5}} onClick={onDeleteAll}>
-              <Icon type="delete" style={{cursor: "pointer", }} />
+            <Button type="ghost" style={{height: 22, paddingRight: 5, paddingLeft: 5}} onClick={onDeleteAll}>
+              <Icon type="delete" style={{cursor: "pointer", color: "red" }} />
             </Button>
           </Tooltip>
         </div>

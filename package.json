@@ -205,7 +205,7 @@
     "yarn": "^1.13.0"
   },
   "dependencies": {
-    "antd": "3.14.1",
+    "antd": "3.26.7",
     "array-move": "^2.1.0",
     "electron-store": "^2.0.0",
     "lodash.get": "^4.4.2",

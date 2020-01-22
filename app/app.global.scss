@@ -8,6 +8,9 @@
   background: #fff !important;
 }
 
+.ant-tabs-tabpane-inactive {
+  height: 0px !important;
+}
 
 .ant-layout-content > .ant-tabs:not(.ant-tabs-vertical) > .ant-tabs-content {
   height: 100%;
@@ -159,4 +162,11 @@
 
 .inline-item {
     display: inline-block;
+}
+
+.env-modal {
+  .ant-modal-confirm-content {
+    margin-top: 20px;
+    margin-left: 0px !important;
+  }
 }
