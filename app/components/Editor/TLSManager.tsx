@@ -25,7 +25,6 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
         <>
         <div>
             <Button
-                href=""
                 type="primary"
                 onClick={async () => {
                   const cert = await handleImportRootCert(certs, setCerts);
@@ -90,7 +89,7 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
                             {privateKey ? (
                                 <span>{privateKey.fileName}</span>
                             ) : (
-                                <a href={'#'} onClick={async (e) => {
+                                <a onClick={async (e) => {
                                   e.preventDefault();
                                   const cert = await handleImportPrivateKey(certificate, certs, setCerts);
                                   if (cert && cert.rootCert.filePath === (selected && selected.rootCert.filePath)) {
@@ -117,7 +116,7 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
                                   {certificate.certChain.fileName}
                                 </span>
                             ) : (
-                                <a href={'#'} onClick={async (e) => {
+                                <a onClick={async (e) => {
                                   e.preventDefault();
                                   const cert = await handleImportCertChain(certificate, certs, setCerts);
                                   if (cert && cert.rootCert.filePath === (selected && selected.rootCert.filePath)) {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Tabs } from 'antd';
-import { Editor, EditorRequest } from '../Editor';
+import { Editor, EditorEnvironment, EditorRequest } from '../Editor';
 import { ProtoInfo, ProtoService } from '../../behaviour';
 import { DraggableItem, DraggableTabs } from "./DraggableTabList";
 import * as Mousetrap from 'mousetrap';
@@ -14,6 +14,8 @@ interface TabListProps {
   onDelete?: (activeKey: string | React.MouseEvent<HTMLElement>) => void
   onEditorRequestChange?: (requestInfo: EditorTabRequest) => void
   onDragEnd: (indexes: {oldIndex: number, newIndex: number}) => void
+  environmentList?: EditorEnvironment[],
+  onEnvironmentChange?: () => void
 }
 
 export interface TabData {
@@ -27,7 +29,7 @@ export interface EditorTabRequest extends EditorRequest {
   id: string
 }
 
-export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange }: TabListProps) {
+export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange, environmentList, onEnvironmentChange }: TabListProps) {
   const tabsWithMatchingKey =
     tabs.filter(tab => tab.tabKey === activeKey);
 
@@ -96,7 +98,10 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
           closable={false}
           style={{ height: "100%" }}
         >
-          <Editor />
+          <Editor
+            environmentList={environmentList}
+            onEnvironmentListChange={onEnvironmentChange}
+          />
         </Tabs.TabPane>
       ) : tabs.map((tab) => (
           <Tabs.TabPane
@@ -106,9 +111,11 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
             style={{ height: "100%" }}
           >
             <Editor
+              environmentList={environmentList}
               protoInfo={new ProtoInfo(tab.service, tab.methodName)}
               key={tab.tabKey}
               initialRequest={tab.initialRequest}
+              onEnvironmentListChange={onEnvironmentChange}
               onRequestChange={(editorRequest: EditorRequest) => {
                 onEditorRequestChange && onEditorRequestChange({
                   id: tab.tabKey,

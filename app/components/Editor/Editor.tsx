@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { ChangeEvent, useEffect, useReducer } from 'react';
-import { Icon, Input } from 'antd';
+import { useEffect, useReducer } from 'react';
 import {
   actions,
-  setData,
+  setData, setEnvironment, setInteractive,
   setMetadata,
   setMetadataVisibilty,
   setProtoVisibility,
@@ -15,7 +14,6 @@ import { Metadata } from './Metadata';
 import { Controls, isControlVisible } from './Controls';
 import { Request } from './Request';
 import { Options } from './Options';
-import { RequestType } from './RequestType';
 import { ProtoFileViewer } from './ProtoFileViewer';
 import { Certificate, GRPCRequest, ProtoInfo } from '../../behaviour';
 import { getMetadata, getUrl, storeUrl } from '../../storage';
@@ -27,10 +25,20 @@ import { exportResponseToJSONFile } from "../../behaviour/response";
 import Resizable from "re-resizable";
 import { Command } from 'react-ace';
 import { makeRequest } from './PlayButton';
+import { AddressBar } from "./AddressBar";
+import { deleteEnvironment, getEnvironments, saveEnvironment } from "../../storage/environments";
 
 export interface EditorAction {
   [key: string]: any
   type: string
+}
+
+export interface EditorEnvironment {
+  name: string
+  url: string
+  metadata: string,
+  interactive: boolean
+  tlsCertificate: Certificate,
 }
 
 export interface EditorRequest {
@@ -39,6 +47,7 @@ export interface EditorRequest {
   inputs?: string // @deprecated
   metadata: string
   interactive: boolean
+  environment?: string
   tlsCertificate?: Certificate
 }
 
@@ -57,6 +66,8 @@ export interface EditorProps {
   protoInfo?: ProtoInfo
   onRequestChange?: (editorRequest: EditorRequest & EditorState) => void
   initialRequest?: EditorRequest
+  environmentList?: EditorEnvironment[]
+  onEnvironmentListChange?: (environmentList: EditorEnvironment[]) => void
 }
 
 export interface EditorResponse {
@@ -132,17 +143,21 @@ const reducer = (state: EditorState, action: EditorAction) => {
 
     case actions.SET_SSL_CERTIFICATE:
       return { ...state, tlsCertificate: action.certificate };
+
+    case actions.SET_ENVIRONMENT:
+      return { ...state, environment: action.environment };
     default:
       return state
   }
 };
 
-export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorProps) {
+export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList }: EditorProps) {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,
     interactive: initialRequest ? initialRequest.interactive : (protoInfo && protoInfo.usesStream()) || INITIAL_STATE.interactive,
     metadata: (initialRequest && initialRequest.metadata) || getMetadata() || INITIAL_STATE.metadata,
+    environment: (initialRequest && initialRequest.environment),
   }, undefined);
 
   const commands: Command[] = [
@@ -178,24 +193,68 @@ export function Editor({ protoInfo, initialRequest, onRequestChange }: EditorPro
   return (
     <div style={styles.tabContainer}>
       <div style={styles.inputContainer}>
-        <div style={{ width: "50%" }}>
-          <Input
-            className="server-url"
-            addonAfter={(
-              <div style={{display: "flex", alignItems: "center", width: "125px"}}>
-                {state.loading ? <Icon type="loading"/> : <Icon type="database"/>}
-                <RequestType protoInfo={protoInfo} />
-              </div>
-            )}
-            defaultValue={state.url}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              dispatch(setUrl(e.target.value));
-              storeUrl(e.target.value);
-              onRequestChange && onRequestChange({
-                ...state,
-                url: e.target.value,
-              });
-            }}/>
+        <div style={{ width: "60%" }}>
+          <AddressBar
+              protoInfo={protoInfo}
+              loading={state.loading}
+              url={state.url}
+              defaultEnvironment={state.environment}
+              environments={environmentList}
+              onChangeEnvironment={(environment) => {
+                dispatch(setUrl(environment.url));
+                dispatch(setMetadata(environment.metadata));
+                dispatch(setEnvironment(environment.name));
+                dispatch(setTSLCertificate(environment.tlsCertificate));
+                dispatch(setInteractive(environment.interactive));
+
+                onRequestChange && onRequestChange({
+                  ...state,
+                  environment: environment.name,
+                  url: environment.url,
+                  metadata: environment.metadata,
+                  tlsCertificate: environment.tlsCertificate,
+                  interactive: environment.interactive,
+                });
+              }}
+              onEnvironmentDelete={(environmentName) => {
+                deleteEnvironment(environmentName);
+                dispatch(setEnvironment(""));
+                onRequestChange && onRequestChange({
+                  ...state,
+                  environment: "",
+                });
+                onEnvironmentListChange && onEnvironmentListChange(
+                    getEnvironments()
+                );
+              }}
+              onEnvironmentSave={(environmentName) => {
+                saveEnvironment({
+                  name: environmentName,
+                  url: state.url,
+                  interactive: state.interactive,
+                  metadata: state.metadata,
+                  tlsCertificate: state.tlsCertificate,
+                });
+
+                dispatch(setEnvironment(environmentName));
+                onRequestChange && onRequestChange({
+                  ...state,
+                  environment: environmentName,
+                });
+
+                onEnvironmentListChange && onEnvironmentListChange(
+                    getEnvironments()
+                );
+              }}
+              onChangeUrl={(e) => {
+                dispatch(setUrl(e.target.value));
+                storeUrl(e.target.value);
+                onRequestChange && onRequestChange({
+                  ...state,
+                  url: e.target.value,
+                });
+              }}
+          />
         </div>
 
         {protoInfo && (

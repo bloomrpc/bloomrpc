@@ -16,6 +16,8 @@ import {
   storeRequestInfo,
   storeTabs,
 } from '../storage';
+import { EditorEnvironment } from "./Editor";
+import { getEnvironments } from "../storage/environments";
 
 export interface EditorTabs {
   activeKey: string
@@ -29,6 +31,8 @@ export function BloomRPC() {
     activeKey: "0",
     tabs: [],
   });
+
+  const [environments, setEnvironments] = useState<EditorEnvironment[]>(getEnvironments());
 
   function setTabs(props: EditorTabs) {
     setEditorTabs(props);
@@ -46,8 +50,8 @@ export function BloomRPC() {
   }, []);
 
   return (
-    <Layout style={styles.layout} tagName="main">
-      <Layout tagName="section">
+    <Layout style={styles.layout}>
+      <Layout>
         <Layout.Sider style={styles.sider} width={250}>
           <Sidebar
             protos={protos}
@@ -62,7 +66,7 @@ export function BloomRPC() {
           />
         </Layout.Sider>
 
-        <Layout.Content tagName="section">
+        <Layout.Content>
           <TabList
             tabs={editorTabs.tabs}
             onDragEnd={({oldIndex, newIndex}) => {
@@ -78,6 +82,10 @@ export function BloomRPC() {
               })
             }}
             activeKey={editorTabs.activeKey}
+            environmentList={environments}
+            onEnvironmentChange={() => {
+              setEnvironments(getEnvironments());
+            }}
             onEditorRequestChange={(editorRequestInfo) => {
               storeRequestInfo(editorRequestInfo);
             }}

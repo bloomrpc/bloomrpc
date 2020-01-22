@@ -71,7 +71,7 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
         <Dropdown overlay={(
             <Menu>
               <Menu.Item key="0">
-                <a href="#" onClick={(e) => {
+                <a onClick={(e) => {
                   e.preventDefault();
                   onClickExport && onClickExport()
                 }}>Export response</a>
@@ -95,7 +95,6 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
         </div>
 
         <Button
-          href=""
           icon="file-ppt"
           type="dashed"
           onClick={() => dispatch(setProtoVisibility(true))}
