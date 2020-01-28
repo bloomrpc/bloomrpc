@@ -18,7 +18,7 @@
   ],
   "license": "LGPL3",
   "dependencies": {
-    "bloomrpc-mock": "^0.2.9",
-    "grpc": "^1.19.0"
+    "bloomrpc-mock": "0.3.1",
+    "grpc": "1.24.2"
   }
 }
