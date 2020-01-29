@@ -68,7 +68,7 @@ export function BloomRPC() {
 
         <Layout.Content>
           <TabList
-            tabs={editorTabs.tabs}
+            tabs={editorTabs.tabs || []}
             onDragEnd={({oldIndex, newIndex}) => {
               const newTab = editorTabs.tabs[oldIndex];
 
@@ -78,7 +78,7 @@ export function BloomRPC() {
                     editorTabs.tabs,
                     oldIndex,
                     newIndex,
-                ),
+                ).filter(e => e),
               })
             }}
             activeKey={editorTabs.activeKey}
@@ -119,7 +119,7 @@ export function BloomRPC() {
             onChange={(activeKey: string) => {
               setTabs({
                 activeKey,
-                tabs: editorTabs.tabs,
+                tabs: editorTabs.tabs || [],
               })
             }}
           />

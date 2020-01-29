@@ -104,6 +104,7 @@ const styles = {
     position: "relative" as "relative",
   },
   responseTime: {
+    userSelect: "none" as "none",
     fontSize: 11,
     padding: "3px 7px",
     background: '#f3f6f7',

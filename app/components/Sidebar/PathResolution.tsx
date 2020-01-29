@@ -46,6 +46,7 @@ export function PathResolution({ importPaths, onImportsChange }: PathResolutionP
                         try {
                           const path = await importResolvePath();
                           setPathStateValue(path);
+                          addImportPath(path, importPaths, onImportsChange);
                         } catch (e) {
                           // No file selected.
                         }
