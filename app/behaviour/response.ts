@@ -10,7 +10,7 @@ export function exportResponseToJSONFile(protoInfo: ProtoInfo, editorState: Edit
     remote.dialog.showOpenDialog({
       properties: ['openDirectory'],
       filters: []
-    }, (filePaths) => {
+    }, (filePaths: string[]) => {
       if (!filePaths) {
         return reject("No folder selected");
       }

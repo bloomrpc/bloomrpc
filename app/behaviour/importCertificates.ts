@@ -21,7 +21,7 @@ export function importRootCert(): Promise<Certificate> {
             filters: [
                 { name: 'All', extensions: ['*'] },
             ]
-        }, async (filePaths) => {
+        }, async (filePaths: string[]) => {
             if (!filePaths || filePaths.length === 0) {
                 reject("No file selected");
                 return;
@@ -46,7 +46,7 @@ export function importPrivateKey(): Promise<CertFile> {
             filters: [
                 { name: 'All', extensions: ['*'] },
             ]
-        },(filePaths) => {
+        },(filePaths: string[]) => {
             if (!filePaths || filePaths.length === 0) {
                 return reject("No file selected");
             }
@@ -65,7 +65,7 @@ export function importCertChain(): Promise<CertFile> {
             filters: [
                 { name: 'All', extensions: ['*'] },
             ]
-        },(filePaths) => {
+        },(filePaths: string[]) => {
             if (!filePaths || filePaths.length === 0) {
                 return reject("No file selected");
             }

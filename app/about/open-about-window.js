@@ -19,6 +19,9 @@ module.exports = function openAboutWindow(parentWindow) {
         titleBarStyle: 'hidden-inset',
         icon: icon,
         parent: parentWindow,
+        webPreferences: {
+            nodeIntegration: true
+        }
     }
 
     aboutWin = new (BrowserWindow || remote.BrowserWindow)(options);
