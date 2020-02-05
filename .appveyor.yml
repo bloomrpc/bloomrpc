@@ -5,7 +5,7 @@ branches:
 environment:
   ELECTRON_CACHE: "%LOCALAPPDATA%\\cache\\electron"
   ELECTRON_BUILDER_CACHE: "%LOCALAPPDATA%\\cache\\electron-builder"
-  nodejs_version: "10.14"
+  nodejs_version: "12.4"
 
 install:
   - ps: Install-Product node $env:nodejs_version

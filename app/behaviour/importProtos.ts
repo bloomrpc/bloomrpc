@@ -23,7 +23,7 @@ export function importProtos(onProtoUploaded: OnProtoUpload, importPaths?: strin
     filters: [
       { name: 'Protos', extensions: ['proto'] },
     ]
-  }, async (filePaths) => {
+  }, async (filePaths: string[]) => {
     if (!filePaths) {
       return;
     }
@@ -101,7 +101,7 @@ export function importResolvePath(): Promise<string> {
     remote.dialog.showOpenDialog({
       properties: ['openDirectory'],
       filters: []
-    }, (filePaths) => {
+    }, (filePaths: string[]) => {
       if (!filePaths) {
         return reject("No folder selected");
       }
