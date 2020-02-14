@@ -6,6 +6,7 @@ import { ProtoInfo, ProtoService } from '../../behaviour';
 import { DraggableItem, DraggableTabs } from "./DraggableTabList";
 import * as Mousetrap from 'mousetrap';
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
+import styled from 'styled-components';
 
 interface TabListProps {
   tabs: TabData[]
@@ -24,6 +25,24 @@ export interface TabData {
   service: ProtoService
   initialRequest?: EditorRequest,
 }
+
+const StyledTabPane = styled(Tabs.TabPane)`
+  color: ${props=>props.theme.primary};
+  background: ${props=>props.theme.background};
+`
+
+const StyledTabs = styled(Tabs)`
+  color: ${props=>props.theme.primary} !important;
+  background: ${props=>props.theme.background} !important;
+  padding: 10px 0px 0px 20px;
+  margin-bottom: 0px;
+  height: 100%;
+  &.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
+    color: ${props=>props.theme.primary} !important;
+    background: ${props=>props.theme.background} !important;
+  }
+`
+
 
 export interface EditorTabRequest extends EditorRequest {
   id: string
@@ -51,7 +70,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
   });
 
   return (
-    <Tabs
+    <StyledTabs
       className={"draggable-tabs"}
       onEdit={(targetKey, action) => {
         if (action === "remove") {
@@ -59,8 +78,6 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
         }
       }}
       onChange={onChange}
-      tabBarStyle={styles.tabBarStyle}
-      style={styles.tabList}
       activeKey={tabActiveKey || "0"}
       hideAdd
       type="editable-card"
@@ -92,23 +109,21 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
       }}
     >
       {tabs.length === 0 ? (
-        <Tabs.TabPane
+        <StyledTabPane
           tab={"New Tab"}
           key={"0"}
           closable={false}
-          style={{ height: "100%" }}
         >
           <Editor
             environmentList={environmentList}
             onEnvironmentListChange={onEnvironmentChange}
           />
-        </Tabs.TabPane>
+        </StyledTabPane>
       ) : tabs.map((tab) => (
-          <Tabs.TabPane
+          <StyledTabPane
             tab={`${tab.service.serviceName}.${tab.methodName}`}
             key={tab.tabKey}
             closable={true}
-            style={{ height: "100%" }}
           >
             <Editor
               environmentList={environmentList}
@@ -123,18 +138,18 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
                 })
               }}
             />
-          </Tabs.TabPane>
+          </StyledTabPane>
       ))}
-    </Tabs>
+    </StyledTabs>
   );
 }
 
-const styles = {
-  tabList: {
-    height: "100%"
-  },
-  tabBarStyle: {
-    padding: "10px 0px 0px 20px",
-    marginBottom: "0px",
-  }
-};
+// const styles = {
+//   tabList: {
+//     height: "100%"
+//   },
+//   tabBarStyle: {
+//     padding: "10px 0px 0px 20px",
+//     marginBottom: "0px",
+//   }
+// };

@@ -3,6 +3,7 @@ import { fromFileName, mockRequestMethods, Proto, walkServices } from 'bloomrpc-
 import * as path from "path";
 import { ProtoFile, ProtoService } from './protobuf';
 import { Service } from 'protobufjs';
+import console = require('console');
 
 const commonProtosPath = [
   // @ts-ignore
@@ -50,7 +51,7 @@ export async function loadProtos(filePaths: string[], importPaths?: string[], on
 
       // Services with methods
       const services = parseServices(proto);
-
+      console.log(services)
       // Proto file
       list.push({
         proto,

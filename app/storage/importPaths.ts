@@ -9,7 +9,7 @@ const ImportPathsStore = new Store({
 const KEYS = {
   IMPORT_PATH: "paths"
 };
-
+clearImportPaths()
 export function storeImportPaths(paths: string[]) {
   ImportPathsStore.set(KEYS.IMPORT_PATH, paths);
 }

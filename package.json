@@ -208,8 +208,10 @@
   },
   "dependencies": {
     "@ant-design/dark-theme": "^1.0.3",
+    "@types/styled-components": "^4.4.3",
     "antd": "3.26.7",
     "array-move": "^2.1.0",
+    "color": "^3.1.2",
     "electron-store": "^2.0.0",
     "lodash.get": "^4.4.2",
     "mousetrap": "^1.6.3",
@@ -221,6 +223,7 @@
     "react-sortable-hoc": "^1.9.1",
     "react-test-renderer": "^16.8.4",
     "source-map-support": "^0.5.10",
+    "styled-components": "^5.0.1",
     "terser-webpack-plugin": "^1.2.3"
   },
   "devEngines": {

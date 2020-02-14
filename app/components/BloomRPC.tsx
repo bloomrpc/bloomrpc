@@ -18,14 +18,32 @@ import {
 } from '../storage';
 import { EditorEnvironment } from "./Editor";
 import { getEnvironments } from "../storage/environments";
+import styled from 'styled-components'
 
 export interface EditorTabs {
   activeKey: string
   tabs: TabData[]
 }
 
-export function BloomRPC() {
 
+const StyledLayout = styled(Layout)`
+  height: 100vh;
+  background: ${props => props.theme.background};
+`
+
+const StyledLayoutSider = styled(Layout.Sider)`
+  background: ${props => props.theme.background};
+  transition: all 0s;
+`
+
+const BloomRPC = styled(BloomRPCInternal)``
+
+export {
+  BloomRPC
+}
+
+
+function BloomRPCInternal() {
   const [protos, setProtosState] = useState<ProtoFile[]>([]);
   const [editorTabs, setEditorTabs] = useState<EditorTabs>({
     activeKey: "0",
@@ -51,8 +69,8 @@ export function BloomRPC() {
 
   return (
     <Layout>
-      <Layout style={styles.layout}>
-        <Layout.Sider width={250}>
+      <StyledLayout>
+        <StyledLayoutSider width={250}>
           <Sidebar
             protos={protos}
             onProtoUpload={handleProtoUpload(setProtos, protos)}
@@ -64,7 +82,7 @@ export function BloomRPC() {
               setProtos([]);
             }}
           />
-        </Layout.Sider>
+        </StyledLayoutSider>
 
         <Layout.Content>
           <TabList
@@ -124,7 +142,7 @@ export function BloomRPC() {
             }}
           />
         </Layout.Content>
-      </Layout>
+      </StyledLayout>
 
     </Layout>
   );
@@ -267,21 +285,3 @@ function handleMethodSelected(editorTabs: EditorTabs, setTabs: React.Dispatch<Ed
     });
   }
 }
-const styles = {
-  layout: {
-    height: "100vh"
-  },
-  header: {
-    color: "#fff",
-    fontWeight: 900,
-    fontSize: 20,
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  sider: {
-    zIndex: 20,
-    borderRight: "1px solid rgba(0, 21, 41, 0.18)",
-    backgroundColor: "white",
-    boxShadow: "3px 0px 4px 0px rgba(0,0,0,0.10)",
-  },
-};
