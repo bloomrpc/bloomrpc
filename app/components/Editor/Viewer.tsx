@@ -59,11 +59,10 @@ export function Viewer({ output, responseTime, emptyContent }: ResponseProps) {
         <AceEditor
           ref={editorRef}
           className={"response-edit"}
-          style={{ background: "#fff" }}
           width={"100%"}
           height={"calc(100vh - 188px)"}
           mode="json"
-          theme="textmate"
+          theme="monokai"
           name="output"
           fontSize={13}
           showPrintMargin={false}
@@ -100,14 +99,12 @@ export function Viewer({ output, responseTime, emptyContent }: ResponseProps) {
 
 const styles = {
   responseContainer: {
-    background: "white",
     position: "relative" as "relative",
   },
   responseTime: {
     userSelect: "none" as "none",
     fontSize: 11,
     padding: "3px 7px",
-    background: '#f3f6f7',
     position: "absolute" as "absolute",
     top: "5px",
     right: "0px",

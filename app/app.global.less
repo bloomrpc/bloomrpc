@@ -1,12 +1,48 @@
-@import '~antd/dist/antd.css';
+@import '~antd/dist/antd.less';
 
-.root {
-  background: #f0f2f5;
+.editor-container {
+  display: flex;
+  height: 100%;
+}
+.ant-tabs-nav-scroll {
+  border-bottom: none;
+}
+.locked {
+  color: @error-color;
+}
+.unlocked {
+  color: @primary-color;
 }
 
-.ace-tm .ace_gutter {
-  background: #fff !important;
+.ant-tabs-nav .ant-tabs-tab-active{
+  color: @primary-color !important;
 }
+
+.play-icon {
+  background: @primary-color;
+  color: @body-background;
+}
+
+.metadata-container {
+  background: @body-background;
+}
+
+.meatada-panel {
+  background: @body-background;
+}
+
+.import-proto-title-box {
+  color: @primary-color;
+}
+
+.import-proto-icon {
+  color: @icon-color;
+}
+
+.ant-layout-sider {
+  background: @body-background;
+}
+
 
 .ant-tabs-tabpane-inactive {
   height: 0px !important;
@@ -19,10 +55,6 @@
 
 .ant-tabs-bar {
   border-bottom: 0;
-}
-
-.ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
-  background: #f1f1f1;
 }
 
 .hide {
@@ -68,15 +100,14 @@
   right: 0px;
 }
 
-.ant-drawer-header {
-  background: #001529;
-  border-radius: 0px;
+// .ant-drawer-header {
+//   background: #001529;
+//   border-radius: 0px;
 
-.ant-drawer-title {
-  color: #fff;
-  font-weight: 700;
-}
-}
+// .ant-drawer-title {
+//   color: #fff;
+//   font-weight: 700;
+// }
 
 .ant-tabs-nav-scroll {
   border-bottom: 1px solid rgb(238, 238, 238);
@@ -105,9 +136,6 @@
   height: 0;
 }
 
-#metadata > .ace_gutter {
-  background: #f0f2f5 !important;
-}
 
 .ant-modal-header {
   background: #001529;

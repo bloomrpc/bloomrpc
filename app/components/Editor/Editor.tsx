@@ -19,6 +19,7 @@ import { Certificate, GRPCRequest, ProtoInfo } from '../../behaviour';
 import { getMetadata, getUrl, storeUrl } from '../../storage';
 
 import 'brace/theme/textmate';
+import 'brace/theme/monokai';
 import 'brace/mode/json';
 import 'brace/mode/protobuf';
 import { exportResponseToJSONFile } from "../../behaviour/response";
@@ -27,7 +28,6 @@ import { Command } from 'react-ace';
 import { makeRequest } from './PlayButton';
 import { AddressBar } from "./AddressBar";
 import { deleteEnvironment, getEnvironments, saveEnvironment } from "../../storage/environments";
-
 export interface EditorAction {
   [key: string]: any
   type: string
@@ -293,7 +293,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
         )}
       </div>
 
-      <div style={styles.editorContainer}>
+      <div className="editor-container">
         <Resizable
             enable={{ right: true }}
             defaultSize={{
@@ -370,10 +370,8 @@ const styles = {
     display: "flex",
     height: "100%",
     borderLeft: "1px solid rgba(0, 21, 41, 0.18)",
-    background: "#fff"
   },
   responseContainer: {
-    background: "white",
     maxWidth: "inherit",
     width: "inherit",
     display: "flex",
@@ -397,7 +395,6 @@ const styles = {
     justifyContent: "space-between",
     border: "1px solid rgba(0, 21, 41, 0.18)",
     borderBottom: "1px solid #eee",
-    background: "#fafafa",
     padding: "15px",
     boxShadow: "2px 0px 4px 0px rgba(0,0,0,0.20)",
   },

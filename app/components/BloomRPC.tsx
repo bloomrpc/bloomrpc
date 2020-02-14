@@ -50,9 +50,9 @@ export function BloomRPC() {
   }, []);
 
   return (
-    <Layout style={styles.layout}>
-      <Layout>
-        <Layout.Sider style={styles.sider} width={250}>
+    <Layout>
+      <Layout style={styles.layout}>
+        <Layout.Sider width={250}>
           <Sidebar
             protos={protos}
             onProtoUpload={handleProtoUpload(setProtos, protos)}
@@ -267,7 +267,6 @@ function handleMethodSelected(editorTabs: EditorTabs, setTabs: React.Dispatch<Ed
     });
   }
 }
-
 const styles = {
   layout: {
     height: "100vh"

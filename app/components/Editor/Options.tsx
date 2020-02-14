@@ -30,10 +30,11 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
           }}>
             <Tooltip placement="bottom" title={tlsSelected ? "Secure Connection" : "Unsecure Connection"}>
               <Icon
+                  className={tlsSelected ? "locked" : "unlocked"}
                   type={tlsSelected ? "lock" : "unlock"}
                   style={{
                     fontSize: 18,
-                    color: tlsSelected ? "#28d440" : "#bdbcbc",
+                    // color: tlsSelected ? "#28d440" : "#bdbcbc",
                   }}
               />
             </Tooltip>
@@ -41,7 +42,7 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
               onClick={() => setTlsModalVisible(true)}
               style={styles.tlsButton}
             >
-              <span style={{}}>TLS</span>
+              <span>TLS</span>
             </span>
           </div>
 
@@ -118,7 +119,7 @@ const styles = {
   tlsButton: {
     marginLeft: 10,
     cursor: "pointer",
-    background: "#fafafa",
+    // background: "#fafafa",
     padding: "1px 10px",
     borderRadius: "3px",
     fontWeight: 500,

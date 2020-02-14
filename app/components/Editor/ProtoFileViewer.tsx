@@ -22,11 +22,11 @@ export function ProtoFileViewer({ protoInfo, visible, onClose }: ProtoFileViewer
       visible={visible}
     >
       <AceEditor
-        style={{ marginTop: "10px", background: "#fff" }}
+        style={{ marginTop: "10px"}}
         width={"100%"}
         height={"calc(100vh - 115px)"}
         mode="protobuf"
-        theme="textmate"
+        theme="monokai"
         name="output"
         fontSize={13}
         showPrintMargin={false}

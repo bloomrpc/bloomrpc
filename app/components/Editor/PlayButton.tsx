@@ -98,8 +98,9 @@ export const makeRequest = ({ dispatch, state, protoInfo }: ControlsStateProps) 
 export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
   return (
     <Icon
+      className="play-icon"
       type={state.loading ? "pause-circle" : "play-circle"}
-      theme="filled" style={{ ...styles.playIcon, ...(state.loading ? { color: "#ea5d5d" } : {}) }}
+      theme="filled" style={{ ...styles.playIcon, ...(state.loading ? {} : {}) }}
       onClick={() => makeRequest({ dispatch, state, protoInfo })}
     />
   )
@@ -108,10 +109,8 @@ export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
 const styles = {
   playIcon: {
     fontSize: 50,
-    color: "#28d440",
     border: "3px solid rgb(238, 238, 238)",
     borderRadius: "50%",
     cursor: "pointer",
-    background: "#fff",
   },
 };

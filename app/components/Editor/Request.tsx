@@ -22,11 +22,10 @@ export function Request({onChangeData, commands, data, streamData}: RequestProps
       >
         <Tabs.TabPane tab="Editor" key={editorTabKey}>
           <AceEditor
-            style={{ background: "#fff" }}
             width={"100%"}
             height={"calc(100vh - 185px)"}
             mode="json"
-            theme="textmate"
+            theme="monokai"
             name="inputs"
             fontSize={13}
             cursorStart={2}

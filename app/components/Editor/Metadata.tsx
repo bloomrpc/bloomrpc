@@ -24,13 +24,12 @@ export function Metadata({ onClickMetadata, onMetadataChange, value }: MetadataP
         onResizeStop={(e, direction, ref, d) => {
           setHeight(height + d.height);
         }}
-        className="meatada-panel"
          style={{
            ...styles.optionContainer,
            ...{bottom: `-38px`, height: `${height}px`},
          }}
     >
-      <div>
+      <div className="metadata-container">
         <div style={styles.optionLabel}>
           <a
             href={"#"}
@@ -49,11 +48,10 @@ export function Metadata({ onClickMetadata, onMetadataChange, value }: MetadataP
         <div>
           <AceEditor
             width={"100%"}
-            style={{ background: "#f5f5f5" }}
             height={`${height + 20}px`}
             mode="json"
             focus={visibile}
-            theme="textmate"
+            theme="monokai"
             fontSize={13}
             name="metadata"
             onChange={(value) => {
@@ -76,7 +74,6 @@ export function Metadata({ onClickMetadata, onMetadataChange, value }: MetadataP
 
 const styles = {
   optionLabel: {
-    background: "#001529",
     padding: "7px 10px",
     marginBottom: "5px"
   },
@@ -85,11 +82,9 @@ const styles = {
     fontWeight: 900,
     fontSize: "13px",
     borderLeft: "1px solid rgba(0, 21, 41, 0.18)",
-    background: "#f5f5f5",
     zIndex: 10,
   },
   optionLink: {
-    color: "#fff",
     textDecoration: "none",
   },
 };

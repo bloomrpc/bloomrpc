@@ -25,7 +25,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
 
   return (
     <>
-      <div style={styles.sidebarTitleContainer}>
+      <div className="import-proto-title-box" style={styles.sidebarTitleContainer}>
         <h3 style={styles.sidebarTitle}>Protos</h3>
 
         <Tooltip placement="bottom" title="Import protos">
@@ -36,13 +36,14 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
             type="plus-circle"
             theme="filled"
             style={styles.icon}
+            className="import-proto-icon"
           />
         </Tooltip>
       </div>
       <div style={styles.optionsContainer}>
         <div style={{width: "50%"}}>
           <Tooltip title="Reload" placement="bottomLeft" align={{offset: [-8, 0]}}>
-            <Button type="ghost" style={{height: 22, paddingRight: 5, paddingLeft: 5}} onClick={onReload}>
+            <Button type="ghost" style={{height: 22, paddingRight: 5, paddingLeft: 5, border: 'none'}} onClick={onReload}>
               <Icon type="reload" style={{cursor: "pointer", color: "#1d93e6"}}/>
             </Button>
           </Tooltip>
@@ -50,7 +51,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
           <Tooltip title="Import Paths" placement="bottomLeft" align={{offset: [-8, 0]}}>
             <Button
                 type="ghost"
-                style={{height: 22, paddingRight: 5, paddingLeft: 5, marginLeft: 5}}
+                style={{height: 22, paddingRight: 5, paddingLeft: 5, marginLeft: 5, border: 'none'}}
                 onClick={() => setImportPathsVisible(true)}
             >
               <Icon type="file-search" style={{cursor: "pointer", color: "#1d93e6"}}/>
@@ -83,7 +84,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
         <div style={{width: "50%", textAlign: "right"}}>
           <Tooltip title="Delete all" placement="bottomRight" align={{offset: [10, 0]}}>
             <Button type="ghost" style={{height: 22, paddingRight: 5, paddingLeft: 5}} onClick={onDeleteAll}>
-              <Icon type="delete" style={{cursor: "pointer", color: "red" }} />
+              <Icon type="delete" style={{cursor: "pointer", border: 'none' }} />
             </Button>
           </Tooltip>
         </div>
@@ -162,27 +163,21 @@ const styles = {
     paddingTop: 14,
     paddingBottom: 4,
     paddingLeft: 20,
-    borderBottom: "1px solid #eee",
-    background: "#001529"
   },
   sidebarTitle: {
-    color: "#fff",
+    // color: "#fff",
   },
   icon: {
     fontSize: 23,
     marginBottom: 7,
     marginRight: 12,
     marginTop: -2,
-    color: "#28d440",
-    border: "2px solid #f3f6f9",
     borderRadius: "50%",
     cursor: "pointer"
   },
   optionsContainer: {
-    background: "#fafafa",
     padding: "3px 6px",
     display: "flex",
     alignContent: "space-between",
-    borderBottom: "1px solid #e0e0e0",
   }
 };

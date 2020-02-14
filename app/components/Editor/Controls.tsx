@@ -69,25 +69,25 @@ const styles = {
     marginTop: 17
   },
   pushData: {
-    background: "#11c9f3",
+    // background: "#11c9f3",
     color: "white",
     padding: "10px",
     paddingLeft: "12px",
     borderRadius: "50% 0 0 50%",
     fontSize: "18px",
     cursor: "pointer",
-    border: "2px solid rgb(238, 238, 238)",
+    // border: "2px solid rgb(238, 238, 238)",
     borderRight: "none"
   },
   commit: {
-    background: "#28d440",
+    // background: "#28d440",
     color: "white",
     padding: "10px",
     paddingLeft: "12px",
     borderRadius: "0 50% 50% 0",
     fontSize: "18px",
     cursor: "pointer",
-    border: "2px solid rgb(238, 238, 238)",
+    // border: "2px solid rgb(238, 238, 238)",
     borderLeft: "none",
   }
 };
