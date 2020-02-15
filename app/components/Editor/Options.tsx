@@ -33,18 +33,16 @@ const StyledModal = styled(Modal)`
     background: ${props=>props.theme.background} !important;
     border-top: none;
   }
-  .ant-table-row:hover {
-    background: ${props=>props.theme.backgroundLight} !important;
-  }
   .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
     color: ${props=>props.theme.primary} !important;
   }
-  .ant-table-thead > tr > th, .ant-table-tbody > tr > td:hover {
-    background: black;
+  .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+    background: ${props=>props.theme.backgroundLight} !important;
+    // color: ${props=>props.theme.table.hover.color} !important;
   }
 `
 
-export function Options({ protoInfo, dispatch, interactiveChecked, onInteractiveChange, tlsSelected, onTLSSelected, onClickExport }: OptionsProps) {
+export function Options({ dispatch, interactiveChecked, onInteractiveChange, tlsSelected, onTLSSelected, onClickExport }: OptionsProps) {
 
   const [tlsModalVisible, setTlsModalVisible] = useState(false);
 

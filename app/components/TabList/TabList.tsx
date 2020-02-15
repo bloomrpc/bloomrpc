@@ -55,6 +55,9 @@ const StyledTabs = styled(Tabs)`
     color: ${props=>props.theme.primary} !important;
     background: ${props=>props.theme.background} !important;
   }
+  .ant-tabs-nav .ant-tabs-tab-active {
+    color: ${props=>props.theme.primary} !important;
+  }
 `
 
 const StyledDraggableTabs = styled(DraggableTabs)`

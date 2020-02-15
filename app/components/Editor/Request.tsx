@@ -36,6 +36,7 @@ function RequestInternal({onChangeData, commands, data, streamData}: RequestProp
             height={"calc(100vh - 185px)"}
             mode="json"
             name="inputs"
+            theme={"tomorrow"}
             fontSize={13}
             cursorStart={2}
             onChange={onChangeData}

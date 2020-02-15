@@ -8,10 +8,16 @@ import * as color from 'color'
 const whiteTheme = {
   primary: "#1890ff",
   background: '#fff',
-  backgroundLight: color('#272822').lighten(0.9).rgb().string(),
+  backgroundLight: color('#1890ff').lighten(0.7).rgb().string(),
   inverse: {
     primary: '#fff',
     background: '#30303d'
+  },
+  table: {
+    hover: {
+      background: color('#1890ff').lighten(0.4).rgb().string(),
+      color: color('#fff').rgb().string(),    
+    }
   },
   tooltip: {
     color: "#1890ff"
@@ -34,22 +40,28 @@ const whiteTheme = {
 }
 
 const darkTheme = {
-  primary: "#1890ff",
+  primary: color('#1890ff').lighten(0.4).rgb().string(),
   background: '#30303d',
-  backgroundLight: color('#272822').lighten(0.2).rgb().string(),
+  backgroundLight: color('#30303d').lighten(0.4).rgb().string(),
   inverse: {
     primary: '#30303d',
     background: '#fff'
   },
+  table: {
+    hover: {
+      background: color('#1890ff').lighten(0.4).rgb().string(),
+      color: color('#30303d').rgb().string(),
+    }
+  },
   tooltip: {
-    color: "#1890ff"
+    color: color('#1890ff').lighten(0.4).rgb().string(),
   },
   icon: {
-    color: "#1890ff",
+    color: color('#1890ff').lighten(0.4).rgb().string(),
     warning: "#ff4d00"
   },
   h3: {
-    color: "#1890ff"
+    color: color('#1890ff').lighten(0.4).rgb().string()
   },
   border: {
     bottom: '#ccc',

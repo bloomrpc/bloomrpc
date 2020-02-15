@@ -49,6 +49,7 @@ function ProtoFileViewerInternal({ protoInfo, visible, onClose }: ProtoFileViewe
         height={"calc(100vh - 115px)"}
         mode="protobuf"
         name="output"
+        theme={"tomorrow"}
         fontSize={13}
         showPrintMargin={false}
         wrapEnabled

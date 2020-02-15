@@ -80,6 +80,7 @@ export function MetadataInternal({ onClickMetadata, onMetadataChange, value }: M
             height={`${height + 20}px`}
             mode="json"
             focus={visibile}
+            theme={"tomorrow"}
             fontSize={13}
             name="metadata"
             onChange={(value) => {

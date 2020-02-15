@@ -15,7 +15,7 @@ interface ResponseProps {
 
 const StyledAceEditor = styled(AceEditor)`
   background: ${props => props.theme.backgroundLight} !important;
-  .ace-monokai .ace_gutter {
+  .ace_gutter {
     background: ${props => props.theme.backgroundLight} !important;
   }
 `
@@ -23,7 +23,7 @@ const StyledAceEditor = styled(AceEditor)`
 export const Viewer = styled(ViewerInternal)``
 
 
-export function ViewerInternal({ output, responseTime, emptyContent }: ResponseProps) {
+function ViewerInternal({ output, responseTime, emptyContent }: ResponseProps) {
 
   const editorRef: any = useRef(null);
   const inputSearch: any = useRef(null);
@@ -75,6 +75,7 @@ export function ViewerInternal({ output, responseTime, emptyContent }: ResponseP
           height={"calc(100vh - 188px)"}
           mode="json"
           name="output"
+          theme={"tomorrow"}
           fontSize={13}
           showPrintMargin={false}
           wrapEnabled
