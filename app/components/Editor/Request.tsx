@@ -1,6 +1,7 @@
 import * as React from 'react';
 import AceEditor, { Command } from 'react-ace';
 import { Tabs } from 'antd';
+import styled from 'styled-components'
 import { Viewer } from './Viewer';
 
 interface RequestProps {
@@ -10,7 +11,16 @@ interface RequestProps {
   commands?: Command[],
 }
 
-export function Request({onChangeData, commands, data, streamData}: RequestProps) {
+const StyledAceEditor = styled(AceEditor)`
+  background: ${props => props.theme.backgroundLight} !important;
+  .ace-monokai .ace_gutter {
+    background: ${props => props.theme.backgroundLight} !important;
+  }
+`
+
+export const Request = styled(RequestInternal)``
+
+function RequestInternal({onChangeData, commands, data, streamData}: RequestProps) {
   const editorTabKey = `editorTab`;
 
   return (
@@ -21,11 +31,10 @@ export function Request({onChangeData, commands, data, streamData}: RequestProps
         style={{width: "100%"}}
       >
         <Tabs.TabPane tab="Editor" key={editorTabKey}>
-          <AceEditor
+          <StyledAceEditor
             width={"100%"}
             height={"calc(100vh - 185px)"}
             mode="json"
-            theme="monokai"
             name="inputs"
             fontSize={13}
             cursorStart={2}

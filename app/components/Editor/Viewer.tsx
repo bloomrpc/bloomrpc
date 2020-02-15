@@ -4,6 +4,7 @@ import AceEditor from 'react-ace';
 import * as Mousetrap from 'mousetrap';
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import { Input } from 'antd';
+import styled from 'styled-components'
 
 interface ResponseProps {
   output: string,
@@ -11,7 +12,18 @@ interface ResponseProps {
   emptyContent?: Node | Element | JSX.Element
 }
 
-export function Viewer({ output, responseTime, emptyContent }: ResponseProps) {
+
+const StyledAceEditor = styled(AceEditor)`
+  background: ${props => props.theme.backgroundLight} !important;
+  .ace-monokai .ace_gutter {
+    background: ${props => props.theme.backgroundLight} !important;
+  }
+`
+
+export const Viewer = styled(ViewerInternal)``
+
+
+export function ViewerInternal({ output, responseTime, emptyContent }: ResponseProps) {
 
   const editorRef: any = useRef(null);
   const inputSearch: any = useRef(null);
@@ -56,13 +68,12 @@ export function Viewer({ output, responseTime, emptyContent }: ResponseProps) {
       )}
 
       {output && (
-        <AceEditor
+        <StyledAceEditor
           ref={editorRef}
           className={"response-edit"}
           width={"100%"}
           height={"calc(100vh - 188px)"}
           mode="json"
-          theme="monokai"
           name="output"
           fontSize={13}
           showPrintMargin={false}

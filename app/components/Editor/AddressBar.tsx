@@ -59,12 +59,23 @@ const InputIcon = styled(Icon)`
   padding-left: 5px;
   padding-right: 5px;
 `
-
+const StyledSelectOption = styled(Select.Option)``
 const StyledInputGroup = styled(Input.Group)``
+const StyledDropdown = styled.div`
+  color: ${props=> {
+    return props.theme.input.color
+  }};
+  background: ${props=>props.theme.input.background};
+  .ant-select-dropdown-menu-item {
+    color: ${props=> {
+      return props.theme.primary
+    }};
+    background: ${props=>props.theme.background};
+  }
+`
 
 export const AddressBar = styled(AddressBarInternal)``
 
-// FIXME on save environment styled theme is not passed and app fails with error.
 function AddressBarInternal({loading, url, onChangeUrl, protoInfo, defaultEnvironment, environments, onEnvironmentSave, onChangeEnvironment, onEnvironmentDelete}: AddressBarProps) {
   const [currentEnvironmentName, setCurrentEnvironmentName] = useState<string>(defaultEnvironment || "");
   const [newEnvironmentName, setNewEnvironmentName] = useState<string>("");
@@ -104,6 +115,11 @@ function AddressBarInternal({loading, url, onChangeUrl, protoInfo, defaultEnviro
               value={currentEnvironmentName || undefined}
               placeholder={"Env"}
               dropdownStyle={{ minWidth: 200 }}
+              dropdownRender={menu => (
+                <StyledDropdown>
+                  {menu}
+                </StyledDropdown>
+              )}
               onSelect={(value: string) => {
                 // Save brand new environment
                 if (value === "new") {
@@ -117,7 +133,7 @@ function AddressBarInternal({loading, url, onChangeUrl, protoInfo, defaultEnviro
                       setConfirmedSave(true);
                     },
                     content: (
-                        <StyledInput autoFocus={true} required placeholder={"Staging"} onChange={(e) => {
+                        <Input autoFocus={true} required placeholder={"Staging"} onChange={(e) => {
                           setNewEnvironmentName(e.target.value);
                         }} />
                     ),
@@ -168,27 +184,27 @@ function AddressBarInternal({loading, url, onChangeUrl, protoInfo, defaultEnviro
                 onChangeEnvironment && onChangeEnvironment(selectedEnv);
               }}
           >
-            <Select.Option value="">
+            <StyledSelectOption value="">
               None
-            </Select.Option>
+            </StyledSelectOption>
 
             {environments && environments.map(environment => (
-              <Select.Option key={environment.name} value={environment.name}>{environment.name}</Select.Option>
+              <StyledSelectOption key={environment.name} value={environment.name}>{environment.name}</StyledSelectOption>
             ))}
 
             {currentEnvironmentName &&
-              <Select.Option value="update">
+              <StyledSelectOption value="update">
                   <Icon type="edit" /> Update Environment
-              </Select.Option>
+              </StyledSelectOption>
             }
             {currentEnvironmentName &&
-            <Select.Option value="delete">
+            <StyledSelectOption value="delete">
                 <Icon type="delete" /> Delete Environment
-            </Select.Option>
+            </StyledSelectOption>
             }
-            <Select.Option value="new">
+            <StyledSelectOption value="new">
               <Icon type="plus-circle" /> Save New Environment
-            </Select.Option>
+            </StyledSelectOption>
           </StyledSelect>
           <StyledInput
               addonAfter={(

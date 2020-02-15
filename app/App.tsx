@@ -8,6 +8,7 @@ import * as color from 'color'
 const whiteTheme = {
   primary: "#1890ff",
   background: '#fff',
+  backgroundLight: color('#ccc').lighten(0.5).rgb().string(),
   inverse: {
     primary: '#fff',
     background: '#30303d'
@@ -35,6 +36,7 @@ const whiteTheme = {
 const darkTheme = {
   primary: "#1890ff",
   background: '#30303d',
+  backgroundLight: color('#ccc').darken(0.2).rgb().string(),
   inverse: {
     primary: '#30303d',
     background: '#fff'

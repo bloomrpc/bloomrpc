@@ -2,7 +2,7 @@ import * as React from 'react';
 import AceEditor from 'react-ace';
 import { Drawer } from 'antd';
 import { ProtoInfo } from '../../behaviour';
-
+import styled from 'styled-components'
 
 interface ProtoFileViewerProps {
   protoInfo: ProtoInfo
@@ -10,10 +10,33 @@ interface ProtoFileViewerProps {
   onClose: () => void
 }
 
-export function ProtoFileViewer({ protoInfo, visible, onClose }: ProtoFileViewerProps) {
+const StyledAceEditor = styled(AceEditor)`
+  background: ${props => props.theme.backgroundLight} !important;
+  .ace-monokai .ace_gutter {
+    background: ${props => props.theme.backgroundLight} !important;
+  }
+  margin-top: 10px;
+`
+
+const StyledDrawer = styled(Drawer)`
+  .ant-drawer-header {
+    background: ${props => props.theme.background};
+  }
+  .ant-drawer-title {
+    color: ${props => props.theme.primary};
+  }
+  .ant-drawer-body {
+    background: ${props => props.theme.background};
+  }
+`
+
+export const ProtoFileViewer = styled(ProtoFileViewerInternal)``
+
+
+function ProtoFileViewerInternal({ protoInfo, visible, onClose }: ProtoFileViewerProps) {
 
   return (
-    <Drawer
+    <StyledDrawer
       title={protoInfo.service.proto.fileName.split('/').pop()}
       placement={"right"}
       width={"50%"}
@@ -21,12 +44,10 @@ export function ProtoFileViewer({ protoInfo, visible, onClose }: ProtoFileViewer
       onClose={onClose}
       visible={visible}
     >
-      <AceEditor
-        style={{ marginTop: "10px"}}
+      <StyledAceEditor
         width={"100%"}
         height={"calc(100vh - 115px)"}
         mode="protobuf"
-        theme="monokai"
         name="output"
         fontSize={13}
         showPrintMargin={false}
@@ -49,6 +70,6 @@ export function ProtoFileViewer({ protoInfo, visible, onClose }: ProtoFileViewer
           tabSize: 1,
         }}
       />
-    </Drawer>
+    </StyledDrawer>
   );
 }
