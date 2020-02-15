@@ -13,9 +13,6 @@ interface RequestProps {
 
 const StyledAceEditor = styled(AceEditor)`
   background: ${props => props.theme.backgroundLight} !important;
-  .ace-monokai .ace_gutter {
-    background: ${props => props.theme.backgroundLight} !important;
-  }
 `
 
 export const Request = styled(RequestInternal)``

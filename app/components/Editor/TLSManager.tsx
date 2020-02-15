@@ -14,24 +14,6 @@ const StyledTable = styled(Table)`
   color: ${props=>props.theme.primary} !important;
   background: ${props=>props.theme.background} !important;
   transition: none;
-  .ant-table-thead > tr > th {
-    color: ${props=>props.theme.primary} !important;
-    background: ${props=>props.theme.background} !important;
-    transition: none;
-  }
-  td > span {
-    color: ${props=>props.theme.primary} !important;
-  }
-  &.ant-modal-header {
-    color: ${props=>props.theme.primary} !important;
-    background: ${props=>props.theme.background} !important;
-  }
-  .ant-table-placeholder {
-    background: ${props=>props.theme.background} !important;
-  }
-  .ant-empty-description {
-    color: ${props=>props.theme.primary} !important;
-  }
 `
 
 export function TLSManager({ selected, onSelected }: TLSManagerProps) {

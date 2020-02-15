@@ -36,9 +36,6 @@ const OptionContainer = styled(Resizable)<{height: number}>`
 
 const StyledAceEditor = styled(AceEditor)`
   background: ${props => props.theme.backgroundLight} !important;
-  .ace-monokai .ace_gutter {
-    background: ${props => props.theme.backgroundLight} !important;
-  }
 `
 
 export const Metadata = styled(MetadataInternal)``

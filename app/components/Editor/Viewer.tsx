@@ -15,9 +15,6 @@ interface ResponseProps {
 
 const StyledAceEditor = styled(AceEditor)`
   background: ${props => props.theme.backgroundLight} !important;
-  .ace_gutter {
-    background: ${props => props.theme.backgroundLight} !important;
-  }
 `
 
 export const Viewer = styled(ViewerInternal)``

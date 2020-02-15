@@ -23,17 +23,7 @@ const StyledSelect = styled(Select)`
   width: 20%;
   color: ${props=>props.theme.primary};
   background: ${props=>props.theme.background};
-  .ant-select-selection__placeholder, .ant-select-search__field__placeholder {
-    color: ${props=>props.theme.primary};
-  }
-  .ant-select-selection {
-    color: ${props=>props.theme.primary};
-    background: ${props=>props.theme.input.backgroundDark};
-    transition: none;
-  }
-  .ant-select-arrow {
-    color: ${props=>props.theme.primary};
-  }
+
 `
 
 const StyledInput = styled(Input)`
@@ -41,16 +31,7 @@ const StyledInput = styled(Input)`
   font-weight: 600;
   color: ${props=>props.theme.primary};
   background: ${props=>props.theme.background};
-  .ant-input {
-    color: ${props=> {
-      return props.theme.input.color
-    }};
-    background: ${props=>props.theme.input.background};
-    transition: none;
-  }
-  .ant-input-group-addon {
-    padding: 0px;
-  }
+
 `
 
 const InputAddon = styled.div`
@@ -70,12 +51,7 @@ const StyledDropdown = styled.div`
     return props.theme.input.color
   }};
   background: ${props=>props.theme.input.background};
-  .ant-select-dropdown-menu-item {
-    color: ${props=> {
-      return props.theme.primary
-    }};
-    background: ${props=>props.theme.background};
-  }
+
 `
 
 export const AddressBar = styled(AddressBarInternal)``

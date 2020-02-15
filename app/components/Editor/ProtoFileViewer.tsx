@@ -12,23 +12,10 @@ interface ProtoFileViewerProps {
 
 const StyledAceEditor = styled(AceEditor)`
   background: ${props => props.theme.backgroundLight} !important;
-  .ace-monokai .ace_gutter {
-    background: ${props => props.theme.backgroundLight} !important;
-  }
   margin-top: 10px;
 `
 
-const StyledDrawer = styled(Drawer)`
-  .ant-drawer-header {
-    background: ${props => props.theme.background};
-  }
-  .ant-drawer-title {
-    color: ${props => props.theme.primary};
-  }
-  .ant-drawer-body {
-    background: ${props => props.theme.background};
-  }
-`
+const StyledDrawer = styled(Drawer)``
 
 export const ProtoFileViewer = styled(ProtoFileViewerInternal)``
 

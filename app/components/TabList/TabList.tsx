@@ -37,27 +37,6 @@ const StyledTabs = styled(Tabs)`
   padding: 10px 0px 0px 20px;
   margin-bottom: 0px;
   height: 100%;
-  &.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
-    color: ${props=>props.theme.secondary};
-    background: ${props=>props.theme.background} !important;
-    transition: none !important;
-  }
-  &.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab .ant-tabs-close-x {
-    width: 16px;
-    height: 16px;
-    height: 14px;
-    margin-right: -5px;
-    margin-left: 3px;
-    overflow: hidden;
-    font-size: 12px;
-    transition: none !important;
-    vertical-align: middle;
-    color: ${props=>props.theme.primary} !important;
-    background: ${props=>props.theme.background} !important;
-  }
-  .ant-tabs-nav .ant-tabs-tab-active {
-    color: ${props=>props.theme.primary} !important;
-  }
 `
 
 const StyledDraggableTabs = styled(DraggableTabs)`

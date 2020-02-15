@@ -86,11 +86,8 @@ const Protos = styled.div`
   height: 100%;
 `
 
-const StyledTreeNode = styled(Tree.TreeNode)`
-  .ant-tree-title {
-    color: ${props=>props.theme.secondary};
-  }
-`
+const StyledTreeNode = styled(Tree.TreeNode)``
+
 function SidebarInternal({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload }: SidebarProps) {
 
   const [importPaths, setImportPaths] = useState<string[]>([""]);
