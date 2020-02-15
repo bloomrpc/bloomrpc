@@ -27,6 +27,7 @@ import Resizable from "re-resizable";
 import { Command } from 'react-ace';
 import { makeRequest } from './PlayButton';
 import { AddressBar } from "./AddressBar";
+import styled from 'styled-components'
 import { deleteEnvironment, getEnvironments, saveEnvironment } from "../../storage/environments";
 export interface EditorAction {
   [key: string]: any
@@ -151,7 +152,9 @@ const reducer = (state: EditorState, action: EditorAction) => {
   }
 };
 
-export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList }: EditorProps) {
+export const Editor = styled(EditorInternal)``
+
+function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList }: EditorProps) {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,

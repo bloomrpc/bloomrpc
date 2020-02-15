@@ -23,6 +23,7 @@ const styles: {[key: string]: any} = {
     marginTop: "5px",
     marginRight: "7px",
     paddingBottom: "1px",
+    borderRadius: '50%'
   },
   protoFile: {
     backgroundColor: "#15abff",

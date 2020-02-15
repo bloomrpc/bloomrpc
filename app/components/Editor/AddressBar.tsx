@@ -4,6 +4,7 @@ import { RequestType } from "./RequestType";
 import { ChangeEvent, useEffect, useState } from "react";
 import { ProtoInfo } from "../../behaviour";
 import { EditorEnvironment } from "./Editor";
+import styled from 'styled-components';
 
 export interface AddressBarProps {
   loading: boolean
@@ -17,7 +18,54 @@ export interface AddressBarProps {
   onEnvironmentDelete?: (name: string) => void
 }
 
-export function AddressBar({loading, url, onChangeUrl, protoInfo, defaultEnvironment, environments, onEnvironmentSave, onChangeEnvironment, onEnvironmentDelete}: AddressBarProps) {
+
+const StyledSelect = styled(Select)`
+  width: 20%;
+  color: ${props=>props.theme.primary};
+  background: ${props=>props.theme.background};
+  .ant-select-selection .ant-select-selection--single {
+    color: ${props=>props.theme.primary};
+    background: ${props=>props.theme.background};
+  }
+  .ant-select-selection__placeholder, .ant-select-search__field__placeholder {
+    color: ${props=>props.theme.primary};
+  }
+`
+
+const StyledInput = styled(Input)`
+  width: 80%;
+  font-weight: 600;
+  color: ${props=>props.theme.primary};
+  background: ${props=>props.theme.background};
+  .ant-input {
+    color: ${props=> {
+      return props.theme.input.color
+    }};
+    background: ${props=>props.theme.input.background};
+    transition: none;
+  }
+  .ant-input-group-addon {
+    padding: 0px;
+  }
+`
+
+const InputAddon = styled.div`
+  display: flex;
+  align-items: center;
+  width: 140px;
+`
+
+const InputIcon = styled(Icon)`
+  padding-left: 5px;
+  padding-right: 5px;
+`
+
+const StyledInputGroup = styled(Input.Group)``
+
+export const AddressBar = styled(AddressBarInternal)``
+
+// FIXME on save environment styled theme is not passed and app fails with error.
+function AddressBarInternal({loading, url, onChangeUrl, protoInfo, defaultEnvironment, environments, onEnvironmentSave, onChangeEnvironment, onEnvironmentDelete}: AddressBarProps) {
   const [currentEnvironmentName, setCurrentEnvironmentName] = useState<string>(defaultEnvironment || "");
   const [newEnvironmentName, setNewEnvironmentName] = useState<string>("");
 
@@ -50,12 +98,11 @@ export function AddressBar({loading, url, onChangeUrl, protoInfo, defaultEnviron
 
   return (
       <>
-        <Input.Group compact>
-          <Select
+        <StyledInputGroup compact>
+          <StyledSelect
               defaultValue={currentEnvironmentName}
               value={currentEnvironmentName || undefined}
               placeholder={"Env"}
-              style={{width: "20%"}}
               dropdownStyle={{ minWidth: 200 }}
               onSelect={(value: string) => {
                 // Save brand new environment
@@ -70,7 +117,7 @@ export function AddressBar({loading, url, onChangeUrl, protoInfo, defaultEnviron
                       setConfirmedSave(true);
                     },
                     content: (
-                        <Input autoFocus={true} required placeholder={"Staging"} onChange={(e) => {
+                        <StyledInput autoFocus={true} required placeholder={"Staging"} onChange={(e) => {
                           setNewEnvironmentName(e.target.value);
                         }} />
                     ),
@@ -142,19 +189,17 @@ export function AddressBar({loading, url, onChangeUrl, protoInfo, defaultEnviron
             <Select.Option value="new">
               <Icon type="plus-circle" /> Save New Environment
             </Select.Option>
-          </Select>
-          <Input
-              style={{width: "80%"}}
-              className="server-url"
+          </StyledSelect>
+          <StyledInput
               addonAfter={(
-                  <div style={{display: "flex", alignItems: "center", width: "125px"}}>
-                    {loading ? <Icon type="loading"/> : <Icon type="database"/>}
+                  <InputAddon>
+                    {loading ? <InputIcon type="loading"/> : <InputIcon type="database"/>}
                     <RequestType protoInfo={protoInfo} />
-                  </div>
+                  </InputAddon>
               )}
               value={url}
               onChange={onChangeUrl}/>
-        </Input.Group>
+        </StyledInputGroup>
       </>
   )
 }

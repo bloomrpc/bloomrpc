@@ -3,10 +3,15 @@ import { useState } from 'react'
 import {BloomRPC} from './components/BloomRPC';
 import { Button } from 'antd'
 import styled, { ThemeProvider } from 'styled-components'
+import * as color from 'color'
 
 const whiteTheme = {
   primary: "#1890ff",
   background: '#fff',
+  inverse: {
+    primary: '#fff',
+    background: '#30303d'
+  },
   tooltip: {
     color: "#1890ff"
   },
@@ -18,13 +23,22 @@ const whiteTheme = {
     color: "#1890ff"
   },
   border: {
-    bottom: '#ccc'
+    bottom: '#ccc',
+    left: "#ccc"
+  },
+  input: {
+    color: color("#1890ff").lighten(0.5).rgb().string(),
+    background: color('#fff').rgb().string(),
   }
 }
 
 const darkTheme = {
   primary: "#1890ff",
   background: '#30303d',
+  inverse: {
+    primary: '#30303d',
+    background: '#fff'
+  },
   tooltip: {
     color: "#1890ff"
   },
@@ -36,7 +50,12 @@ const darkTheme = {
     color: "#1890ff"
   },
   border: {
-    bottom: '#ccc'
+    bottom: '#ccc',
+    left: "#ccc"
+  },
+  input: {
+    color: color("#1890ff").lighten(0.5).rgb().string(),
+    background: color('#30303d').rgb().string(),
   }
 }
 

@@ -87,21 +87,26 @@ const Protos = styled.div`
 `
 
 const StyledTreeNode = styled(Tree.TreeNode)`
-  color: ${props=>props.theme.primary} !important;
-  background: ${props=>props.theme.background};
-  transition: all 0s;
+  &.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
+    color: ${props=>props.theme.primary} !important;
+    background: ${props=>props.theme.background} !important;
+    transition: all 1s !important;
+  }
   &.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab .ant-tabs-close-x {
     color: ${props=>props.theme.primary} !important;
-    background: ${props=>props.theme.background};
-    transition: all 0s;
+    background: ${props=>props.theme.background} !important;
+    transition: none !important;
   }
-  &.ant-tree li .ant-tree-node-content-wrapper{
-    transition: all 0s;
+  &.ant-tree li .ant-tree-node-content-wrapper {
+    transition: none !important;
     color: ${props=>props.theme.primary} !important;
-    background: ${props=>props.theme.background};
+    background: ${props=>props.theme.background} !important;
+  }
+  &.ant-tabs-nav {
+    transition: none !important;
   }
 `
-
+// FIXME - sidebar proto names still remain black
 function SidebarInternal({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload }: SidebarProps) {
 
   const [importPaths, setImportPaths] = useState<string[]>([""]);

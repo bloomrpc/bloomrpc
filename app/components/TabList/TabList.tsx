@@ -43,12 +43,14 @@ const StyledTabs = styled(Tabs)`
   }
 `
 
+export const TabList = styled(TabListInternal)``
 
 export interface EditorTabRequest extends EditorRequest {
   id: string
 }
 
-export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange, environmentList, onEnvironmentChange }: TabListProps) {
+// FIXME - tab still has transition configured even though I removed it
+function TabListInternal({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange, environmentList, onEnvironmentChange }: TabListProps) {
   const tabsWithMatchingKey =
     tabs.filter(tab => tab.tabKey === activeKey);
 
@@ -143,13 +145,3 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
     </StyledTabs>
   );
 }
-
-// const styles = {
-//   tabList: {
-//     height: "100%"
-//   },
-//   tabBarStyle: {
-//     padding: "10px 0px 0px 20px",
-//     marginBottom: "0px",
-//   }
-// };
