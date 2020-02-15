@@ -40,7 +40,25 @@ const StyledTabs = styled(Tabs)`
   &.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
     color: ${props=>props.theme.primary} !important;
     background: ${props=>props.theme.background} !important;
+    transition: none !important;
   }
+  &.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab .ant-tabs-close-x {
+    width: 16px;
+    height: 16px;
+    height: 14px;
+    margin-right: -5px;
+    margin-left: 3px;
+    overflow: hidden;
+    font-size: 12px;
+    transition: none !important;
+    vertical-align: middle;
+    color: ${props=>props.theme.primary} !important;
+    background: ${props=>props.theme.background} !important;
+  }
+`
+
+const StyledDraggableTabs = styled(DraggableTabs)`
+
 `
 
 export const TabList = styled(TabListInternal)``
@@ -49,7 +67,6 @@ export interface EditorTabRequest extends EditorRequest {
   id: string
 }
 
-// FIXME - tab still has transition configured even though I removed it
 function TabListInternal({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange, environmentList, onEnvironmentChange }: TabListProps) {
   const tabsWithMatchingKey =
     tabs.filter(tab => tab.tabKey === activeKey);
@@ -85,12 +102,11 @@ function TabListInternal({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdi
       type="editable-card"
       renderTabBar={(props, DefaultTabBar: any) => {
         return (
-            <DraggableTabs
+            <StyledDraggableTabs
                 onSortEnd={onDragEnd}
                 lockAxis={"x"}
                 axis={"x"}
                 pressDelay={120}
-                helperClass={"draggable draggable-tab"}
             >
               <DefaultTabBar {...props}>
                 {(node: any) => {
@@ -106,7 +122,7 @@ function TabListInternal({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdi
                   )
                 }}
               </DefaultTabBar>
-            </DraggableTabs>
+            </StyledDraggableTabs>
         )
       }}
     >

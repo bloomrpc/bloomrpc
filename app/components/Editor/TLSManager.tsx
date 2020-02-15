@@ -3,11 +3,30 @@ import { useEffect, useState } from 'react';
 import { Button, Icon, Input, Radio, Table } from "antd";
 import { Certificate, importCertChain, importPrivateKey, importRootCert } from "../../behaviour";
 import { getTLSList, storeTLSList } from "../../storage";
-
+import styled from 'styled-components'
 interface TLSManagerProps {
     selected?: Certificate
     onSelected?: (value?: Certificate) => void
 }
+
+
+const StyledTable = styled(Table)`
+  color: ${props=>props.theme.primary} !important;
+  background: ${props=>props.theme.background} !important;
+  transition: none;
+  .ant-table-thead > tr > th {
+    color: ${props=>props.theme.primary} !important;
+    background: ${props=>props.theme.background} !important;
+    transition: none;
+  }
+  td > span {
+    color: ${props=>props.theme.primary} !important;
+  }
+  &.ant-modal-header {
+    color: ${props=>props.theme.primary} !important;
+    background: ${props=>props.theme.background} !important;
+  }
+`
 
 export function TLSManager({ selected, onSelected }: TLSManagerProps) {
     const [certs, setStateCerts] = useState<Certificate[]>([]);
@@ -41,7 +60,7 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
               <Icon type="plus-circle" /> Add Root Certificate
             </Button>
         </div>
-        <Table
+        <StyledTable
             dataSource={certs}
             pagination={false}
             rowKey={(certificate: Certificate) => certificate.rootCert.filePath}
@@ -172,7 +191,7 @@ export function TLSManager({ selected, onSelected }: TLSManagerProps) {
                 )
               }}
             />
-        </Table>
+        </StyledTable>
         </>
     );
 }

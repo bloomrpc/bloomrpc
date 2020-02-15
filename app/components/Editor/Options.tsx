@@ -5,7 +5,7 @@ import { EditorAction } from './Editor';
 import {useState} from "react";
 import {TLSManager} from "./TLSManager";
 import { ProtoInfo, Certificate } from '../../behaviour';
-
+import styled from 'styled-components'
 interface OptionsProps {
   protoInfo: ProtoInfo
   dispatch: React.Dispatch<EditorAction>
@@ -15,6 +15,34 @@ interface OptionsProps {
   onTLSSelected?: (selected: Certificate) => void
   onClickExport?: () => void
 }
+
+const StyledModalTitle = styled.div`
+  color: ${props=>props.theme.primary} !important;
+  background: ${props=>props.theme.background} !important;
+`
+
+const StyledModal = styled(Modal)`
+  color: ${props=>props.theme.primary} !important;
+  .ant-modal-content .ant-modal-close-x {
+    color: ${props=>props.theme.primary} !important;
+  }
+  .ant-modal-header {
+    background: ${props=>props.theme.background} !important;
+  }
+  .ant-modal-footer {
+    background: ${props=>props.theme.background} !important;
+    border-top: none;
+  }
+  .ant-table-row:hover {
+    background: ${props=>props.theme.backgroundLight} !important;
+  }
+  .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+    color: ${props=>props.theme.primary} !important;
+  }
+  .ant-table-thead > tr > th, .ant-table-tbody > tr > td:hover {
+    background: black;
+  }
+`
 
 export function Options({ protoInfo, dispatch, interactiveChecked, onInteractiveChange, tlsSelected, onTLSSelected, onClickExport }: OptionsProps) {
 
@@ -46,12 +74,12 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
             </span>
           </div>
 
-          <Modal
+          <StyledModal
               title={(
-                  <div>
+                  <StyledModalTitle>
                     <Icon type="lock" />
                     <span style={{marginLeft: 10}}> TLS / SSL Manager </span>
-                  </div>
+                  </StyledModalTitle>
               )}
               visible={tlsModalVisible}
               onCancel={() => setTlsModalVisible(false)}
@@ -65,7 +93,7 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
                 selected={tlsSelected}
                 onSelected={onTLSSelected}
             />
-          </Modal>
+          </StyledModal>
       </div>
 
       <div style={{ ...styles.inline }}>
