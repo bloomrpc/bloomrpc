@@ -42,8 +42,12 @@ export {
   BloomRPC
 }
 
+interface IBloomRPC {
+  theme: string
+}
 
-function BloomRPCInternal() {
+function BloomRPCInternal({ theme }: IBloomRPC) {
+
   const [protos, setProtosState] = useState<ProtoFile[]>([]);
   const [editorTabs, setEditorTabs] = useState<EditorTabs>({
     activeKey: "0",
@@ -86,6 +90,7 @@ function BloomRPCInternal() {
 
         <Layout.Content>
           <TabList
+            theme={theme}
             tabs={editorTabs.tabs || []}
             onDragEnd={({oldIndex, newIndex}) => {
               const newTab = editorTabs.tabs[oldIndex];

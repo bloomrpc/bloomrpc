@@ -5,8 +5,8 @@ import Resizable from 're-resizable';
 import { storeMetadata } from "../../storage";
 import { useState } from "react";
 import styled from 'styled-components';
-
 interface MetadataProps {
+  theme: string
   onClickMetadata: () => void,
   onMetadataChange: (value: string) => void,
   value: string,
@@ -40,10 +40,9 @@ const StyledAceEditor = styled(AceEditor)`
 
 export const Metadata = styled(MetadataInternal)``
 
-export function MetadataInternal({ onClickMetadata, onMetadataChange, value }: MetadataProps) {
+export function MetadataInternal({ onClickMetadata, onMetadataChange, value, theme }: MetadataProps) {
   const [height, setHeight] = useState(38);
   const visibile = height > 38;
-
   return (
     <OptionContainer
         height={height}
@@ -77,7 +76,7 @@ export function MetadataInternal({ onClickMetadata, onMetadataChange, value }: M
             height={`${height + 20}px`}
             mode="json"
             focus={visibile}
-            theme={"tomorrow"}
+            theme={theme === 'white' ? "textmate" : "monokai"}
             fontSize={13}
             name="metadata"
             onChange={(value) => {

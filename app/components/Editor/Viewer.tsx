@@ -7,6 +7,7 @@ import { Input } from 'antd';
 import styled from 'styled-components'
 
 interface ResponseProps {
+  theme: string
   output: string,
   responseTime?: number
   emptyContent?: Node | Element | JSX.Element
@@ -20,7 +21,7 @@ const StyledAceEditor = styled(AceEditor)`
 export const Viewer = styled(ViewerInternal)``
 
 
-function ViewerInternal({ output, responseTime, emptyContent }: ResponseProps) {
+function ViewerInternal({ output, responseTime, emptyContent, theme }: ResponseProps) {
 
   const editorRef: any = useRef(null);
   const inputSearch: any = useRef(null);
@@ -72,7 +73,7 @@ function ViewerInternal({ output, responseTime, emptyContent }: ResponseProps) {
           height={"calc(100vh - 188px)"}
           mode="json"
           name="output"
-          theme={"tomorrow"}
+          theme={theme === 'white' ? "textmate" : "monokai"}
           fontSize={13}
           showPrintMargin={false}
           wrapEnabled

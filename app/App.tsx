@@ -32,7 +32,7 @@ type H3 = {
   color: string
 }
 
-type Theme = {
+export type Theme = {
   primary: string
   secondary: string,
   background: string,
@@ -263,7 +263,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme === 'white' ? whiteTheme : darkTheme}>
       <ChangeThemeBtn onClick={()=>changeTheme()}>Set Theme</ChangeThemeBtn>
-      <BloomRPC/>
+      <BloomRPC theme={theme}/>
       <GlobalStyles theme={theme === 'white' ? whiteTheme : darkTheme}/>
     </ThemeProvider>
   )

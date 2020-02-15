@@ -5,6 +5,7 @@ import { ProtoInfo } from '../../behaviour';
 import styled from 'styled-components'
 
 interface ProtoFileViewerProps {
+  theme: string
   protoInfo: ProtoInfo
   visible: boolean
   onClose: () => void
@@ -20,7 +21,7 @@ const StyledDrawer = styled(Drawer)``
 export const ProtoFileViewer = styled(ProtoFileViewerInternal)``
 
 
-function ProtoFileViewerInternal({ protoInfo, visible, onClose }: ProtoFileViewerProps) {
+function ProtoFileViewerInternal({ protoInfo, visible, onClose, theme }: ProtoFileViewerProps) {
 
   return (
     <StyledDrawer
@@ -36,7 +37,7 @@ function ProtoFileViewerInternal({ protoInfo, visible, onClose }: ProtoFileViewe
         height={"calc(100vh - 115px)"}
         mode="protobuf"
         name="output"
-        theme={"tomorrow"}
+        theme={theme === 'white' ? "textmate" : "monokai"}
         fontSize={13}
         showPrintMargin={false}
         wrapEnabled

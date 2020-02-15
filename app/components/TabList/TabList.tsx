@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Tabs } from 'antd';
+import { Theme } from '../../App'
 import { Editor, EditorEnvironment, EditorRequest } from '../Editor';
 import { ProtoInfo, ProtoService } from '../../behaviour';
 import { DraggableItem, DraggableTabs } from "./DraggableTabList";
@@ -9,6 +10,7 @@ import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import styled from 'styled-components';
 
 interface TabListProps {
+  theme: Theme
   tabs: TabData[]
   activeKey?: string
   onChange?: (activeKey: string) => void
@@ -49,7 +51,7 @@ export interface EditorTabRequest extends EditorRequest {
   id: string
 }
 
-function TabListInternal({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange, environmentList, onEnvironmentChange }: TabListProps) {
+function TabListInternal({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange, environmentList, onEnvironmentChange, theme }: TabListProps) {
   const tabsWithMatchingKey =
     tabs.filter(tab => tab.tabKey === activeKey);
 
@@ -115,6 +117,7 @@ function TabListInternal({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdi
           closable={false}
         >
           <Editor
+            theme={theme}
             environmentList={environmentList}
             onEnvironmentListChange={onEnvironmentChange}
           />
@@ -126,6 +129,7 @@ function TabListInternal({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdi
             closable={true}
           >
             <Editor
+              theme={theme}
               environmentList={environmentList}
               protoInfo={new ProtoInfo(tab.service, tab.methodName)}
               key={tab.tabKey}

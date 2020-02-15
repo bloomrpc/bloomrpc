@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Viewer } from './Viewer';
 
 interface RequestProps {
+  theme: string
   data: string
   streamData: string[]
   onChangeData: (value: string) => void
@@ -17,7 +18,7 @@ const StyledAceEditor = styled(AceEditor)`
 
 export const Request = styled(RequestInternal)``
 
-function RequestInternal({onChangeData, commands, data, streamData}: RequestProps) {
+function RequestInternal({onChangeData, commands, data, streamData, theme}: RequestProps) {
   const editorTabKey = `editorTab`;
 
   return (
@@ -33,7 +34,7 @@ function RequestInternal({onChangeData, commands, data, streamData}: RequestProp
             height={"calc(100vh - 185px)"}
             mode="json"
             name="inputs"
-            theme={"tomorrow"}
+            theme={theme === 'white' ? "textmate" : "monokai"}
             fontSize={13}
             cursorStart={2}
             onChange={onChangeData}
@@ -52,7 +53,7 @@ function RequestInternal({onChangeData, commands, data, streamData}: RequestProp
 
         {streamData.map((data, key) => (
           <Tabs.TabPane tab={`Stream ${key + 1}`} key={`${key}`}>
-            <Viewer output={data} />
+            <Viewer theme={theme} output={data} />
           </Tabs.TabPane>
         ))}
       </Tabs>

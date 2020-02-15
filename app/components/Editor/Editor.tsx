@@ -64,6 +64,7 @@ export interface EditorState extends EditorRequest {
 }
 
 export interface EditorProps {
+  theme: string
   protoInfo?: ProtoInfo
   onRequestChange?: (editorRequest: EditorRequest & EditorState) => void
   initialRequest?: EditorRequest
@@ -154,7 +155,7 @@ const reducer = (state: EditorState, action: EditorAction) => {
 
 export const Editor = styled(EditorInternal)``
 
-function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList }: EditorProps) {
+function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList, theme }: EditorProps) {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,
@@ -306,6 +307,7 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
             minWidth={"10%"}
         >
           <Request
+            theme={theme}
             data={state.data}
             streamData={state.requestStreamData}
             commands={commands}
@@ -339,6 +341,7 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
       </div>
 
       <Metadata
+        theme={theme}
         onClickMetadata={() => {
           dispatch(setMetadataVisibilty(!state.metadataOpened));
         }}
@@ -354,6 +357,7 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
 
       {protoInfo && (
         <ProtoFileViewer
+          theme={theme}
           protoInfo={protoInfo}
           visible={state.protoViewVisible}
           onClose={() => dispatch(setProtoVisibility(false))}
