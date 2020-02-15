@@ -42,6 +42,20 @@ const StyledModal = styled(Modal)`
   }
 `
 
+const ViewProtoBtn = styled(Button)`
+  color: ${props=>props.theme.primary} !important;
+  background: ${props=>props.theme.backgroundDark} !important;
+  transition: none;
+  &:hover {
+    background: ${props=>props.theme.backgroundLight} !important;
+  }
+`
+
+const StyledSwitch = styled(Switch)`
+  color: ${props=>props.theme.switch.color} !important;
+  background: ${props=>props.theme.switch.background} !important;
+`
+
 export function Options({ dispatch, interactiveChecked, onInteractiveChange, tlsSelected, onTLSSelected, onClickExport }: OptionsProps) {
 
   const [tlsModalVisible, setTlsModalVisible] = useState(false);
@@ -110,7 +124,7 @@ export function Options({ dispatch, interactiveChecked, onInteractiveChange, tls
           </div>
         </Dropdown>
         <div style={{paddingRight: 10}}>
-          <Switch
+          <StyledSwitch
             checkedChildren="Interactive"
             defaultChecked={interactiveChecked}
             unCheckedChildren="Manual &nbsp; &nbsp; &nbsp;"
@@ -121,13 +135,13 @@ export function Options({ dispatch, interactiveChecked, onInteractiveChange, tls
           />
         </div>
 
-        <Button
+        <ViewProtoBtn
           icon="file-ppt"
           type="dashed"
           onClick={() => dispatch(setProtoVisibility(true))}
         >
           View Proto
-        </Button>
+        </ViewProtoBtn>
       </div>
     </div>
   )

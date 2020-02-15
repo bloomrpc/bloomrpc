@@ -38,7 +38,7 @@ const StyledTabs = styled(Tabs)`
   margin-bottom: 0px;
   height: 100%;
   &.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
-    color: ${props=>props.theme.primary} !important;
+    color: ${props=>props.theme.secondary};
     background: ${props=>props.theme.background} !important;
     transition: none !important;
   }

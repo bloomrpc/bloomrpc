@@ -23,11 +23,15 @@ const StyledSelect = styled(Select)`
   width: 20%;
   color: ${props=>props.theme.primary};
   background: ${props=>props.theme.background};
-  .ant-select-selection .ant-select-selection--single {
-    color: ${props=>props.theme.primary};
-    background: ${props=>props.theme.background};
-  }
   .ant-select-selection__placeholder, .ant-select-search__field__placeholder {
+    color: ${props=>props.theme.primary};
+  }
+  .ant-select-selection {
+    color: ${props=>props.theme.primary};
+    background: ${props=>props.theme.input.backgroundDark};
+    transition: none;
+  }
+  .ant-select-arrow {
     color: ${props=>props.theme.primary};
   }
 `
@@ -56,8 +60,8 @@ const InputAddon = styled.div`
 `
 
 const InputIcon = styled(Icon)`
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
 `
 const StyledSelectOption = styled(Select.Option)``
 const StyledInputGroup = styled(Input.Group)``

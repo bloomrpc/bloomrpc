@@ -7,11 +7,17 @@ import * as color from 'color'
 
 const whiteTheme = {
   primary: "#1890ff",
+  secondary: color('#fff').darken(0.4).rgb().string(),
   background: '#fff',
   backgroundLight: color('#1890ff').lighten(0.7).rgb().string(),
+  backgroundDark: color('#fff').darken(0.05).rgb().string(),
   inverse: {
     primary: '#fff',
     background: '#30303d'
+  },
+  switch: {
+    background: color('#1890ff').rgb().string(),
+    color: color('#1890ff').rgb().string()
   },
   table: {
     hover: {
@@ -31,21 +37,29 @@ const whiteTheme = {
   },
   border: {
     bottom: '#ccc',
-    left: "#ccc"
+    left: "#ccc",
+    right: "#ccc"
   },
   input: {
-    color: color("#1890ff").lighten(0.5).rgb().string(),
+    color: color("#1890ff").lighten(0.3).rgb().string(),
     background: color('#fff').rgb().string(),
+    backgroundDark: color("#fff").darken(0.05).rgb().string(),
   }
 }
 
 const darkTheme = {
   primary: color('#1890ff').lighten(0.4).rgb().string(),
+  secondary: color('#fff').darken(0.4).rgb().string(),
   background: '#30303d',
-  backgroundLight: color('#30303d').lighten(0.4).rgb().string(),
+  backgroundLight: color('#30303d').lighten(0.3).rgb().string(),
+  backgroundDark: color("#30303d").darken(0.05).rgb().string(),
   inverse: {
     primary: '#30303d',
     background: '#fff'
+  },
+  switch: {
+    background: color('#30303d').lighten(1).rgb().string(),
+    color: color('#30303d').rgb().string()
   },
   table: {
     hover: {
@@ -65,11 +79,13 @@ const darkTheme = {
   },
   border: {
     bottom: '#ccc',
-    left: "#ccc"
+    left: "#ccc",
+    right: "#ccc"
   },
   input: {
-    color: color("#1890ff").lighten(0.5).rgb().string(),
-    background: color('#30303d').rgb().string(),
+    color: color("#1890ff").lighten(0.3).rgb().string(),
+    background: color('#30303d').lighten(0.5).rgb().string(),
+    backgroundDark: color("#30303d").darken(0.05).rgb().string(),
   }
 }
 

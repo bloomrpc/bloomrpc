@@ -88,7 +88,7 @@ const Protos = styled.div`
 
 const StyledTreeNode = styled(Tree.TreeNode)`
   .ant-tree-title {
-    color: ${props=>props.theme.primary};
+    color: ${props=>props.theme.secondary};
   }
 `
 function SidebarInternal({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload }: SidebarProps) {

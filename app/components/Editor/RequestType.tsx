@@ -10,10 +10,11 @@ const StyledRequestType = styled.div`
   text-overflow: ellipsis;
   max-width: 125px;
   overflow: hidden;
+  border-left: 1px solid ${props=>props.theme.border.left};
   white-space: nowrap;
   width: 100%;
-  color: ${props=>props.theme.inverse.primary};
-  background: ${props=>props.theme.inverse.background};
+  color: ${props=>props.theme.primary};
+  background: ${props=>props.theme.backgroundDark};
   padding: 7px 8px;
   font-size: 11px;
   font-weight: 500;
