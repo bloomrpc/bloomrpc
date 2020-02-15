@@ -6,10 +6,13 @@ import {
   setResponse,
   setResponseStreamData,
   setRequestStreamData,
-  addResponseStreamData, setStreamCommitted
+  addResponseStreamData,
+  setStreamCommitted
 } from './actions';
 import { ControlsStateProps } from './Controls';
 import { GRPCEventType, GRPCRequest, ResponseMetaInformation } from '../../behaviour';
+
+import styled from 'styled-components'
 
 export const makeRequest = ({ dispatch, state, protoInfo }: ControlsStateProps) => {
   // Do nothing if not set
@@ -95,22 +98,20 @@ export const makeRequest = ({ dispatch, state, protoInfo }: ControlsStateProps) 
   }
 };
 
+
+const StyledIcon = styled(Icon)`
+  font-size: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: ${props=>props.theme.primary};
+  background: ${props=>props.theme.background};
+`
+
 export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
   return (
-    <Icon
-      className="play-icon"
+    <StyledIcon
       type={state.loading ? "pause-circle" : "play-circle"}
-      theme="filled" style={{ ...styles.playIcon, ...(state.loading ? {} : {}) }}
       onClick={() => makeRequest({ dispatch, state, protoInfo })}
     />
   )
 }
-
-const styles = {
-  playIcon: {
-    fontSize: 50,
-    border: "3px solid rgb(238, 238, 238)",
-    borderRadius: "50%",
-    cursor: "pointer",
-  },
-};

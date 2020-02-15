@@ -44,9 +44,10 @@ export {
 
 interface IBloomRPC {
   theme: string
+  changeTheme: () => void
 }
 
-function BloomRPCInternal({ theme }: IBloomRPC) {
+function BloomRPCInternal({ theme, changeTheme }: IBloomRPC) {
 
   const [protos, setProtosState] = useState<ProtoFile[]>([]);
   const [editorTabs, setEditorTabs] = useState<EditorTabs>({
@@ -76,6 +77,8 @@ function BloomRPCInternal({ theme }: IBloomRPC) {
       <StyledLayout>
         <StyledLayoutSider width={250}>
           <Sidebar
+            changeTheme={changeTheme}
+            theme={theme}
             protos={protos}
             onProtoUpload={handleProtoUpload(setProtos, protos)}
             onReload={() => {

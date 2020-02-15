@@ -11,7 +11,7 @@ import {
 } from './actions';
 import { Response } from './Response';
 import { Metadata } from './Metadata';
-import { Controls, isControlVisible } from './Controls';
+import { Controls } from './Controls';
 import { Request } from './Request';
 import { Options } from './Options';
 import { ProtoFileViewer } from './ProtoFileViewer';
@@ -154,6 +154,20 @@ const reducer = (state: EditorState, action: EditorAction) => {
 };
 
 export const Editor = styled(EditorInternal)``
+
+
+const PlayIconContainer = styled.div`
+  position: absolute;
+  align-items: center;
+  display: flex;
+  z-index: 10;
+  width: 100px;
+  flex-direction: column;
+  justify-content: center;
+  right: -50px;
+  margin-left: -25px;
+  top: calc(50% - 80px);
+`
 
 function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList, theme }: EditorProps) {
   const [state, dispatch] = useReducer(reducer, {
@@ -320,20 +334,18 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
             }}
           />
 
-          <div style={{
-            ...styles.playIconContainer,
-            ...(isControlVisible(state) ? styles.streamControlsContainer : {}),
-          }}>
+          <PlayIconContainer>
             <Controls
                 dispatch={dispatch}
                 state={state}
                 protoInfo={protoInfo}
             />
-          </div>
+          </PlayIconContainer>
         </Resizable>
 
         <div style={{...styles.responseContainer}}>
           <Response
+            theme={theme}
             streamResponse={state.responseStreamData}
             response={state.response}
           />
@@ -386,16 +398,6 @@ const styles = {
     borderLeft: "1px solid #eee",
     borderRight: "1px solid rgba(0, 21, 41, 0.18)",
     overflow: "auto"
-  },
-  playIconContainer: {
-    position: "absolute" as "absolute",
-    zIndex: 10,
-    right: "-30px",
-    marginLeft: "-25px",
-    top: "calc(50% - 80px)",
-  },
-  streamControlsContainer: {
-    right: "-42px",
   },
   inputContainer: {
     display: "flex",

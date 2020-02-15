@@ -5,6 +5,7 @@ import * as Mousetrap from 'mousetrap';
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import { Input } from 'antd';
 import styled from 'styled-components'
+import console = require('console');
 
 interface ResponseProps {
   theme: string
@@ -22,7 +23,7 @@ export const Viewer = styled(ViewerInternal)``
 
 
 function ViewerInternal({ output, responseTime, emptyContent, theme }: ResponseProps) {
-
+  console.log(`viewer theme`, theme)
   const editorRef: any = useRef(null);
   const inputSearch: any = useRef(null);
   const [showFind, setShowFind] = useState(false);

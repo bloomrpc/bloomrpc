@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react'
 import {BloomRPC} from './components/BloomRPC';
-import { Button } from 'antd'
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
+import  { ThemeProvider, createGlobalStyle } from 'styled-components'
 import * as color from 'color'
 
 
@@ -57,7 +56,9 @@ type Border = {
   top: string,
   bottom: string,
   left: string,
-  right: string
+  right: string,
+  all: string,
+  allWeak: string
 }
 
 const whiteTheme: Theme = {
@@ -90,7 +91,9 @@ const whiteTheme: Theme = {
     bottom: '#ccc',
     left: "#ccc",
     right: "#ccc",
-    top: "#ccc"
+    top: "#ccc",
+    all: "#ccc",
+    allWeak:  color("#ccc").lighten(0.5).rgb().string()
   },
   input: {
     color: color("#1890ff").lighten(0.3).rgb().string(),
@@ -129,7 +132,9 @@ const darkTheme: Theme = {
     bottom: '#ccc',
     left: "#ccc",
     right: "#ccc",
-    top: "#ccc"
+    top: "#ccc",
+    all: "#ccc",
+    allWeak:  color("#ccc").lighten(0.5).rgb().string()
   },
   input: {
     color: color("#1890ff").lighten(0.3).rgb().string(),
@@ -137,22 +142,6 @@ const darkTheme: Theme = {
     backgroundDark: color("#30303d").darken(0.05).rgb().string(),
   }
 }
-
-
-const ChangeThemeBtn = styled(Button)`
-  background: ${props => props.theme.background};
-  color: ${props=>props.theme.primary};
-  position: absolute;
-  z-index: 100000;
-  top: 0;
-  right: 0;
-  height:20px;
-  width:100px;
-  &:hover {
-    background: ${props => props.theme.primary};
-    color: ${props=>props.theme.background};   
-  }
-`
 
 const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   .ant-tree-title {
@@ -165,9 +154,7 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     background: ${props=>props.theme.background};
   }
   .ant-input {
-    color: ${props=> {
-      return props.theme.input.color
-    }};
+    color: ${props=> props.theme.input.color};
     background: ${props=>props.theme.input.background};
     transition: none;
   }
@@ -234,6 +221,10 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     background: ${props=>props.theme.background} !important;
     transition: none !important;
   }
+  .ant-tabs-nav .ant-tabs-tab {
+    transition: none;
+    color: ${props=>props.theme.primary}; 
+  }
   .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab .ant-tabs-close-x {
     width: 16px;
     height: 16px;
@@ -262,8 +253,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme === 'white' ? whiteTheme : darkTheme}>
-      <ChangeThemeBtn onClick={()=>changeTheme()}>Set Theme</ChangeThemeBtn>
-      <BloomRPC theme={theme}/>
+      <BloomRPC changeTheme={changeTheme} theme={theme}/>
       <GlobalStyles theme={theme === 'white' ? whiteTheme : darkTheme}/>
     </ThemeProvider>
   )

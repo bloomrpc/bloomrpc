@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import { Button, Icon, Modal, Tooltip, Tree } from 'antd';
+import { Button, Icon, Modal, Tooltip, Tree, Switch } from 'antd';
 import { Badge } from '../Badge/Badge';
 import { OnProtoUpload, ProtoFile, ProtoService, importProtos } from '../../behaviour';
 import { PathResolution } from "./PathResolution";
@@ -14,12 +14,13 @@ interface SidebarProps {
   onProtoUpload: OnProtoUpload
   onDeleteAll: () => void
   onReload: () => void
+  changeTheme: () => void
+  theme: string
 }
 
 const StyledTooltipIcon = styled(Icon)`
   font-size: 22px;
   margin-right: 10px;
-  margin-top: -2px;
   border-radius: 50%;
   cursor: pointer;
   background: ${props => props.theme.background};
@@ -86,9 +87,20 @@ const Protos = styled.div`
   height: 100%;
 `
 
+const ThemeSwitch = styled(Switch)`
+  margin-right: 10px;
+  color: ${props=>props.theme.switch.color};
+  background: ${props=>props.theme.switch.background};
+`
+
 const StyledTreeNode = styled(Tree.TreeNode)``
 
-function SidebarInternal({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload }: SidebarProps) {
+const ThemeTooltipContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+function SidebarInternal({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload, changeTheme, theme }: SidebarProps) {
 
   const [importPaths, setImportPaths] = useState<string[]>([""]);
   const [importPathVisible, setImportPathsVisible] = useState(false);
@@ -101,14 +113,22 @@ function SidebarInternal({ protos, onMethodSelected, onProtoUpload, onDeleteAll,
     <>
       <TitleBox>
         <Title>Protos</Title>
-        <Tooltip placement="bottom" title="Import protos">
-          <StyledTooltipIcon
-            onClick={() => {
-              importProtos(onProtoUpload, importPaths)
-            }}
-            type="plus-circle"
+        <ThemeTooltipContainer>
+          <ThemeSwitch 
+            checkedChildren={<Icon type="check" />}
+            unCheckedChildren={<Icon type="close" />}
+            onClick={changeTheme}
           />
-        </Tooltip>
+          <Tooltip placement="bottom" title="Import protos">
+            <StyledTooltipIcon
+              onClick={() => {
+                importProtos(onProtoUpload, importPaths)
+              }}
+              type="plus-circle"
+            />
+          </Tooltip>
+        </ThemeTooltipContainer>
+
       </TitleBox>
       <OptionsContainer>
         <OptionsLeft>
