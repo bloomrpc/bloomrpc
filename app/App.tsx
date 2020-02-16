@@ -154,11 +154,26 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   .ant-tree-title {
     color: ${props=>props.theme.secondary};
   }
+  .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
+    color: ${props=> {
+      return props.theme.background
+    }};
+    transition: none;
+    background: ${props=>props.theme.primary};
+  }
+  .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+    color: ${props=> {
+      return props.theme.background
+    }};
+    transition: none;
+    background: ${props=>props.theme.primary};
+  }
   .ant-select-dropdown-menu-item {
     color: ${props=> {
       return props.theme.primary
     }};
     background: ${props=>props.theme.background};
+    transition: none;
   }
   .ant-input {
     color: ${props=> props.theme.input.color};
