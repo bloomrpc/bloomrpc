@@ -147,8 +147,7 @@ function SidebarInternal({ protos, onMethodSelected, onProtoUpload, onDeleteAll,
           <Modal
               title={(
                   <div>
-                    <IconBtn type="file-search" />
-                    <span style={{marginLeft: 10}}> Import Paths </span>
+                    <Title> <IconBtn type="file-search" /> Import Paths </Title>
                   </div>
               )}
               visible={importPathVisible}

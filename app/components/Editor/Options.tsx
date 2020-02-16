@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Button, Icon, Tooltip, Switch, Modal, Menu, Dropdown } from 'antd';
 import { setInteractive, setProtoVisibility } from './actions';
 import { EditorAction } from './Editor';
+import { Theme } from '../../App'
 import {useState} from "react";
 import {TLSManager} from "./TLSManager";
 import { ProtoInfo, Certificate } from '../../behaviour';
@@ -39,6 +40,16 @@ const StyledSwitch = styled(Switch)`
   background: ${props=>props.theme.switch.background} !important;
 `
 
+type Props = {
+  theme: Theme,
+  tlsSelected: boolean
+}
+
+const LockIcon = styled(Icon)`
+  font-size: 18px;
+  color: ${(props: Props) => props.tlsSelected ? props.theme.icon.success : props.theme.icon.warning}
+`
+
 export function Options({ dispatch, interactiveChecked, onInteractiveChange, tlsSelected, onTLSSelected, onClickExport }: OptionsProps) {
 
   const [tlsModalVisible, setTlsModalVisible] = useState(false);
@@ -52,12 +63,11 @@ export function Options({ dispatch, interactiveChecked, onInteractiveChange, tls
             alignItems: "center",
           }}>
             <Tooltip placement="bottom" title={tlsSelected ? "Secure Connection" : "Unsecure Connection"}>
-              <Icon
-                  className={tlsSelected ? "locked" : "unlocked"}
+              <LockIcon
+                  tlsSelected={!!tlsSelected}
                   type={tlsSelected ? "lock" : "unlock"}
                   style={{
                     fontSize: 18,
-                    // color: tlsSelected ? "#28d440" : "#bdbcbc",
                   }}
               />
             </Tooltip>

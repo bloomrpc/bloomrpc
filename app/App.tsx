@@ -25,6 +25,7 @@ type Tooltip = {
 type Icon = {
   color: string
   warning: string
+  success: string
 }
 
 type H3 = {
@@ -36,6 +37,7 @@ export type Theme = {
   secondary: string,
   background: string,
   backgroundLight: string,
+  backgroundLighter: string,
   backgroundDark: string,
   switch: Switch,
   table: Table,
@@ -66,6 +68,7 @@ const whiteTheme: Theme = {
   secondary: color('#fff').darken(0.4).rgb().string(),
   background: '#fff',
   backgroundLight: color('#1890ff').lighten(0.7).rgb().string(),
+  backgroundLighter: color('#1890ff').lighten(1).rgb().string(),
   backgroundDark: color('#fff').darken(0.05).rgb().string(),
   switch: {
     background: color('#1890ff').rgb().string(),
@@ -82,7 +85,8 @@ const whiteTheme: Theme = {
   },
   icon: {
     color: "#1890ff",
-    warning: "#ff4d00"
+    warning: "#ff4d00",
+    success: "#6fe89b"
   },
   h3: {
     color: "#1890ff"
@@ -93,10 +97,10 @@ const whiteTheme: Theme = {
     right: "#ccc",
     top: "#ccc",
     all: "#ccc",
-    allWeak:  color("#ccc").lighten(0.5).rgb().string()
+    allWeak: color("#ccc").lighten(0.1).rgb().string()
   },
   input: {
-    color: color("#1890ff").lighten(0.3).rgb().string(),
+    color: color("#fff").darken(0.3).rgb().string(),
     background: color('#fff').rgb().string(),
     backgroundDark: color("#fff").darken(0.05).rgb().string(),
   }
@@ -107,6 +111,7 @@ const darkTheme: Theme = {
   secondary: color('#fff').darken(0.4).rgb().string(),
   background: '#30303d',
   backgroundLight: color('#30303d').lighten(0.3).rgb().string(),
+  backgroundLighter: color('#30303d').lighten(1).rgb().string(),
   backgroundDark: color("#30303d").darken(0.05).rgb().string(),
   switch: {
     background: color('#30303d').lighten(1).rgb().string(),
@@ -123,7 +128,8 @@ const darkTheme: Theme = {
   },
   icon: {
     color: color('#1890ff').lighten(0.4).rgb().string(),
-    warning: "#ff4d00"
+    warning: "#ff4d00",
+    success: "#6fe89b"
   },
   h3: {
     color: color('#1890ff').lighten(0.4).rgb().string()
@@ -134,11 +140,12 @@ const darkTheme: Theme = {
     right: "#ccc",
     top: "#ccc",
     all: "#ccc",
-    allWeak:  color("#ccc").lighten(0.5).rgb().string()
+    allWeak:  color("#30303d").lighten(0.8).rgb().string()
   },
   input: {
-    color: color("#1890ff").lighten(0.3).rgb().string(),
-    background: color('#30303d').lighten(0.5).rgb().string(),
+    // color: color("#1890ff").lighten(0.3).rgb().string(),
+    color: '#fff',
+    background: color('#30303d').lighten(0.3).rgb().string(),
     backgroundDark: color("#30303d").darken(0.05).rgb().string(),
   }
 }
@@ -211,15 +218,17 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   }
   .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
     color: ${props=>props.theme.primary} !important;
+    background: ${props=>props.theme.background} !important;
   }
   .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
     background: ${props=>props.theme.backgroundLight} !important;
     // color: ${props=>props.theme.table.hover.color} !important;
   }
   .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
-    color: ${props=>props.theme.secondary};
-    background: ${props=>props.theme.background} !important;
+    color: ${props=>props.theme.primary};
+    background: ${props=>props.theme.backgroundLighter} !important;
     transition: none !important;
+    border: 1px solid ${props=>props.theme.border.allWeak};
   }
   .ant-tabs-nav .ant-tabs-tab {
     transition: none;
@@ -236,7 +245,7 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     transition: none !important;
     vertical-align: middle;
     color: ${props=>props.theme.primary} !important;
-    background: ${props=>props.theme.background} !important;
+    // background: ${props=>props.theme.background} !important;
   }
   .ant-tabs-nav .ant-tabs-tab-active {
     color: ${props=>props.theme.primary} !important;
