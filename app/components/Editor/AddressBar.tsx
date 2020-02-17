@@ -38,6 +38,8 @@ const InputAddon = styled.div`
   display: flex;
   align-items: center;
   width: 140px;
+  border: 1px solid ${props=>props.theme.border.all};
+  border-left: 0;
   color: ${props=>props.theme.primary};
   background: ${props=>props.theme.backgroundLight};
 `
@@ -47,7 +49,8 @@ const InputIcon = styled(Icon)`
   padding-right: 10px;
 `
 const StyledSelectOption = styled(Select.Option)``
-const StyledInputGroup = styled(Input.Group)``
+const StyledInputGroup = styled(Input.Group)`
+`
 const StyledDropdown = styled.div`
   color: ${props=> {
     return props.theme.input.color

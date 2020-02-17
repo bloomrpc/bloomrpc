@@ -202,8 +202,10 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     transition: none;
   }
   .ant-input-group > .ant-input:last-child, .ant-input-group-addon:last-child {
-    border-top-left-radius: 0px;
-    border-bottom-left-radius 0px;
+    border: 0;
+  }
+  .ant-input-group.ant-input-group-compact > *:first-child, .ant-input-group.ant-input-group-compact > .ant-select:first-child > .ant-select-selection, .ant-input-group.ant-input-group-compact > .ant-calendar-picker:first-child .ant-input, .ant-input-group.ant-input-group-compact > .ant-select-auto-complete:first-child .ant-input, .ant-input-group.ant-input-group-compact > .ant-cascader-picker:first-child .ant-input, .ant-input-group.ant-input-group-compact > .ant-mention-wrapper:first-child .ant-mention-editor, .ant-input-group.ant-input-group-compact > .ant-time-picker:first-child .ant-time-picker-input {
+    border-radius: 0;
   }
   .ant-select-selection__placeholder, .ant-select-search__field__placeholder {
     color: ${props => props.theme.primary};
@@ -268,12 +270,12 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   }
   .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
     color: ${props => props.theme.secondary};
-    background: ${props => props.theme.background} !important;
+    background: ${props => props.theme.background};
     transition: none !important;
     border: 1px solid ${props => props.theme.border.allWeak};
     :hover {
       color: ${props => props.theme.primary};
-      background: ${props => props.theme.backgroundLight} !important;
+      background: ${props => props.theme.backgroundLight};
     }
   }
   .ant-tree.ant-tree-directory > li span.ant-tree-node-content-wrapper:hover::before, .ant-tree.ant-tree-directory .ant-tree-child-tree > li span.ant-tree-node-content-wrapper:hover::before {
@@ -300,8 +302,10 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     }
     // background: ${props => props.theme.background} !important;
   }
-  .ant-tabs-nav .ant-tabs-tab-active {
+  &&.ant-tabs-nav .ant-tabs-tab-active {
     color: ${props => props.theme.primary} !important;
+    background: ${props => props.theme.backgroundLight} !important;
+    font-weight: normal;
   }
   .ant-modal-body {
     color: ${props => props.theme.primary};

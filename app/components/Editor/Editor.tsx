@@ -181,7 +181,7 @@ const ResponseContainer = styled.div`
   display: flex;
   flex: 1 1 0%;
   border-left: 1px solid ${props=>props.theme.border.left};
-  border-right: 1px solid ${props=>props.theme.border.left};
+  border-right: 1px solid ${props=>props.theme.border.right};
   overflow: auto;
 `
 
@@ -189,6 +189,10 @@ const TabContainer = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+`
+
+const AddressBarContainer = styled.div`
+  width: 60%;
 `
 
 function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList, theme }: EditorProps) {
@@ -233,7 +237,7 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
   return (
     <TabContainer>
       <InputContainer>
-        <div style={{ width: "60%" }}>
+        <AddressBarContainer>
           <AddressBar
             protoInfo={protoInfo}
             loading={state.loading}
@@ -305,7 +309,7 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
               });
             }}
           />
-        </div>
+        </AddressBarContainer>
 
         {protoInfo && (
           <Options
