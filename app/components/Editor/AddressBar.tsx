@@ -22,7 +22,7 @@ export interface AddressBarProps {
 const StyledSelect = styled(Select)`
   width: 20%;
   color: ${props=>props.theme.primary};
-  background: ${props=>props.theme.background};
+  background: ${props=>props.theme.backgroundLight};
 
 `
 
@@ -38,6 +38,8 @@ const InputAddon = styled.div`
   display: flex;
   align-items: center;
   width: 140px;
+  color: ${props=>props.theme.primary};
+  background: ${props=>props.theme.backgroundLight};
 `
 
 const InputIcon = styled(Icon)`
@@ -51,7 +53,7 @@ const StyledDropdown = styled.div`
     return props.theme.input.color
   }};
   background: ${props=>props.theme.input.background};
-
+  
 `
 
 export const AddressBar = styled(AddressBarInternal)``
@@ -105,7 +107,6 @@ function AddressBarInternal({loading, url, onChangeUrl, protoInfo, defaultEnviro
                 if (value === "new") {
                   Modal.confirm({
                     title: 'Environment Name',
-                    className: "env-modal",
                     icon: (
                         <Icon type="project" />
                     ),
@@ -127,7 +128,6 @@ function AddressBarInternal({loading, url, onChangeUrl, protoInfo, defaultEnviro
                 if (value === "update") {
                   Modal.confirm({
                     title: `Update ${currentEnvironmentName}?`,
-                    className: "env-modal",
                     icon: (
                         <Icon type="project" />
                     ),
@@ -144,7 +144,6 @@ function AddressBarInternal({loading, url, onChangeUrl, protoInfo, defaultEnviro
                 if (value === "delete") {
                   Modal.confirm({
                     title: `Deleting ${currentEnvironmentName}?`,
-                    className: "env-modal",
                     icon: (
                         <Icon type="delete" />
                     ),

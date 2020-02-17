@@ -102,13 +102,6 @@ const styles = {
     padding: "7px 10px",
     marginBottom: "5px"
   },
-  optionContainer: {
-    position: "absolute" as "absolute",
-    fontWeight: 900,
-    fontSize: "13px",
-    borderLeft: "1px solid rgba(0, 21, 41, 0.18)",
-    zIndex: 10,
-  },
   optionLink: {
     textDecoration: "none",
   },

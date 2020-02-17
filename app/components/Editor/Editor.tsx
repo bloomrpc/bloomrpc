@@ -168,6 +168,28 @@ const PlayIconContainer = styled.div`
   margin-left: -25px;
   top: calc(50% - 80px);
 `
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid ${props => props.theme.border.all};
+  padding: 15px;
+`
+
+const ResponseContainer = styled.div`
+  max-width: inherit;
+  width: inherit;
+  display: flex;
+  flex: 1 1 0%;
+  border-left: 1px solid ${props=>props.theme.border.left};
+  border-right: 1px solid ${props=>props.theme.border.left};
+  overflow: auto;
+`
+
+const TabContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`
 
 function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList, theme }: EditorProps) {
   const [state, dispatch] = useReducer(reducer, {
@@ -209,79 +231,79 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
   }, []);
 
   return (
-    <div style={styles.tabContainer}>
-      <div style={styles.inputContainer}>
+    <TabContainer>
+      <InputContainer>
         <div style={{ width: "60%" }}>
           <AddressBar
-              protoInfo={protoInfo}
-              loading={state.loading}
-              url={state.url}
-              defaultEnvironment={state.environment}
-              environments={environmentList}
-              onChangeEnvironment={(environment) => {
+            protoInfo={protoInfo}
+            loading={state.loading}
+            url={state.url}
+            defaultEnvironment={state.environment}
+            environments={environmentList}
+            onChangeEnvironment={(environment) => {
 
-                if (!environment) {
-                  dispatch(setEnvironment(""));
-                  onRequestChange && onRequestChange({
-                    ...state,
-                    environment: "",
-                  });
-                  return;
-                }
-
-                dispatch(setUrl(environment.url));
-                dispatch(setMetadata(environment.metadata));
-                dispatch(setEnvironment(environment.name));
-                dispatch(setTSLCertificate(environment.tlsCertificate));
-                dispatch(setInteractive(environment.interactive));
-
-                onRequestChange && onRequestChange({
-                  ...state,
-                  environment: environment.name,
-                  url: environment.url,
-                  metadata: environment.metadata,
-                  tlsCertificate: environment.tlsCertificate,
-                  interactive: environment.interactive,
-                });
-              }}
-              onEnvironmentDelete={(environmentName) => {
-                deleteEnvironment(environmentName);
+              if (!environment) {
                 dispatch(setEnvironment(""));
                 onRequestChange && onRequestChange({
                   ...state,
                   environment: "",
                 });
-                onEnvironmentListChange && onEnvironmentListChange(
-                    getEnvironments()
-                );
-              }}
-              onEnvironmentSave={(environmentName) => {
-                saveEnvironment({
-                  name: environmentName,
-                  url: state.url,
-                  interactive: state.interactive,
-                  metadata: state.metadata,
-                  tlsCertificate: state.tlsCertificate,
-                });
+                return;
+              }
 
-                dispatch(setEnvironment(environmentName));
-                onRequestChange && onRequestChange({
-                  ...state,
-                  environment: environmentName,
-                });
+              dispatch(setUrl(environment.url));
+              dispatch(setMetadata(environment.metadata));
+              dispatch(setEnvironment(environment.name));
+              dispatch(setTSLCertificate(environment.tlsCertificate));
+              dispatch(setInteractive(environment.interactive));
 
-                onEnvironmentListChange && onEnvironmentListChange(
-                    getEnvironments()
-                );
-              }}
-              onChangeUrl={(e) => {
-                dispatch(setUrl(e.target.value));
-                storeUrl(e.target.value);
-                onRequestChange && onRequestChange({
-                  ...state,
-                  url: e.target.value,
-                });
-              }}
+              onRequestChange && onRequestChange({
+                ...state,
+                environment: environment.name,
+                url: environment.url,
+                metadata: environment.metadata,
+                tlsCertificate: environment.tlsCertificate,
+                interactive: environment.interactive,
+              });
+            }}
+            onEnvironmentDelete={(environmentName) => {
+              deleteEnvironment(environmentName);
+              dispatch(setEnvironment(""));
+              onRequestChange && onRequestChange({
+                ...state,
+                environment: "",
+              });
+              onEnvironmentListChange && onEnvironmentListChange(
+                getEnvironments()
+              );
+            }}
+            onEnvironmentSave={(environmentName) => {
+              saveEnvironment({
+                name: environmentName,
+                url: state.url,
+                interactive: state.interactive,
+                metadata: state.metadata,
+                tlsCertificate: state.tlsCertificate,
+              });
+
+              dispatch(setEnvironment(environmentName));
+              onRequestChange && onRequestChange({
+                ...state,
+                environment: environmentName,
+              });
+
+              onEnvironmentListChange && onEnvironmentListChange(
+                getEnvironments()
+              );
+            }}
+            onChangeUrl={(e) => {
+              dispatch(setUrl(e.target.value));
+              storeUrl(e.target.value);
+              onRequestChange && onRequestChange({
+                ...state,
+                url: e.target.value,
+              });
+            }}
           />
         </div>
 
@@ -309,16 +331,16 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
             }}
           />
         )}
-      </div>
+      </InputContainer>
 
       <div className="editor-container">
         <Resizable
-            enable={{ right: true }}
-            defaultSize={{
-              width: "50%",
-            }}
-            maxWidth={"80%"}
-            minWidth={"10%"}
+          enable={{ right: true }}
+          defaultSize={{
+            width: "50%",
+          }}
+          maxWidth={"80%"}
+          minWidth={"10%"}
         >
           <Request
             theme={theme}
@@ -336,20 +358,20 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
 
           <PlayIconContainer>
             <Controls
-                dispatch={dispatch}
-                state={state}
-                protoInfo={protoInfo}
+              dispatch={dispatch}
+              state={state}
+              protoInfo={protoInfo}
             />
           </PlayIconContainer>
         </Resizable>
 
-        <div style={{...styles.responseContainer}}>
+        <ResponseContainer>
           <Response
             theme={theme}
             streamResponse={state.responseStreamData}
             response={state.response}
           />
-        </div>
+        </ResponseContainer>
       </div>
 
       <Metadata
@@ -375,36 +397,6 @@ function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironm
           onClose={() => dispatch(setProtoVisibility(false))}
         />
       )}
-    </div>
+    </TabContainer>
   )
 }
-
-const styles = {
-  tabContainer: {
-    width: "100%",
-    height: "100%",
-    position: "relative" as "relative",
-  },
-  editorContainer: {
-    display: "flex",
-    height: "100%",
-    borderLeft: "1px solid rgba(0, 21, 41, 0.18)",
-  },
-  responseContainer: {
-    maxWidth: "inherit",
-    width: "inherit",
-    display: "flex",
-    flex: "1 1 0%",
-    borderLeft: "1px solid #eee",
-    borderRight: "1px solid rgba(0, 21, 41, 0.18)",
-    overflow: "auto"
-  },
-  inputContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    border: "1px solid rgba(0, 21, 41, 0.18)",
-    borderBottom: "1px solid #eee",
-    padding: "15px",
-    boxShadow: "2px 0px 4px 0px rgba(0,0,0,0.20)",
-  },
-};

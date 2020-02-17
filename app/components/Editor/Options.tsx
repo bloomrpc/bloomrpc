@@ -40,6 +40,16 @@ const StyledSwitch = styled(Switch)`
   background: ${props=>props.theme.switch.background} !important;
 `
 
+const TLSButton = styled.span`
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 1px 10px;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 13px;
+  border: 1px solid ${props=>props.theme.border.all};
+`
+
 type Props = {
   theme: Theme,
   tlsSelected: boolean
@@ -71,12 +81,11 @@ export function Options({ dispatch, interactiveChecked, onInteractiveChange, tls
                   }}
               />
             </Tooltip>
-            <span
+            <TLSButton
               onClick={() => setTlsModalVisible(true)}
-              style={styles.tlsButton}
             >
               <span>TLS</span>
-            </span>
+            </TLSButton>
           </div>
 
           <StyledModal
@@ -148,15 +157,5 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-  },
-  tlsButton: {
-    marginLeft: 10,
-    cursor: "pointer",
-    // background: "#fafafa",
-    padding: "1px 10px",
-    borderRadius: "3px",
-    fontWeight: 500,
-    fontSize: "13px",
-    border: "1px solid #d8d8d8",
   }
 };
