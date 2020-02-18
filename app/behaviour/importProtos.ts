@@ -3,7 +3,6 @@ import { fromFileName, mockRequestMethods, Proto, walkServices } from 'bloomrpc-
 import * as path from "path";
 import { ProtoFile, ProtoService } from './protobuf';
 import { Service } from 'protobufjs';
-import console = require('console');
 
 const commonProtosPath = [
   // @ts-ignore
