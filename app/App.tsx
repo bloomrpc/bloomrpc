@@ -170,6 +170,74 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   #root {
     overflow: hidden;
   }
+
+  .editor-container {
+    display: flex;
+    height: 100%;
+  }
+  .ant-tabs-nav-scroll {
+    border-bottom: none;
+  }
+
+  .hide {
+    display: none;
+  }
+
+
+  .response-edit {
+
+  .ace_gutter > .ace_layer {
+    margin-left: -15px;
+  }
+  }
+
+  .find-match {
+    border-radius: 0;
+    position: absolute;
+    top: -10px;
+    z-index: 30;
+    width: 39%;
+    right: 0px;
+  }
+
+  .ant-tabs-bar {
+    margin: 0 0 8px 0;
+  }
+
+  .ant-tabs-ink-bar {
+    height: 0;
+  }
+
+
+  .ant-modal-header {
+    background: #001529;
+    border-bottom: none;
+    .ant-modal-title {
+      color: #fff;
+    }
+  }
+
+  .ant-modal-content {
+  .ant-modal-close-x {
+    color: #fff;
+  }
+  }
+
+  .draggable-tab.active {
+    font-weight: 500;
+  }
+
+  .inline-item {
+      display: inline-block;
+  }
+
+  .env-modal {
+    .ant-modal-confirm-content {
+      margin-top: 20px;
+      margin-left: 0px !important;
+    }
+  }
+
   .ant-tabs-nav .ant-tabs-tab {
     padding: 4px;
     padding-left: 17px;

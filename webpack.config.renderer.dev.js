@@ -13,7 +13,6 @@ const merge = require('webpack-merge');
 const { spawn } = require('child_process');
 const baseConfig = require('./webpack.config.base');
 const CheckNodeEnv = require('./internals/scripts/CheckNodeEnv');
-// const darkTheme = require('@ant-design/dark-theme').default
 
 CheckNodeEnv('development');
 
@@ -41,27 +40,6 @@ module.exports = merge.smart(baseConfig, {
 
   module: {
     rules: [
-      {
-        test: /\.less$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              // modifyVars: darkTheme,
-              javascriptEnabled: true,
-            },
-          }
-        ]
-      },
       {
         test: /\.global\.css$/,
         use: [

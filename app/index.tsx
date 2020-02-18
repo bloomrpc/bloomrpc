@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import './app.global.less';
+import './app.global.scss';
 import App from './App';
 
 render(

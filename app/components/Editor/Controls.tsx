@@ -11,14 +11,11 @@ export interface ControlsStateProps {
   protoInfo?: ProtoInfo
 }
 
-const StyledTooltip = styled(Tooltip)`
-  color: ${props=>props.theme.tooltip.color};
-`
+
 
 const Commit = styled.div`
   color: ${props=>props.theme.tooltip.primary};
   padding: 10px;
-  paddingleft: 12px;
   border-radius: 0 50% 50% 0;
   font-size: 18px;
   cursor: pointer;
@@ -28,7 +25,6 @@ const Commit = styled.div`
 const PushData = styled.div`
   color: ${props=>props.theme.primary};
   padding: 10px;
-  paddingleft: 12px;
   border-radius: 0 50% 50% 0;
   font-size: 18px;
   cursor: pointer;
@@ -51,7 +47,7 @@ export function Controls({ dispatch, state, protoInfo }: ControlsStateProps) {
       { isControlVisible(state) &&
         (
           <ControlsContainer>
-            <StyledTooltip placement="topLeft" title={"Push Data"}>
+            <Tooltip placement="topLeft" title={"Push Data"}>
               <PushData onClick={() => {
                 if (state.call) {
                   dispatch(setRequestStreamData([
@@ -63,9 +59,9 @@ export function Controls({ dispatch, state, protoInfo }: ControlsStateProps) {
               }}>
                 <Icon type="double-right"/>
               </PushData>
-            </StyledTooltip>
+            </Tooltip>
 
-            <StyledTooltip placement="topRight" title={"Commit Stream"}>
+            <Tooltip placement="topRight" title={"Commit Stream"}>
               <Commit
                 onClick={() => {
                   if (state.call) {
@@ -75,7 +71,7 @@ export function Controls({ dispatch, state, protoInfo }: ControlsStateProps) {
                 }}>
                 <Icon type="check"/>
               </Commit>
-            </StyledTooltip>
+            </Tooltip>
           </ControlsContainer>
         )}
       </>

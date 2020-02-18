@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-
 interface BadgeProps {
   type: "protoFile" | "service" | "method"
   children: Node | string | Element

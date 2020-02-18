@@ -36,27 +36,6 @@ module.exports = merge.smart(baseConfig, {
 
   module: {
     rules: [
-      {
-        test: /\.less$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              // modifyVars: darkTheme,
-              javascriptEnabled: true,
-            },
-          }
-        ]
-      },
       // Extract all .global.css to style.css as is
       {
         test: /\.global\.css$/,
