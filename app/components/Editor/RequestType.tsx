@@ -20,9 +20,7 @@ const StyledRequestType = styled.div`
   font-weight: 500;
 `
 
-export const RequestType = styled(RequestTypeInternal)``
-
-function RequestTypeInternal({ protoInfo }: RequestTypeProps) {
+export function RequestType({ protoInfo }: RequestTypeProps) {
   let reqType = "Unary Call";
 
   if (!protoInfo) {

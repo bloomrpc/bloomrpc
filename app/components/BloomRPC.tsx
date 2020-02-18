@@ -36,18 +36,12 @@ const StyledLayoutSider = styled(Layout.Sider)`
   transition: all 0s;
 `
 
-const BloomRPC = styled(BloomRPCInternal)``
-
-export {
-  BloomRPC
-}
-
 interface IBloomRPC {
   theme: string
   changeTheme: () => void
 }
 
-function BloomRPCInternal({ theme, changeTheme }: IBloomRPC) {
+export function BloomRPC({ theme, changeTheme }: IBloomRPC) {
 
   const [protos, setProtosState] = useState<ProtoFile[]>([]);
   const [editorTabs, setEditorTabs] = useState<EditorTabs>({

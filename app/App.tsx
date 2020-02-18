@@ -14,6 +14,17 @@ type Table = {
   hover: Hover
 }
 
+type BadgeType = "protoFile" | "service" | "method"
+
+type Badge = {
+  color: {
+    [key in BadgeType]: string
+  },
+  background: {
+    [key in BadgeType]: string
+  }
+}
+
 type Switch = {
   color: string
   background: string,
@@ -48,6 +59,7 @@ export type Theme = {
   switch: Switch,
   table: Table,
   tooltip: Tooltip,
+  badge: Badge,
   icon: Icon,
   h3: H3,
   border: Border,
@@ -85,6 +97,18 @@ const whiteTheme: Theme = {
     hover: {
       background: color('#1890ff').lighten(0.4).rgb().string(),
       color: color('#fff').rgb().string(),
+    }
+  },
+  badge: {
+    background: {
+      "protoFile": "#15abff",
+      "method": "#2cc316",
+      "service": "#ffa733"
+    },
+    color: {
+      "protoFile": "#fff",
+      "method": "#fff",
+      "service": "#fff"
     }
   },
   inverse: {
@@ -138,6 +162,18 @@ const darkTheme: Theme = {
     hover: {
       background: color('#1890ff').lighten(0.4).rgb().string(),
       color: color('#30303d').rgb().string(),
+    }
+  },
+  badge: {
+    background: {
+      "protoFile": "#15abff",
+      "method": "#2cc316",
+      "service": "#ffa733"
+    },
+    color: {
+      "protoFile": "#fff",
+      "method": "#fff",
+      "service": "#fff"
     }
   },
   tooltip: {

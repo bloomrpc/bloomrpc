@@ -18,10 +18,8 @@ const StyledAceEditor = styled(AceEditor)`
 
 const StyledDrawer = styled(Drawer)``
 
-export const ProtoFileViewer = styled(ProtoFileViewerInternal)``
 
-
-function ProtoFileViewerInternal({ protoInfo, visible, onClose, theme }: ProtoFileViewerProps) {
+export function ProtoFileViewer({ protoInfo, visible, onClose, theme }: ProtoFileViewerProps) {
 
   return (
     <StyledDrawer

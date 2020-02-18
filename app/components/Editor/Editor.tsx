@@ -153,9 +153,6 @@ const reducer = (state: EditorState, action: EditorAction) => {
   }
 };
 
-export const Editor = styled(EditorInternal)``
-
-
 const PlayIconContainer = styled.div`
   position: absolute;
   align-items: center;
@@ -195,7 +192,7 @@ const AddressBarContainer = styled.div`
   width: 60%;
 `
 
-function EditorInternal({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList, theme }: EditorProps) {
+export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList, theme }: EditorProps) {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,

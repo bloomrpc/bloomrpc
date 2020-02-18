@@ -18,8 +18,6 @@ const StyledAceEditor = styled(AceEditor)`
   background: ${props => props.theme.backgroundLight} !important;
 `
 
-export const Viewer = styled(ViewerInternal)``
-
 const StyledResponseTime = styled.div`
   user-select: none;
   font-size: 11px;
@@ -31,7 +29,7 @@ const StyledResponseTime = styled.div`
   color: ${props=>props.theme.primary};
 `
 
-function ViewerInternal({ output, responseTime, emptyContent, theme }: ResponseProps) {
+export function Viewer({ output, responseTime, emptyContent, theme }: ResponseProps) {
   const editorRef: any = useRef(null);
   const inputSearch: any = useRef(null);
   const [showFind, setShowFind] = useState(false);

@@ -16,13 +16,9 @@ const StyledAceEditor = styled(AceEditor)`
   background: ${props => props.theme.backgroundLight} !important;
 `
 
-const StyledTabPane = styled(Tabs.TabPane)`
+const StyledTabPane = styled(Tabs.TabPane)``
 
-`
-
-export const Request = styled(RequestInternal)``
-
-function RequestInternal({onChangeData, commands, data, streamData, theme}: RequestProps) {
+export function Request({onChangeData, commands, data, streamData, theme}: RequestProps) {
   const editorTabKey = `editorTab`;
 
   return (

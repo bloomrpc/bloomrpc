@@ -29,9 +29,6 @@ const StyledTooltipIcon = styled(Icon)`
   }};
 `
 
-export const Sidebar = styled(SidebarInternal)`
-`
-
 const TitleBox = styled.div`
   display: flex;
   justify-content: space-between;
@@ -103,7 +100,7 @@ const ThemeTooltipContainer = styled.div`
   align-items: center;
 `
 
-function SidebarInternal({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload, changeTheme, theme }: SidebarProps) {
+export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload, changeTheme, theme }: SidebarProps) {
 
   const [importPaths, setImportPaths] = useState<string[]>([""]);
   const [importPathVisible, setImportPathsVisible] = useState(false);

@@ -59,9 +59,7 @@ const StyledDropdown = styled.div`
   
 `
 
-export const AddressBar = styled(AddressBarInternal)``
-
-function AddressBarInternal({loading, url, onChangeUrl, protoInfo, defaultEnvironment, environments, onEnvironmentSave, onChangeEnvironment, onEnvironmentDelete}: AddressBarProps) {
+export function AddressBar({loading, url, onChangeUrl, protoInfo, defaultEnvironment, environments, onEnvironmentSave, onChangeEnvironment, onEnvironmentDelete}: AddressBarProps) {
   const [currentEnvironmentName, setCurrentEnvironmentName] = useState<string>(defaultEnvironment || "");
   const [newEnvironmentName, setNewEnvironmentName] = useState<string>("");
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Tabs } from 'antd';
-import { Theme } from '../../App'
 import { Editor, EditorEnvironment, EditorRequest } from '../Editor';
 import { ProtoInfo, ProtoService } from '../../behaviour';
 import { DraggableItem, DraggableTabs } from "./DraggableTabList";
@@ -10,7 +9,7 @@ import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import styled from 'styled-components';
 
 interface TabListProps {
-  theme: Theme
+  theme: string
   tabs: TabData[]
   activeKey?: string
   onChange?: (activeKey: string) => void
@@ -44,14 +43,11 @@ const StyledTabs = styled(Tabs)`
 const StyledDraggableTabs = styled(DraggableTabs)`
 
 `
-
-export const TabList = styled(TabListInternal)``
-
 export interface EditorTabRequest extends EditorRequest {
   id: string
 }
 
-function TabListInternal({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange, environmentList, onEnvironmentChange, theme }: TabListProps) {
+export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEditorRequestChange, environmentList, onEnvironmentChange, theme }: TabListProps) {
   const tabsWithMatchingKey =
     tabs.filter(tab => tab.tabKey === activeKey);
 

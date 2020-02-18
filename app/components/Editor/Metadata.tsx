@@ -39,9 +39,7 @@ const StyledAceEditor = styled(AceEditor)`
   background: ${props => props.theme.backgroundLight} !important;
 `
 
-export const Metadata = styled(MetadataInternal)``
-
-export function MetadataInternal({ onClickMetadata, onMetadataChange, value, theme }: MetadataProps) {
+export function Metadata({ onClickMetadata, onMetadataChange, value, theme }: MetadataProps) {
   const [height, setHeight] = useState(38);
   const visibile = height > 38;
   return (
