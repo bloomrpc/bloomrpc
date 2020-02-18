@@ -51,7 +51,7 @@ module.exports = merge.smart(baseConfig, {
           {
             loader: 'less-loader',
             options: {
-              modifyVars: darkTheme,
+              // modifyVars: darkTheme,
               javascriptEnabled: true,
             },
           }
