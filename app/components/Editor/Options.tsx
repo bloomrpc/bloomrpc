@@ -38,6 +38,7 @@ const ViewProtoBtn = styled(Button)`
 const StyledSwitch = styled(Switch)`
   color: ${props=>props.theme.switch.color} !important;
   background: ${props=>props.theme.switch.background} !important;
+  transition: none;
 `
 
 const TLSButton = styled.span`

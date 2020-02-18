@@ -29,7 +29,8 @@ const StyledTooltipIcon = styled(Icon)`
   }};
 `
 
-export const Sidebar = styled(SidebarInternal)``
+export const Sidebar = styled(SidebarInternal)`
+`
 
 const TitleBox = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ const TitleBox = styled.div`
   padding-top: 14px;
   padding-bottom: 4px;
   padding-left: 10px;
+
   border-bottom: 1px solid ${props => props.theme.border.bottom};
 `
 
@@ -91,6 +93,7 @@ const ThemeSwitch = styled(Switch)`
   margin-right: 10px;
   color: ${props=>props.theme.switch.color};
   background: ${props=>props.theme.switch.background};
+  transition: none;
 `
 
 const StyledTreeNode = styled(Tree.TreeNode)``

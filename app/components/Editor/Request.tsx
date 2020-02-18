@@ -16,6 +16,10 @@ const StyledAceEditor = styled(AceEditor)`
   background: ${props => props.theme.backgroundLight} !important;
 `
 
+const StyledTabPane = styled(Tabs.TabPane)`
+
+`
+
 export const Request = styled(RequestInternal)``
 
 function RequestInternal({onChangeData, commands, data, streamData, theme}: RequestProps) {
@@ -28,7 +32,7 @@ function RequestInternal({onChangeData, commands, data, streamData, theme}: Requ
         tabPosition={"top"}
         style={{width: "100%"}}
       >
-        <Tabs.TabPane tab="Editor" key={editorTabKey}>
+        <StyledTabPane tab="Editor" key={editorTabKey}>
           <StyledAceEditor
             width={"100%"}
             height={"calc(100vh - 185px)"}
@@ -49,12 +53,12 @@ function RequestInternal({onChangeData, commands, data, streamData, theme}: Requ
             }}
             tabSize={2}
           />
-        </Tabs.TabPane>
+        </StyledTabPane>
 
         {streamData.map((data, key) => (
-          <Tabs.TabPane tab={`Stream ${key + 1}`} key={`${key}`}>
+          <StyledTabPane tab={`Stream ${key + 1}`} key={`${key}`}>
             <Viewer theme={theme} output={data} />
-          </Tabs.TabPane>
+          </StyledTabPane>
         ))}
       </Tabs>
     </>

@@ -5,7 +5,6 @@ import * as Mousetrap from 'mousetrap';
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import { Input } from 'antd';
 import styled from 'styled-components'
-import console = require('console');
 
 interface ResponseProps {
   theme: string
@@ -21,9 +20,18 @@ const StyledAceEditor = styled(AceEditor)`
 
 export const Viewer = styled(ViewerInternal)``
 
+const StyledResponseTime = styled.div`
+  user-select: none;
+  font-size: 11px;
+  padding: 3px 7px;
+  position: absolute;
+  top: 5px;
+  right: 0px;
+  z-index: 30;
+  color: ${props=>props.theme.primary};
+`
 
 function ViewerInternal({ output, responseTime, emptyContent, theme }: ResponseProps) {
-  console.log(`viewer theme`, theme)
   const editorRef: any = useRef(null);
   const inputSearch: any = useRef(null);
   const [showFind, setShowFind] = useState(false);
@@ -61,9 +69,9 @@ function ViewerInternal({ output, responseTime, emptyContent, theme }: ResponseP
       {!output && emptyContent}
 
       { responseTime && (
-          <div style={styles.responseTime}>
+          <StyledResponseTime>
             {responseTime.toFixed(3)}s
-          </div>
+          </StyledResponseTime>
       )}
 
       {output && (

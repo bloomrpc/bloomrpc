@@ -15,6 +15,7 @@ interface MetadataProps {
 const StyledMetadata = styled.div`
   color: ${props=>props.theme.primary};
   background: ${props=>props.theme.background};
+  border-top: 1px solid ${props=>props.theme.border.top};
 `
 
 const StyledMetadataOption = styled.div`

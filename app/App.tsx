@@ -167,6 +167,16 @@ const darkTheme: Theme = {
 }
 
 const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
+  #root {
+    overflow: hidden;
+  }
+  .ant-tabs-nav .ant-tabs-tab {
+    padding: 4px;
+    padding-left: 17px;
+    padding-right: 17px;
+    user-select: none;
+  }
+  
   .ant-tree-title {
     color: ${props => props.theme.secondary};
   }
@@ -190,15 +200,15 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   .ant-input {
     color: ${props => props.theme.input.color};
     background: ${props => props.theme.input.background};
-    border: 1px solid ${props=>props.theme.border.all};
+    border: 1px solid ${props => props.theme.border.all};
     transition: none;
     :hover, :focus {
-      border: 1px solid ${props=>props.theme.border.allWeak};
+      border: 1px solid ${props => props.theme.border.allWeak};
     }
   }
   .ant-input-group-addon {
     padding: 0px;
-    border: 1px solid ${props=>props.theme.border.all};
+    border: 1px solid ${props => props.theme.border.all};
     transition: none;
   }
   .ant-input-group > .ant-input:last-child, .ant-input-group-addon:last-child {
@@ -207,17 +217,20 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   .ant-input-group.ant-input-group-compact > *:first-child, .ant-input-group.ant-input-group-compact > .ant-select:first-child > .ant-select-selection, .ant-input-group.ant-input-group-compact > .ant-calendar-picker:first-child .ant-input, .ant-input-group.ant-input-group-compact > .ant-select-auto-complete:first-child .ant-input, .ant-input-group.ant-input-group-compact > .ant-cascader-picker:first-child .ant-input, .ant-input-group.ant-input-group-compact > .ant-mention-wrapper:first-child .ant-mention-editor, .ant-input-group.ant-input-group-compact > .ant-time-picker:first-child .ant-time-picker-input {
     border-radius: 0;
   }
+  .ant-tabs-tab-prev-icon, .ant-tabs-tab-next-icon {
+    color: ${props => props.theme.primary};
+  }
   .ant-select-selection__placeholder, .ant-select-search__field__placeholder {
     color: ${props => props.theme.primary};
   }
   .ant-select-selection {
     color: ${props => props.theme.primary};
     background: ${props => props.theme.input.backgroundDark};
-    border: 1px solid ${props=>props.theme.border.all};
+    border: 1px solid ${props => props.theme.border.all};
     transition: none;
     :hover, :focus {
       color: ${props => props.theme.primary};
-      border: 1px solid ${props=>props.theme.border.allWeak};
+      border: 1px solid ${props => props.theme.border.allWeak};
     }
   }
   .ant-select-arrow {
@@ -225,6 +238,7 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   }
   .ant-drawer-header {
     background: ${props => props.theme.background};
+    border-bottom: 1px solid ${props => props.theme.border.bottom};
   }
   .ant-drawer-title {
     color: ${props => props.theme.primary};
@@ -333,7 +347,7 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
 `
 
 export default function App() {
-  const [theme, setTheme] = useState<string>('white')
+  const [theme, setTheme] = useState<string>('dark')
 
   function changeTheme() {
     const d = theme === 'white' ? 'dark' : 'white'
