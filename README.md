@@ -45,6 +45,7 @@ You can install the client downloading the installer directly from the [Releases
 ```
 brew cask install bloomrpc
 ```
+The app will get installed and copied to the path `/Applications/BloomRPC.app`
 
 ### Build from source:
 
