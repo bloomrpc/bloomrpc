@@ -12,7 +12,7 @@
 <p align="center">The missing GUI Client for GRPC services. 🌸 </p>
 
 <p align="center">Inspired by <b>Postman</b> and <b>GraphQL Playground</b> <br/>
-  <b>BloomRPC</b> aim to give the simplest and efficient developer experience for exploring
+  <b>BloomRPC</b> aims to provide the simplest and most efficient developer experience for exploring
 and querying your GRPC services.
 </p>
 
