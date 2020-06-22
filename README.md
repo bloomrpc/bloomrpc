@@ -19,7 +19,7 @@ and querying your GRPC services.
 <br/>
 
 <p align="center">
-  Install the client, select your protobuf files and start making requests! <br/> 
+  Install the client, select your protobuf files and start making requests! <br/>
   <b>No extra</b> steps or configuration <b>needed</b>.
 </p>
 
@@ -34,6 +34,14 @@ and querying your GRPC services.
 - Persistent Workspace
 - Request Cancellation
 - Much more...
+
+### Shortcuts
+
+<kbd>CTRL</kbd>+<kbd>w</kbd> or <kbd>CMD</kbd>+<kbd>w</kbd>: close tab
+
+<kbd>ESC</kbd>: focos editor
+
+<kbd>CTRL</kbd>+<kbd>Enter</kbd> or <kbd>CMD</kbd>+<kbd>Enter</kbd>: send request
 
 ## Installation
 We support all the major operation systems, **MacOS / Windows / Linux Deb - Arch Linux**
