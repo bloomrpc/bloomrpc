@@ -48,6 +48,7 @@ export interface EditorRequest {
   metadata: string
   interactive: boolean
   environment?: string
+  grpcWeb: boolean
   tlsCertificate?: Certificate
 }
 
@@ -82,6 +83,7 @@ const INITIAL_STATE: EditorState = {
   requestStreamData: [],
   responseStreamData: [],
   interactive: false,
+  grpcWeb: false,
   loading: false,
   response: {
     output: "",
@@ -129,6 +131,9 @@ const reducer = (state: EditorState, action: EditorAction) => {
     case actions.SET_INTERACTIVE:
       return { ...state, interactive: action.interactive };
 
+    case actions.SET_GRPC_WEB:
+      return { ...state, grpcWeb: action.grpcWeb };
+
     case actions.SET_REQUEST_STREAM_DATA:
       return { ...state, requestStreamData: action.requestData };
 
@@ -156,6 +161,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,
     interactive: initialRequest ? initialRequest.interactive : (protoInfo && protoInfo.usesStream()) || INITIAL_STATE.interactive,
+    grpcWeb: initialRequest ? initialRequest.grpcWeb : INITIAL_STATE.grpcWeb,
     metadata: (initialRequest && initialRequest.metadata) || getMetadata() || INITIAL_STATE.metadata,
     environment: (initialRequest && initialRequest.environment),
   }, undefined);
@@ -271,6 +277,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
           <Options
             protoInfo={protoInfo}
             dispatch={dispatch}
+            grpcWebChecked={state.grpcWeb}
             interactiveChecked={state.interactive}
             onClickExport={async () => {
               await exportResponseToJSONFile(protoInfo, state)
