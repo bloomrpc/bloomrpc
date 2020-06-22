@@ -1,5 +1,7 @@
 import * as React from 'react';
 import AceEditor, { Command } from 'react-ace';
+import * as Mousetrap from 'mousetrap'
+import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import { Tabs } from 'antd';
 import { Viewer } from './Viewer';
 
@@ -12,6 +14,21 @@ interface RequestProps {
 
 export function Request({onChangeData, commands, data, streamData}: RequestProps) {
   const editorTabKey = `editorTab`;
+
+  // bind esc for focus on the active editor window
+  const aceEditor = React.useRef<AceEditor>(null)
+  React.useEffect(() => {
+    Mousetrap.bindGlobal('esc', () => {
+      const node = aceEditor.current as any
+      if (node && 'editor' in node) {
+        node.editor.focus()
+      }
+    })
+
+    return () => {
+      Mousetrap.unbind('esc')
+    }
+  })
 
   return (
     <>

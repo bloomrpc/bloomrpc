@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Icon, notification } from 'antd';
+import * as Mousetrap from 'mousetrap'
+import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import {
   setCall,
   setIsLoading,
@@ -96,6 +98,18 @@ export const makeRequest = ({ dispatch, state, protoInfo }: ControlsStateProps) 
 };
 
 export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
+  React.useEffect(() => {
+    Mousetrap.bindGlobal(['ctrl+enter', 'command+enter'], () => {
+      if (state.loading) {
+        return
+      }
+      makeRequest({ dispatch, state, protoInfo })
+    })
+    return () => {
+      Mousetrap.unbind(['ctrl+enter', 'command+enter'])
+    }
+  }, [])
+
   return (
     <Icon
       type={state.loading ? "pause-circle" : "play-circle"}
