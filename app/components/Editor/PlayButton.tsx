@@ -108,7 +108,7 @@ export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
     return () => {
       Mousetrap.unbind(['ctrl+enter', 'command+enter'])
     }
-  }, [])
+  }, [dispatch, state, protoInfo])
 
   return (
     <Icon
