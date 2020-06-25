@@ -1,4 +1,4 @@
-import { Certificate, GRPCRequest } from '../../behaviour';
+import { Certificate, GRPCEventEmitter } from '../../behaviour';
 import { EditorResponse } from "./Editor";
 
 const actions = {
@@ -36,7 +36,7 @@ export function setResponse(response: EditorResponse) {
   return { type: actions.SET_RESPONSE, response };
 }
 
-export function setCall(call?: GRPCRequest) {
+export function setCall(call?: GRPCEventEmitter) {
   return { type: actions.SET_CALL, call };
 }
 

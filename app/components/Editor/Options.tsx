@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Icon, Tooltip, Switch, Modal, Menu, Dropdown } from 'antd';
-import { setInteractive, setProtoVisibility } from './actions';
+import { setInteractive, setProtoVisibility, setGrpcWeb } from './actions';
 import { EditorAction } from './Editor';
 import {useState} from "react";
 import {TLSManager} from "./TLSManager";
@@ -89,8 +89,7 @@ export function Options({ protoInfo, dispatch, grpcWebChecked, interactiveChecke
             defaultChecked={grpcWebChecked}
             unCheckedChildren="GRPC"
             onChange={(checked) => {
-              dispatch(setInteractive(checked));
-              onInteractiveChange && onInteractiveChange(checked);
+              dispatch(setGrpcWeb(checked));
             }}
           />
         </div>

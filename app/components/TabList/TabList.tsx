@@ -81,6 +81,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
                       <DraggableItem
                           active={nodeTab && nodeTab.tabKey === activeKey}
                           index={nodeIndex}
+                          key={node.key}
                       >
                         {node}
                       </DraggableItem>

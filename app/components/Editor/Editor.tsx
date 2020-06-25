@@ -15,7 +15,7 @@ import { Controls, isControlVisible } from './Controls';
 import { Request } from './Request';
 import { Options } from './Options';
 import { ProtoFileViewer } from './ProtoFileViewer';
-import { Certificate, GRPCRequest, ProtoInfo } from '../../behaviour';
+import { Certificate, ProtoInfo, GRPCEventEmitter } from '../../behaviour';
 import { getMetadata, getUrl, storeUrl } from '../../storage';
 
 import 'brace/theme/textmate';
@@ -60,7 +60,7 @@ export interface EditorState extends EditorRequest {
   requestStreamData: string[]
   responseStreamData: EditorResponse[]
   streamCommitted: boolean
-  call?: GRPCRequest
+  call?: GRPCEventEmitter
 }
 
 export interface EditorProps {
