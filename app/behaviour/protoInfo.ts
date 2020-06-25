@@ -14,7 +14,7 @@ export class ProtoInfo {
   }
 
   client(): any {
-      return lodashGet(this.service.proto.ast, this.service.serviceName);
+    return lodashGet(this.service.proto.ast, this.service.serviceName);
   }
 
   serviceDef() {

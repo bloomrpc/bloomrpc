@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Icon, Tooltip, Switch, Modal, Menu, Dropdown } from 'antd';
-import { setInteractive, setProtoVisibility } from './actions';
+import { setInteractive, setProtoVisibility, setGrpcWeb } from './actions';
 import { EditorAction } from './Editor';
 import {useState} from "react";
 import {TLSManager} from "./TLSManager";
@@ -10,13 +10,14 @@ interface OptionsProps {
   protoInfo: ProtoInfo
   dispatch: React.Dispatch<EditorAction>
   interactiveChecked: boolean
+  grpcWebChecked: boolean
   onInteractiveChange?: (chcked: boolean) => void
   tlsSelected?: Certificate
   onTLSSelected?: (selected: Certificate) => void
   onClickExport?: () => void
 }
 
-export function Options({ protoInfo, dispatch, interactiveChecked, onInteractiveChange, tlsSelected, onTLSSelected, onClickExport }: OptionsProps) {
+export function Options({ protoInfo, dispatch, grpcWebChecked, interactiveChecked, onInteractiveChange, tlsSelected, onTLSSelected, onClickExport }: OptionsProps) {
 
   const [tlsModalVisible, setTlsModalVisible] = useState(false);
 
@@ -82,6 +83,16 @@ export function Options({ protoInfo, dispatch, interactiveChecked, onInteractive
             <Icon type="caret-down" />
           </div>
         </Dropdown>
+        <div style={{paddingRight: 10}}>
+          <Switch
+            checkedChildren="WEB &nbsp;"
+            defaultChecked={grpcWebChecked}
+            unCheckedChildren="GRPC"
+            onChange={(checked) => {
+              dispatch(setGrpcWeb(checked));
+            }}
+          />
+        </div>
         <div style={{paddingRight: 10}}>
           <Switch
             checkedChildren="Interactive"
