@@ -67,6 +67,7 @@ export interface EditorProps {
   initialRequest?: EditorRequest
   environmentList?: EditorEnvironment[]
   onEnvironmentListChange?: (environmentList: EditorEnvironment[]) => void
+  active?: boolean
 }
 
 export interface EditorResponse {
@@ -149,12 +150,13 @@ const reducer = (state: EditorState, action: EditorAction) => {
 
     case actions.SET_ENVIRONMENT:
       return { ...state, environment: action.environment };
+
     default:
       return state
   }
 };
 
-export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList }: EditorProps) {
+export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList, active }: EditorProps) {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,
@@ -300,6 +302,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
           <Request
             data={state.data}
             streamData={state.requestStreamData}
+            active={active}
             onChangeData={(value) => {
               dispatch(setData(value));
               onRequestChange && onRequestChange({
@@ -314,6 +317,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
             ...(isControlVisible(state) ? styles.streamControlsContainer : {}),
           }}>
             <Controls
+                active={active}
                 dispatch={dispatch}
                 state={state}
                 protoInfo={protoInfo}

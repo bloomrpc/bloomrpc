@@ -100,6 +100,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
           style={{ height: "100%" }}
         >
           <Editor
+            active={true}
             environmentList={environmentList}
             onEnvironmentListChange={onEnvironmentChange}
           />
@@ -112,6 +113,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
             style={{ height: "100%" }}
           >
             <Editor
+              active={tab.tabKey === activeKey}
               environmentList={environmentList}
               protoInfo={new ProtoInfo(tab.service, tab.methodName)}
               key={tab.tabKey}

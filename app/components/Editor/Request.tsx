@@ -9,24 +9,23 @@ interface RequestProps {
   data: string
   streamData: string[]
   onChangeData: (value: string) => void
-  commands?: Command[],
+  commands?: Command[]
+  active?: boolean
 }
 
-export function Request({onChangeData, commands, data, streamData}: RequestProps) {
+export function Request({onChangeData, commands, data, streamData, active}: RequestProps) {
   const editorTabKey = `editorTab`;
 
   // bind esc for focus on the active editor window
   const aceEditor = React.useRef<AceEditor>(null)
   React.useEffect(() => {
-    Mousetrap.bindGlobal('esc', () => {
-      const node = aceEditor.current as any
-      if (node && 'editor' in node) {
-        node.editor.focus()
-      }
-    })
-
-    return () => {
-      Mousetrap.unbind('esc')
+    if (active) {
+      Mousetrap.bindGlobal('esc', () => {
+        const node = aceEditor.current as any
+        if (node && 'editor' in node) {
+          node.editor.focus()
+        }
+      })
     }
   })
 

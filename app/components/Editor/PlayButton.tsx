@@ -109,18 +109,26 @@ export const makeRequest = ({ dispatch, state, protoInfo }: ControlsStateProps) 
   }
 };
 
-export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
+export function PlayButton({ dispatch, state, protoInfo, active }: ControlsStateProps) {
   React.useEffect(() => {
+    if (!active) {
+      return
+    }
     Mousetrap.bindGlobal(['ctrl+enter', 'command+enter'], () => {
       if (state.loading) {
         return
       }
       makeRequest({ dispatch, state, protoInfo })
     })
-    return () => {
-      Mousetrap.unbind(['ctrl+enter', 'command+enter'])
-    }
-  }, [dispatch, state, protoInfo])
+  }, [
+    // a bit of optimisation here: list all state properties needed in this component
+    state.grpcWeb,
+    state.url,
+    state.data,
+    state.metadata,
+    state.interactive,
+    state.tlsCertificate,
+  ])
 
   return (
     <Icon
