@@ -49,7 +49,8 @@ GRPC Web is now supported! Just toggle the `GRPC` switch to `WEB`.
 
 Note on https:
 
-- turn on "TLS" -> Server certificate (default port will change to 443)
+- add https to the url, note for GRPC-Web it also supports path, e.g. https://example.com/grpcweb/v1
+- or turn on "TLS" -> Server certificate (default port will change to 443)
 - self-signed certificate not supported at the moment
 
 ## Installation

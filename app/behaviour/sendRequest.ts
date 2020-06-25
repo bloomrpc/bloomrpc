@@ -342,6 +342,7 @@ export class GRPCWebRequest extends EventEmitter {
   interactive?: boolean;
   tlsCertificate?: Certificate;
   _call?: grpcWeb.ClientReadableStream<any>;
+  _fullUrl?: string;
 
   constructor({ url, protoInfo, metadata, inputs, interactive, tlsCertificate }: GRPCRequestInfo) {
     super()
@@ -352,6 +353,7 @@ export class GRPCWebRequest extends EventEmitter {
     this.interactive = interactive;
     this.tlsCertificate = tlsCertificate;
     this._call = undefined;
+    this._fullUrl = undefined;
   }
 
   send(): GRPCWebRequest {
@@ -375,16 +377,19 @@ export class GRPCWebRequest extends EventEmitter {
     const web = grpcWeb as any
     const rpc = serviceClient.service[this.protoInfo.methodName]
 
-    let scheme = 'http'
-    if (this.tlsCertificate) {
+    let scheme = 'http://'
+    if (this.url.startsWith("http://") || this.url.startsWith("https://")) {
+      scheme = ''
+    } else if (this.tlsCertificate) {
       if (this.tlsCertificate.useServerCertificate) {
-        scheme = 'https'
+        scheme = 'https://'
       } else {
         // TODO: can we do anything about self-signed CA?
       }
     }
 
-    const fullUrl : string = scheme+'://'+this.url+rpc.path
+    const fullUrl : string = scheme+this.url+rpc.path
+    this._fullUrl = fullUrl
 
     const methodDescriptor = new web.MethodDescriptor(
       rpc.path, // name
@@ -450,17 +455,17 @@ export class GRPCWebRequest extends EventEmitter {
    * @param call
    * @param streamStartTime
    */
-  private handleServerStreaming(call: any, streamStartTime?: Date) {
+  private handleServerStreaming(call: grpcWeb.ClientReadableStream<any>, streamStartTime?: Date) {
     call.on('data', (data: object) => {
       const responseMetaInformation = this.responseMetaInformation(streamStartTime, true);
       this.emit(GRPCEventType.DATA, data, responseMetaInformation);
       streamStartTime = new Date();
     });
   
-    call.on('error', (err: { [key: string]: any }) => {
+    call.on('error', (err: grpcWeb.Error) => {
       const responseMetaInformation = this.responseMetaInformation(streamStartTime, true);
       if (err && err.code !== 1) {
-        this.emit(GRPCEventType.ERROR, err, responseMetaInformation);
+        this.emit(GRPCEventType.ERROR, this.betterErr(err), responseMetaInformation);
   
         if (err.code === 2 || err.code === 14) { // Stream Removed.
           this.emit(GRPCEventType.END, call);
@@ -489,12 +494,16 @@ export class GRPCWebRequest extends EventEmitter {
       if (err.code === 1) {
         return;
       } else {
-        this.emit(GRPCEventType.ERROR, err, responseMetaInformation);
+        this.emit(GRPCEventType.ERROR, this.betterErr(err), responseMetaInformation);
       }
     } else {
       this.emit(GRPCEventType.DATA, response, responseMetaInformation);
     }
     this.emit(GRPCEventType.END);
+  }
+
+  private betterErr(err: grpcWeb.Error) : Error {
+    return new Error(`full url: ${this._fullUrl}, code: ${err.code}, err: ${err.message}`)
   }
 
   /**
