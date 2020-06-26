@@ -132,6 +132,13 @@ module.exports = class MenuBuilder {
           click: () => {
             this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
           }
+        },
+        {
+          label: 'Toggle Developer Tools',
+          accelerator: 'Alt+Command+I',
+          click: () => {
+            this.mainWindow.toggleDevTools();
+          }
         }
       ]
     };
