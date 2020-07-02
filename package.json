@@ -205,6 +205,7 @@
     "yarn": "^1.13.0"
   },
   "dependencies": {
+    "@types/uuid": "^7.0.2",
     "antd": "3.26.7",
     "array-move": "^2.1.0",
     "electron-store": "^2.0.0",
@@ -218,7 +219,8 @@
     "react-sortable-hoc": "^1.9.1",
     "react-test-renderer": "^16.8.4",
     "source-map-support": "^0.5.10",
-    "terser-webpack-plugin": "^1.2.3"
+    "terser-webpack-plugin": "^1.2.3",
+    "uuid": "^7.0.2"
   },
   "devEngines": {
     "node": ">=8.12.x",
