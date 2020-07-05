@@ -27,10 +27,12 @@ export function Request({onChangeData, commands, data, streamData, theme}: Reque
         defaultActiveKey={editorTabKey}
         tabPosition={"top"}
         style={{width: "100%"}}
+
       >
         <StyledTabPane tab="Editor" key={editorTabKey}>
           <StyledAceEditor
             width={"100%"}
+            className={"request-editor"}
             height={"calc(100vh - 185px)"}
             mode="json"
             name="inputs"

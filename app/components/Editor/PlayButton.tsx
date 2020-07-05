@@ -105,6 +105,10 @@ const StyledIcon = styled(Icon)`
   cursor: pointer;
   color: ${props=>props.theme.primary};
   background: ${props=>props.theme.background};
+  
+  :hover {
+    background: ${props=>props.theme.backgroundFeedback};
+  }
 `
 
 export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
