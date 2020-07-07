@@ -48,7 +48,6 @@ export function Request({onChangeData, commands, data, streamData, theme}: Reque
         <StyledTabPane tab="Editor" key={editorTabKey}>
           <StyledAceEditor
             ref={aceEditor}
-            style={{ background: "#fff" }}
             width={"100%"}
             height={"calc(100vh - 185px)"}
             mode="json"
