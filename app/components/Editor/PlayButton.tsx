@@ -130,14 +130,3 @@ export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
     />
   )
 }
-
-const styles = {
-  playIcon: {
-    fontSize: 50,
-    color: "#28d440",
-    border: "3px solid rgb(238, 238, 238)",
-    borderRadius: "50%",
-    cursor: "pointer",
-    background: "#fff",
-  },
-};

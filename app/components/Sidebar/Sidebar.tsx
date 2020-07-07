@@ -11,6 +11,7 @@ import styled from 'styled-components'
 interface SidebarProps {
   protos: ProtoFile[]
   onMethodSelected: (methodName: string, protoService: ProtoService) => void
+  onMethodDoubleClick: (methodName: string, protoService: ProtoService) => void
   onProtoUpload: OnProtoUpload
   onDeleteAll: () => void
   onReload: () => void
@@ -100,7 +101,7 @@ const ThemeTooltipContainer = styled.div`
   align-items: center;
 `
 
-export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload, changeTheme, theme }: SidebarProps) {
+export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload, changeTheme, theme, onMethodDoubleClick }: SidebarProps) {
 
   const [importPaths, setImportPaths] = useState<string[]>([""]);
   const [importPathVisible, setImportPathsVisible] = useState(false);
@@ -227,8 +228,6 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
             }
 
             // if the original one table doesn't exist, then ignore it
-            
-       
             onMethodDoubleClick(profoDefinitions.methodName, profoDefinitions.protodef.services[profoDefinitions.serviceName])
           }}
         >

@@ -305,22 +305,3 @@ function handleMethodDoubleClick(editorTabs: EditorTabs, setTabs: React.Dispatch
   }
 
 }
-
-const styles = {
-  layout: {
-    height: "100vh"
-  },
-  header: {
-    color: "#fff",
-    fontWeight: 900,
-    fontSize: 20,
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  sider: {
-    zIndex: 20,
-    borderRight: "1px solid rgba(0, 21, 41, 0.18)",
-    backgroundColor: "white",
-    boxShadow: "3px 0px 4px 0px rgba(0,0,0,0.10)",
-  },
-};
