@@ -56,6 +56,7 @@ export type Theme = {
   backgroundLight: string,
   backgroundLighter: string,
   backgroundDark: string,
+  backgroundFeedback: string,
   switch: Switch,
   table: Table,
   tooltip: Tooltip,
@@ -89,6 +90,7 @@ const whiteTheme: Theme = {
   backgroundLight: color('#fff').lighten(0.7).rgb().string(),
   backgroundLighter: color('#fff').lighten(1).rgb().string(),
   backgroundDark: color('#fff').darken(0.05).rgb().string(),
+  backgroundFeedback: color('#1890ff').lighten(0.7).rgb().string(),
   switch: {
     background: color('#1890ff').rgb().string(),
     color: color('#1890ff').rgb().string()
@@ -139,7 +141,7 @@ const whiteTheme: Theme = {
     color: color("#fff").darken(0.3).rgb().string(),
     background: color('#fff').rgb().string(),
     backgroundDark: color("#fff").darken(0.05).rgb().string(),
-  }
+  },
 }
 
 const darkTheme: Theme = {
@@ -149,6 +151,7 @@ const darkTheme: Theme = {
   backgroundLight: color('#30303d').lighten(0.3).rgb().string(),
   backgroundLighter: color('#30303d').lighten(1).rgb().string(),
   backgroundDark: color("#30303d").darken(0.05).rgb().string(),
+  backgroundFeedback: color('#30303d').lighten(1).rgb().string(),
   switch: {
     background: color('#30303d').lighten(1).rgb().string(),
     color: color('#30303d').rgb().string()
@@ -219,12 +222,19 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     display: none;
   }
 
+  .response-edit, .request-editor {
+    
+  }
 
   .response-edit {
-
-  .ace_gutter > .ace_layer {
-    margin-left: -15px;
-  }
+    padding-top: 10px;
+      
+    .ace_gutter {
+      background: none !important;   
+    }
+    .ace_gutter > .ace_layer {
+      margin-left: -15px;
+    }
   }
 
   .find-match {
@@ -275,7 +285,8 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   }
 
   .ant-tabs-nav .ant-tabs-tab {
-    padding: 4px;
+    padding: 5px;
+    padding-bottom: 7px;
     padding-left: 17px;
     padding-right: 17px;
     user-select: none;

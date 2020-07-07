@@ -106,7 +106,10 @@ const StyledIcon = styled(Icon)`
   border-radius: 50%;
   cursor: pointer;
   color: ${props=>props.theme.primary};
-  background: ${props=>props.theme.background};
+  background: ${props=>props.theme.background};  
+  :hover {
+    background: ${props=>props.theme.backgroundFeedback};
+  }
   border: 3px solid rgb(238, 238, 238);
 `
 
