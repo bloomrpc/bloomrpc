@@ -429,8 +429,8 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     :hover {
       color: ${props => props.theme.primary} !important;
     }
-    // background: ${props => props.theme.background} !important;
   }
+  
   &&.ant-tabs-nav .ant-tabs-tab-active {
     color: ${props => props.theme.primary} !important;
     font-weight: normal;

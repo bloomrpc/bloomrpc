@@ -24,8 +24,6 @@ import 'brace/mode/json';
 import 'brace/mode/protobuf';
 import { exportResponseToJSONFile } from "../../behaviour/response";
 import Resizable from "re-resizable";
-import { Command } from 'react-ace';
-import { makeRequest } from './PlayButton';
 import { AddressBar } from "./AddressBar";
 import styled from 'styled-components'
 import { deleteEnvironment, getEnvironments, saveEnvironment } from "../../storage/environments";
@@ -201,16 +199,6 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
     environment: (initialRequest && initialRequest.environment),
   }, undefined);
 
-  const commands: Command[] = [
-    {
-      name: 'Request',
-      bindKey: { win: 'Ctrl+Enter', mac: 'Command+Enter' },
-      exec: () => {
-        makeRequest({ protoInfo, state, dispatch });
-      },
-    },
-  ];
-
   useEffect(() => {
     if (protoInfo && !initialRequest) {
       try {
@@ -347,7 +335,6 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
             theme={theme}
             data={state.data}
             streamData={state.requestStreamData}
-            commands={commands}
             onChangeData={(value) => {
               dispatch(setData(value));
               onRequestChange && onRequestChange({

@@ -19,6 +19,7 @@ import {
 import { EditorEnvironment } from "./Editor";
 import { getEnvironments } from "../storage/environments";
 import styled from 'styled-components'
+import { v4 as uuidv4 } from 'uuid';
 
 export interface EditorTabs {
   activeKey: string
@@ -82,6 +83,7 @@ export function BloomRPC({ theme, changeTheme }: IBloomRPC) {
             onDeleteAll={() => {
               setProtos([]);
             }}
+            onMethodDoubleClick={handleMethodDoubleClick(editorTabs, setTabs)}
           />
         </StyledLayoutSider>
 
@@ -207,13 +209,11 @@ async function loadTabs(editorTabs: EditorTabsStorage): Promise<EditorTabs> {
       return false;
     }
 
-    const tabKey = `${tab.serviceName}${tab.methodName}`;
-
     return {
-      tabKey,
+      tabKey: tab.tabKey,
       methodName: tab.methodName,
       service: def.services[tab.serviceName],
-      initialRequest: getRequestInfo(tabKey),
+      initialRequest: getRequestInfo(tab.tabKey),
     }
   });
 
@@ -286,4 +286,22 @@ function handleMethodSelected(editorTabs: EditorTabs, setTabs: React.Dispatch<Ed
       tabs: newTabs,
     });
   }
+}
+
+function handleMethodDoubleClick(editorTabs: EditorTabs, setTabs: React.Dispatch<EditorTabs>){
+  return (methodName: string, protoService: ProtoService) => {
+    const tab = {
+      tabKey: `${protoService.serviceName}${methodName}-${uuidv4()}`,
+      methodName,
+      service: protoService
+    };
+
+    const newTabs = [...editorTabs.tabs, tab];
+
+    setTabs({
+      activeKey: tab.tabKey,
+      tabs: newTabs,
+    });
+  }
+
 }

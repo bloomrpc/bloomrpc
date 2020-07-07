@@ -1,5 +1,7 @@
 import * as React from 'react';
 import AceEditor, { Command } from 'react-ace';
+import * as Mousetrap from 'mousetrap'
+import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import { Tabs } from 'antd';
 import styled from 'styled-components'
 import { Viewer } from './Viewer';
@@ -21,6 +23,21 @@ const StyledTabPane = styled(Tabs.TabPane)``
 export function Request({onChangeData, commands, data, streamData, theme}: RequestProps) {
   const editorTabKey = `editorTab`;
 
+  // bind esc for focus on the active editor window
+  const aceEditor = React.useRef<AceEditor>(null)
+  React.useEffect(() => {
+    Mousetrap.bindGlobal('esc', () => {
+      const node = aceEditor.current as any
+      if (node && 'editor' in node) {
+        node.editor.focus()
+      }
+    })
+
+    return () => {
+      Mousetrap.unbind('esc')
+    }
+  })
+
   return (
     <>
       <Tabs
@@ -31,6 +48,7 @@ export function Request({onChangeData, commands, data, streamData, theme}: Reque
       >
         <StyledTabPane tab="Editor" key={editorTabKey}>
           <StyledAceEditor
+            ref={aceEditor}
             width={"100%"}
             className={"request-editor"}
             height={"calc(100vh - 185px)"}
