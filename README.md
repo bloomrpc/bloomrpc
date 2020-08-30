@@ -12,14 +12,14 @@
 <p align="center">The missing GUI Client for GRPC services. 🌸 </p>
 
 <p align="center">Inspired by <b>Postman</b> and <b>GraphQL Playground</b> <br/>
-  <b>BloomRPC</b> aim to give the simplest and efficient developer experience for exploring
+  <b>BloomRPC</b> aims to provide the simplest and most efficient developer experience for exploring
 and querying your GRPC services.
 </p>
 
 <br/>
 
 <p align="center">
-  Install the client, select your protobuf files and start making requests! <br/> 
+  Install the client, select your protobuf files and start making requests! <br/>
   <b>No extra</b> steps or configuration <b>needed</b>.
 </p>
 
@@ -35,6 +35,14 @@ and querying your GRPC services.
 - Request Cancellation
 - Much more...
 
+### Shortcuts
+
+<kbd>CTRL</kbd>+<kbd>w</kbd> or <kbd>CMD</kbd>+<kbd>w</kbd>: close tab
+
+<kbd>ESC</kbd>: focos editor
+
+<kbd>CTRL</kbd>+<kbd>Enter</kbd> or <kbd>CMD</kbd>+<kbd>Enter</kbd>: send request
+
 ## Installation
 We support all the major operation systems, **MacOS / Windows / Linux Deb - Arch Linux**
 
@@ -45,6 +53,7 @@ You can install the client downloading the installer directly from the [Releases
 ```
 brew cask install bloomrpc
 ```
+The app will get installed and copied to the path `/Applications/BloomRPC.app`
 
 ### Build from source:
 

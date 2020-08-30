@@ -196,13 +196,6 @@ module.exports = class MenuBuilder {
             accelerator: 'Ctrl+O'
           },
           {
-            label: '&Close',
-            accelerator: 'Ctrl+W',
-            click: () => {
-              this.mainWindow.close();
-            }
-          },
-          {
             label: '&Quit',
             accelerator: 'Ctrl+Q',
             click: app.quit,
