@@ -43,6 +43,16 @@ and querying your GRPC services.
 
 <kbd>CTRL</kbd>+<kbd>Enter</kbd> or <kbd>CMD</kbd>+<kbd>Enter</kbd>: send request
 
+### GRPC Web
+
+GRPC Web is now supported! Just toggle the `GRPC` switch to `WEB`.
+
+Note on https:
+
+- add https to the url, note for GRPC-Web it also supports path, e.g. https://example.com/grpcweb/v1
+- or turn on "TLS" -> Server certificate (default port will change to 443)
+- self-signed certificate not supported at the moment
+
 ## Installation
 We support all the major operation systems, **MacOS / Windows / Linux Deb - Arch Linux**
 
@@ -75,7 +85,7 @@ The installer will be located in the `release` folder
 
 - [x] Client-Side Streaming and Bi-Directional Streaming Support
 - [x] Draggable tabs
-- [ ] Web Version with GRPC-WEB
+- [x] Web Version with GRPC-WEB
 
 ## Contributing
 

@@ -209,6 +209,7 @@
     "antd": "3.26.7",
     "array-move": "^2.1.0",
     "electron-store": "^2.0.0",
+    "grpc-web": "^1.2.0",
     "lodash.get": "^4.4.2",
     "mousetrap": "^1.6.3",
     "protobufjs": "^6.8.8",

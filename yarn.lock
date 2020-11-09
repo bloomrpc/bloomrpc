@@ -4458,6 +4458,11 @@ growly@^1.3.0:
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
+grpc-web@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/grpc-web/-/grpc-web-1.2.0.tgz#96402a1245ea834fedb1dd5a80f910476ddbbb1c"
+  integrity sha512-QS0RF+xiWnMEiHWyA0A0I8JYYJLOiF/DGEpRQ7vJDOzEZYfmNqI7d7d29sYBbNfTi+arVh2JpeGIX7ch24a+tA==
+
 gud@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
