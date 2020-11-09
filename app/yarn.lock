@@ -208,10 +208,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-bloomrpc-mock@0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/bloomrpc-mock/-/bloomrpc-mock-0.3.1.tgz#2842e913aa03ba6ae4ec6d8e002af5f3edbc5469"
-  integrity sha512-cnb9Ebs6kwW3PCFOsKYRCiuzUQKacQm10FqCAInzVTpMFCKDTeXm8oPCYhGxAETz9Pli0HTIMnVbDataW/zDLQ==
+bloomrpc-mock@0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/bloomrpc-mock/-/bloomrpc-mock-0.3.2.tgz#4be1d624926bbeb30eb306d59c59da2a3098b850"
+  integrity sha512-R+Z7YAuTwB6j8k3pMjTD01spCQC3qDD7i1G2uSsQ3nUCDhnctVgtD9wdpNfJLqqrong19DjQN1LUQ6HEQXR7qg==
   dependencies:
     "@grpc/proto-loader" "^0.4.0"
     "@oclif/command" "^1"
@@ -539,9 +539,9 @@ lodash.templatesettings@^4.0.0:
     lodash._reinterpolate "^3.0.0"
 
 lodash@^4.17.11:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.20"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
+  integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
 
 long@^4.0.0:
   version "4.0.0"
