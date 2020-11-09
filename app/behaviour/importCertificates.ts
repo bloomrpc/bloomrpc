@@ -15,64 +15,69 @@ export interface Certificate {
 }
 
 export function importRootCert(): Promise<Certificate> {
-    return new Promise((resolve, reject) => {
-        remote.dialog.showOpenDialog({
+    return new Promise(async (resolve, reject) => {
+        const openDialogResult = await remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
             properties: ['openFile'],
             filters: [
                 { name: 'All', extensions: ['*'] },
             ]
-        }, async (filePaths: string[]) => {
-            if (!filePaths || filePaths.length === 0) {
-                reject("No file selected");
-                return;
-            }
+        });
 
-            const filePath = filePaths[0];
+        const filePaths = openDialogResult.filePaths;
+        
+        if (!filePaths || filePaths.length === 0) {
+            reject("No file selected");
+            return;
+        }
 
-            resolve({
-                rootCert: {
-                    fileName: path.basename(filePath),
-                    filePath: filePath,
-                },
-            });
+        const filePath = filePaths[0];
+
+        resolve({
+            rootCert: {
+                fileName: path.basename(filePath),
+                filePath: filePath,
+            },
         });
     });
 }
 
 export function importPrivateKey(): Promise<CertFile> {
-    return new Promise((resolve, reject) => {
-        remote.dialog.showOpenDialog({
+    return new Promise(async (resolve, reject) => {
+        const openDialogResult = await remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
             properties: ['openFile'],
             filters: [
                 { name: 'All', extensions: ['*'] },
             ]
-        },(filePaths: string[]) => {
-            if (!filePaths || filePaths.length === 0) {
-                return reject("No file selected");
-            }
-            resolve({
-                filePath: filePaths[0],
-                fileName: path.basename(filePaths[0]),
-            });
+        });
+
+        const filePaths = openDialogResult.filePaths;
+        if (!filePaths || filePaths.length === 0) {
+            return reject("No file selected");
+        }
+        resolve({
+            filePath: filePaths[0],
+            fileName: path.basename(filePaths[0]),
         });
     });
 }
 
 export function importCertChain(): Promise<CertFile> {
-    return new Promise((resolve, reject) => {
-        remote.dialog.showOpenDialog({
+    return new Promise(async (resolve, reject) => {
+        const openDialogResult = await remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
             properties: ['openFile'],
             filters: [
                 { name: 'All', extensions: ['*'] },
             ]
-        },(filePaths: string[]) => {
-            if (!filePaths || filePaths.length === 0) {
-                return reject("No file selected");
-            }
-            resolve({
-                filePath: filePaths[0],
-                fileName: path.basename(filePaths[0]),
-            });
+        });
+
+        const filePaths = openDialogResult.filePaths;
+
+        if (!filePaths || filePaths.length === 0) {
+            return reject("No file selected");
+        }
+        resolve({
+            filePath: filePaths[0],
+            fileName: path.basename(filePaths[0]),
         });
     });
 }
