@@ -8,7 +8,7 @@
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-main": "cross-env NODE_ENV=production node --trace-warnings ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
     "build-renderer": "cross-env NODE_ENV=production node --trace-warnings ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
-    "dev": "cross-env START_HOT=1 node ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev",
+    "dev": "cross-env START_HOT=1 node ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-server-dev",
     "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --version 6.1.7 --module-dir app",
     "package": "yarn build && electron-builder build",
     "package-all": "yarn build && electron-builder build -mwl",
