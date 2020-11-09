@@ -53,7 +53,7 @@ export function BloomRPC() {
   return (
     <Layout style={styles.layout}>
       <Layout>
-        <Layout.Sider style={styles.sider} width={250}>
+        <Layout.Sider style={styles.sider} width={ 300 }>
           <Sidebar
             protos={protos}
             onProtoUpload={handleProtoUpload(setProtos, protos)}
