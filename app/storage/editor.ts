@@ -59,6 +59,7 @@ export function storeTabs(editorTabs: EditorTabs) {
       methodName: tab.methodName,
       serviceName: tab.service.serviceName,
       protoPath: tab.service.proto.filePath,
+      tabKey: tab.tabKey
     })),
   })
 }
@@ -69,6 +70,7 @@ export interface EditorTabsStorage {
     protoPath: string,
     methodName: string,
     serviceName: string,
+    tabKey: string
   }[]
 }
 

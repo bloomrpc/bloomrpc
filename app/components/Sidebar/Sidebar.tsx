@@ -12,9 +12,10 @@ interface SidebarProps {
   onProtoUpload: OnProtoUpload
   onDeleteAll: () => void
   onReload: () => void
+  onMethodDoubleClick: (methodName: string, protoService: ProtoService) => void
 }
 
-export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload }: SidebarProps) {
+export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload, onMethodDoubleClick }: SidebarProps) {
 
   const [importPaths, setImportPaths] = useState<string[]>([""]);
   const [importPathVisible, setImportPathsVisible] = useState(false);
@@ -22,6 +23,36 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
   useEffect(() => {
     setImportPaths(getImportPaths());
   }, []);
+
+  /**
+   * An internal function to retrieve protobuff from the selected key
+   * @param selected The selected key from the directory tree
+   */
+  function processSelectedKey(selected: string | undefined){
+    // We handle only methods.
+    if (!selected || !selected.includes("method:")) {
+      return undefined;
+    }
+
+    const fragments = selected.split('||');
+    const fileName = fragments[0];
+    const methodName = fragments[1].replace('method:', '');
+    const serviceName = fragments[2].replace('service:', '');
+
+    const protodef = protos.find((protoFile) => {
+      const match = Object.keys(protoFile.services).find(
+        (service) => service === serviceName &&
+          fileName === protoFile.services[serviceName].proto.filePath
+      );
+      return Boolean(match);
+    });
+
+    if (!protodef) {
+      return undefined;
+    }
+    return {methodName, protodef, serviceName}
+  }
+
 
   return (
     <>
@@ -98,30 +129,26 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
           defaultExpandAll
           onSelect={async (selectedKeys) => {
             const selected = selectedKeys.pop();
+            const profoDefinitions = processSelectedKey(selected);
 
-            // We handle only methods.
-            if (!selected || !selected.includes("method:")) {
+            if (!profoDefinitions){
+              return;
+            }
+            
+            onMethodSelected(profoDefinitions.methodName, profoDefinitions.protodef.services[profoDefinitions.serviceName]);
+          }}
+          onDoubleClick={async (event, treeNode)=>{
+            const selected = treeNode.props.eventKey;
+            const profoDefinitions = processSelectedKey(selected);
+
+            if (!profoDefinitions){
               return;
             }
 
-            const fragments = selected.split('||');
-            const fileName = fragments[0];
-            const methodName = fragments[1].replace('method:', '');
-            const serviceName = fragments[2].replace('service:', '');
-
-            const protodef = protos.find((protoFile) => {
-              const match = Object.keys(protoFile.services).find(
-                (service) => service === serviceName &&
-                  fileName === protoFile.services[serviceName].proto.filePath
-              );
-              return Boolean(match);
-            });
-
-            if (!protodef) {
-              return;
-            }
-
-            onMethodSelected(methodName, protodef.services[serviceName]);
+            // if the original one table doesn't exist, then ignore it
+            
+       
+            onMethodDoubleClick(profoDefinitions.methodName, profoDefinitions.protodef.services[profoDefinitions.serviceName])
           }}
         >
           {protos.map((proto) => (
