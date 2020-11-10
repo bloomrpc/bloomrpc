@@ -9,6 +9,7 @@ export interface ControlsStateProps {
   dispatch: React.Dispatch<EditorAction>
   state: EditorState
   protoInfo?: ProtoInfo
+  active?: boolean
 }
 
 
@@ -35,10 +36,11 @@ const ControlsContainer = styled.div`
   display: flex;
 `
 
-export function Controls({ dispatch, state, protoInfo }: ControlsStateProps) {
+export function Controls({ dispatch, state, protoInfo, active }: ControlsStateProps) {
   return (
     <>
       <PlayButton
+        active={active}
         dispatch={dispatch}
         state={state}
         protoInfo={protoInfo}

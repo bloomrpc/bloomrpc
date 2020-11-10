@@ -15,7 +15,7 @@ import { Controls } from './Controls';
 import { Request } from './Request';
 import { Options } from './Options';
 import { ProtoFileViewer } from './ProtoFileViewer';
-import { Certificate, GRPCRequest, ProtoInfo } from '../../behaviour';
+import { Certificate, ProtoInfo, GRPCEventEmitter } from '../../behaviour';
 import { getMetadata, getUrl, storeUrl } from '../../storage';
 
 import 'brace/theme/textmate';
@@ -47,6 +47,7 @@ export interface EditorRequest {
   metadata: string
   interactive: boolean
   environment?: string
+  grpcWeb: boolean
   tlsCertificate?: Certificate
 }
 
@@ -58,7 +59,7 @@ export interface EditorState extends EditorRequest {
   requestStreamData: string[]
   responseStreamData: EditorResponse[]
   streamCommitted: boolean
-  call?: GRPCRequest
+  call?: GRPCEventEmitter
 }
 
 export interface EditorProps {
@@ -68,6 +69,7 @@ export interface EditorProps {
   initialRequest?: EditorRequest
   environmentList?: EditorEnvironment[]
   onEnvironmentListChange?: (environmentList: EditorEnvironment[]) => void
+  active?: boolean
 }
 
 export interface EditorResponse {
@@ -82,6 +84,7 @@ const INITIAL_STATE: EditorState = {
   requestStreamData: [],
   responseStreamData: [],
   interactive: false,
+  grpcWeb: false,
   loading: false,
   response: {
     output: "",
@@ -129,6 +132,9 @@ const reducer = (state: EditorState, action: EditorAction) => {
     case actions.SET_INTERACTIVE:
       return { ...state, interactive: action.interactive };
 
+    case actions.SET_GRPC_WEB:
+      return { ...state, grpcWeb: action.grpcWeb };
+
     case actions.SET_REQUEST_STREAM_DATA:
       return { ...state, requestStreamData: action.requestData };
 
@@ -146,6 +152,7 @@ const reducer = (state: EditorState, action: EditorAction) => {
 
     case actions.SET_ENVIRONMENT:
       return { ...state, environment: action.environment };
+
     default:
       return state
   }
@@ -190,11 +197,12 @@ const AddressBarContainer = styled.div`
   width: 60%;
 `
 
-export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList, theme }: EditorProps) {
+export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironmentListChange, environmentList, theme, active }: EditorProps) {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
     url: (initialRequest && initialRequest.url) || getUrl() || INITIAL_STATE.url,
     interactive: initialRequest ? initialRequest.interactive : (protoInfo && protoInfo.usesStream()) || INITIAL_STATE.interactive,
+    grpcWeb: initialRequest ? initialRequest.grpcWeb : INITIAL_STATE.grpcWeb,
     metadata: (initialRequest && initialRequest.metadata) || getMetadata() || INITIAL_STATE.metadata,
     environment: (initialRequest && initialRequest.environment),
   }, undefined);
@@ -300,6 +308,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
           <Options
             protoInfo={protoInfo}
             dispatch={dispatch}
+            grpcWebChecked={state.grpcWeb}
             interactiveChecked={state.interactive}
             onClickExport={async () => {
               await exportResponseToJSONFile(protoInfo, state)
@@ -335,6 +344,7 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
             theme={theme}
             data={state.data}
             streamData={state.requestStreamData}
+            active={active}
             onChangeData={(value) => {
               dispatch(setData(value));
               onRequestChange && onRequestChange({
@@ -346,9 +356,10 @@ export function Editor({ protoInfo, initialRequest, onRequestChange, onEnvironme
 
           <PlayIconContainer>
             <Controls
-              dispatch={dispatch}
-              state={state}
-              protoInfo={protoInfo}
+                active={active}
+                dispatch={dispatch}
+                state={state}
+                protoInfo={protoInfo}
             />
           </PlayIconContainer>
         </Resizable>

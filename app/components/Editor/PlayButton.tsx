@@ -12,7 +12,7 @@ import {
   setStreamCommitted
 } from './actions';
 import { ControlsStateProps } from './Controls';
-import { GRPCEventType, GRPCRequest, ResponseMetaInformation } from '../../behaviour';
+import { GRPCEventType, GRPCRequest, ResponseMetaInformation, GRPCEventEmitter, GRPCWebRequest } from '../../behaviour';
 
 import styled from 'styled-components'
 
@@ -31,14 +31,26 @@ export const makeRequest = ({ dispatch, state, protoInfo }: ControlsStateProps) 
   // Play button action:
   dispatch(setIsLoading(true));
 
-  const grpcRequest = new GRPCRequest({
-    url: state.url,
-    inputs: state.data,
-    metadata: state.metadata,
-    protoInfo,
-    interactive: state.interactive,
-    tlsCertificate: state.tlsCertificate,
-  });
+  let grpcRequest : GRPCEventEmitter
+  if (state.grpcWeb){
+    grpcRequest = new GRPCWebRequest({
+      url: state.url,
+      inputs: state.data,
+      metadata: state.metadata,
+      protoInfo,
+      interactive: state.interactive,
+      tlsCertificate: state.tlsCertificate,
+    })
+  } else {
+    grpcRequest = new GRPCRequest({
+      url: state.url,
+      inputs: state.data,
+      metadata: state.metadata,
+      protoInfo,
+      interactive: state.interactive,
+      tlsCertificate: state.tlsCertificate,
+    });
+  }
 
   dispatch(setCall(grpcRequest));
 
@@ -113,18 +125,26 @@ const StyledIcon = styled(Icon)`
   border: 3px solid rgb(238, 238, 238);
 `
 
-export function PlayButton({ dispatch, state, protoInfo }: ControlsStateProps) {
+export function PlayButton({ dispatch, state, protoInfo, active }: ControlsStateProps) {
   React.useEffect(() => {
+    if (!active) {
+      return
+    }
     Mousetrap.bindGlobal(['ctrl+enter', 'command+enter'], () => {
       if (state.loading) {
         return
       }
       makeRequest({ dispatch, state, protoInfo })
     })
-    return () => {
-      Mousetrap.unbind(['ctrl+enter', 'command+enter'])
-    }
-  }, [dispatch, state, protoInfo])
+  }, [
+    // a bit of optimisation here: list all state properties needed in this component
+    state.grpcWeb,
+    state.url,
+    state.data,
+    state.metadata,
+    state.interactive,
+    state.tlsCertificate,
+  ])
 
   return (
     <StyledIcon

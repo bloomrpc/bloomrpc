@@ -105,6 +105,8 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
 
   const [importPaths, setImportPaths] = useState<string[]>([""]);
   const [importPathVisible, setImportPathsVisible] = useState(false);
+  const [filterVisible, setFilterVisible] = useState(false);
+  const [filterMatch, setFilterMatch] = useState<string|null>(null);
 
   useEffect(() => {
     setImportPaths(getImportPaths());
@@ -114,7 +116,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
    * An internal function to retrieve protobuff from the selected key
    * @param selected The selected key from the directory tree
    */
-  function processSelectedKey(selected: string | undefined){
+  function processSelectedKey(selected: string | undefined) {
     // We handle only methods.
     if (!selected || !selected.includes("method:")) {
       return undefined;
@@ -139,6 +141,12 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
     return {methodName, protodef, serviceName}
   }
 
+  function toggleFilter() {
+    setFilterVisible(!filterVisible);
+    if (filterVisible) {
+      setFilterMatch(null);
+    }
+  }
 
   return (
     <>
@@ -173,6 +181,16 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
             <GhostButton type="ghost" onClick={() => setImportPathsVisible(true)}>
               <IconBtn type="file-search"/>
             </GhostButton>
+          </Tooltip>
+
+          <Tooltip title="Filter method names" placement="bottomLeft" align={{offset: [-8, 0]}}>
+            <Button
+              type="ghost"
+              style={{height: 24, paddingRight: 5, paddingLeft: 5, marginLeft: 5}}
+              onClick={() => toggleFilter()}
+            >
+              <Icon type="filter" style={{cursor: "pointer", color: "#1d93e6"}}/>
+            </Button>
           </Tooltip>
 
           <Modal
@@ -211,24 +229,24 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
           defaultExpandAll
           onSelect={async (selectedKeys) => {
             const selected = selectedKeys.pop();
-            const profoDefinitions = processSelectedKey(selected);
+            const protoDefinitions = processSelectedKey(selected);
 
-            if (!profoDefinitions){
+            if (!protoDefinitions){
               return;
             }
-            
-            onMethodSelected(profoDefinitions.methodName, profoDefinitions.protodef.services[profoDefinitions.serviceName]);
+
+            onMethodSelected(protoDefinitions.methodName, protoDefinitions.protodef.services[protoDefinitions.serviceName]);
           }}
           onDoubleClick={async (event, treeNode)=>{
             const selected = treeNode.props.eventKey;
-            const profoDefinitions = processSelectedKey(selected);
+            const protoDefinitions = processSelectedKey(selected);
 
-            if (!profoDefinitions){
+            if (!protoDefinitions){
               return;
             }
 
             // if the original one table doesn't exist, then ignore it
-            onMethodDoubleClick(profoDefinitions.methodName, profoDefinitions.protodef.services[profoDefinitions.serviceName])
+            onMethodDoubleClick(protoDefinitions.methodName, protoDefinitions.protodef.services[protoDefinitions.serviceName])
           }}
         >
           {protos.map((proto) => (
@@ -244,13 +262,18 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
                   key={`${proto.fileName}-${service}`}
                 >
 
-                  {proto.services[service].methodsName.map((method: any) => (
-                    <StyledTreeNode
-                      icon={<Badge type="method"> M </Badge>}
-                      title={method}
-                      key={`${proto.proto.filePath}||method:${method}||service:${service}`}
-                    >
-                    </StyledTreeNode>
+                  {proto.services[service].methodsName
+                    .filter((name) => {
+                      if (filterMatch === null) return true;
+                      return name.toLowerCase().includes(filterMatch.toLowerCase());
+                    })
+                    .map((method: any) => (
+                      <Tree.TreeNode
+                        icon={<Badge type="method"> M </Badge>}
+                        title={method}
+                        key={`${proto.proto.filePath}||method:${method}||service:${service}`}
+                      >
+                    </Tree.TreeNode>
                   ))}
                 </StyledTreeNode>
               ))}

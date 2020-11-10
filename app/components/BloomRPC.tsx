@@ -70,7 +70,7 @@ export function BloomRPC({ theme, changeTheme }: IBloomRPC) {
   return (
     <Layout>
       <StyledLayout>
-        <StyledLayoutSider width={250}>
+        <StyledLayoutSider width={300}>
           <Sidebar
             changeTheme={changeTheme}
             theme={theme}

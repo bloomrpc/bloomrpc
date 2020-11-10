@@ -96,6 +96,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
                       <DraggableItem
                           active={nodeTab && nodeTab.tabKey === activeKey}
                           index={nodeIndex}
+                          key={node.key}
                       >
                         {node}
                       </DraggableItem>
@@ -114,6 +115,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
         >
           <Editor
             theme={theme}
+            active={true}
             environmentList={environmentList}
             onEnvironmentListChange={onEnvironmentChange}
           />
@@ -126,6 +128,7 @@ export function TabList({ tabs, activeKey, onChange, onDelete, onDragEnd, onEdit
           >
             <Editor
               theme={theme}
+              active={tab.tabKey === activeKey}
               environmentList={environmentList}
               protoInfo={new ProtoInfo(tab.service, tab.methodName)}
               key={tab.tabKey}

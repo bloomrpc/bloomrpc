@@ -6,29 +6,31 @@ import { EditorState } from "../components/Editor";
 
 
 export function exportResponseToJSONFile(protoInfo: ProtoInfo, editorState: EditorState) {
-  return new Promise((resolve, reject) => {
-    remote.dialog.showOpenDialog({
+  return new Promise(async (resolve, reject) => {
+    const openDialogResult = await remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
       properties: ['openDirectory'],
       filters: []
-    }, (filePaths: string[]) => {
-      if (!filePaths) {
-        return reject("No folder selected");
-      }
-
-      const timestamp = new Date().getTime();
-      const basePath = filePaths[0];
-      const fileName = `${protoInfo.service.serviceName}.${protoInfo.methodName}_${timestamp}`;
-
-      const exportPath = path.join(basePath, fileName);
-
-      const responseData = editorState.response.output
-          ? editorState.response.output
-          : JSON.stringify(editorState.responseStreamData.map((steam) => JSON.parse(steam.output)), null, 2);
-
-
-      fs.writeFileSync(exportPath, responseData);
-
-      resolve(exportPath);
     });
-  })
+
+    const filePaths = openDialogResult.filePaths;
+
+    if (!filePaths) {
+      return reject("No folder selected");
+    }
+
+    const timestamp = new Date().getTime();
+    const basePath = filePaths[0];
+    const fileName = `${protoInfo.service.serviceName}.${protoInfo.methodName}_${timestamp}`;
+
+    const exportPath = path.join(basePath, fileName);
+
+    const responseData = editorState.response.output
+        ? editorState.response.output
+        : JSON.stringify(editorState.responseStreamData.map((steam) => JSON.parse(steam.output)), null, 2);
+
+
+    fs.writeFileSync(exportPath, responseData);
+
+    resolve(exportPath);
+  });
 }

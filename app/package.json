@@ -11,14 +11,14 @@
   },
   "scripts": {
     "electron-rebuild": "node ../internals/scripts/ElectronRebuild.js",
-    "postinstall": "yarn electron-rebuild --version=6.1.7"
+    "postinstall": "yarn electron-rebuild --version=7.1.11"
   },
   "externals": [
     "grpc"
   ],
   "license": "LGPL3",
   "dependencies": {
-    "bloomrpc-mock": "0.3.1",
+    "bloomrpc-mock": "0.3.2",
     "grpc": "1.24.2"
   }
 }

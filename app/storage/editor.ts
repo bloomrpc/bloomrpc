@@ -95,7 +95,7 @@ interface TabRequestInfo extends EditorRequest {
  * @param interactive
  * @param tlsCertificate
  */
-export function storeRequestInfo({id, url, data, inputs, metadata, interactive, tlsCertificate, environment}: EditorTabRequest) {
+export function storeRequestInfo({id, url, data, inputs, metadata, interactive, tlsCertificate, environment, grpcWeb}: EditorTabRequest) {
   const request = {
     id,
     url,
@@ -104,6 +104,7 @@ export function storeRequestInfo({id, url, data, inputs, metadata, interactive, 
     interactive,
     tlsCertificate,
     environment,
+    grpcWeb,
     createdAt: new Date().toISOString(),
   };
 
