@@ -58,6 +58,9 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
+  // In Electron 11 this will change to true by default
+  app.allowRendererProcessReuse = false
+
   mainWindow = new BrowserWindow({
     show: false,
     width: 1324,
@@ -65,7 +68,7 @@ app.on('ready', async () => {
     backgroundColor: "#f0f2f5",
     webPreferences: {
       nodeIntegration: true
-    }
+    },
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
