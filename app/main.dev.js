@@ -59,7 +59,7 @@ app.on('ready', async () => {
   }
 
   // In Electron 11 this will change to true by default
-  app.allowRendererProcessReuse = false
+  app.allowRendererProcessReuse = false;
 
   mainWindow = new BrowserWindow({
     show: false,
