@@ -65,6 +65,13 @@ brew cask install bloomrpc
 ```
 The app will get installed and copied to the path `/Applications/BloomRPC.app`
 
+#### For Windows and chocolatey users:
+
+```
+choco install bloomrpc
+```
+Search for bloomrpc in windows search.
+
 ### Build from source:
 
 ```
