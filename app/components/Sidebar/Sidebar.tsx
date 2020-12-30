@@ -16,12 +16,14 @@ interface SidebarProps {
 }
 
 export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, onReload, onMethodDoubleClick }: SidebarProps) {
-
+  
   const [importPaths, setImportPaths] = useState<string[]>([""]);
   const [importPathVisible, setImportPathsVisible] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
   const [filterMatch, setFilterMatch] = useState<string|null>(null);
-
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+  const [autoExpandParent, setAutoExpandParent] = useState(true);
+  
   useEffect(() => {
     setImportPaths(getImportPaths());
   }, []);
@@ -62,8 +64,6 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
     }
   }
 
-  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [autoExpandParent, setAutoExpandParent] = useState(true);
 
   const onExpand = (expandedKeys:string[]) => {
     setExpandedKeys(expandedKeys);
