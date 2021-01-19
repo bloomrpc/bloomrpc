@@ -61,7 +61,7 @@ You can install the client downloading the installer directly from the [Releases
 #### For MacOS and Homebrew users:
 
 ```
-brew cask install bloomrpc
+brew install --cask bloomrpc
 ```
 The app will get installed and copied to the path `/Applications/BloomRPC.app`
 
