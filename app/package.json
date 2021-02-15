@@ -18,7 +18,9 @@
   ],
   "license": "LGPL3",
   "dependencies": {
+    "@grpc/grpc-js": "^1.2.6",
     "bloomrpc-mock": "0.3.2",
-    "grpc": "1.24.2"
+    "grpc": "1.24.2",
+    "grpc-reflection-js": "^0.1.0"
   }
 }

@@ -1,8 +1,11 @@
-import { remote } from 'electron';
-import { fromFileName, mockRequestMethods, Proto, walkServices } from 'bloomrpc-mock';
+import {remote} from 'electron';
+import {fromFileName, mockRequestMethods, Proto, walkServices} from 'bloomrpc-mock';
 import * as path from "path";
-import { ProtoFile, ProtoService } from './protobuf';
-import { Service } from 'protobufjs';
+import {ProtoFile, ProtoService} from './protobuf';
+import {Service} from 'protobufjs';
+import {Client} from 'grpc-reflection-js';
+import {credentials} from '@grpc/grpc-js';
+import * as grpc from "grpc";
 
 const commonProtosPath = [
   // @ts-ignore
@@ -17,7 +20,6 @@ export type OnProtoUpload = (protoFiles: ProtoFile[], err?: Error) => void
  * @param importPaths
  */
 export async function importProtos(onProtoUploaded: OnProtoUpload, importPaths?: string[]) {
-
   const openDialogResult = await remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
     properties: ['openFile', 'multiSelections'],
     filters: [
@@ -31,6 +33,69 @@ export async function importProtos(onProtoUploaded: OnProtoUpload, importPaths?:
     return;
   }
   await loadProtos(filePaths, importPaths, onProtoUploaded);
+}
+
+/**
+ * Upload protofiles from gRPC server reflection
+ * @param onProtoUploaded
+ * @param host
+ */
+export async function importProtosFromServerReflection(onProtoUploaded: OnProtoUpload, host: string) {
+  await loadProtoReflection(host, onProtoUploaded)
+}
+
+/**
+ * Load protocol buffer files from gRPC server reflection
+ * @param host
+ * @param onProtoUploaded
+ */
+export async function loadProtoReflection(host: string, onProtoUploaded?: OnProtoUpload): Promise<ProtoFile[]> {
+  try {
+    const reflectionClient = new Client(host, credentials.createInsecure());
+    const services = (await reflectionClient.listServices()) as string[];
+    const serviceRoots = await Promise.all(
+        services
+            .filter(s => s && s !== 'grpc.reflection.v1alpha.ServerReflection')
+            .map((service: string) => reflectionClient.fileContainingSymbol(service))
+    );
+
+    const protos = serviceRoots.map((root) => {
+      return {
+        fileName: root.files[root.files.length - 1],
+        filePath: host,
+        protoText: "proto text not supported in gRPC reflection",
+        ast: grpc.loadObject(root),
+        root: root
+      }
+    });
+
+    const protoList = protos.reduce((list: ProtoFile[], proto: Proto) => {
+      // Services with methods
+      const services = parseServices(proto);
+
+      // Proto file
+      list.push({
+        proto,
+        fileName: proto.fileName,
+        services
+      });
+
+      return list;
+    }, []);
+
+    onProtoUploaded && onProtoUploaded(protoList, undefined);
+    return protoList;
+
+  } catch (e) {
+    console.error(e);
+    onProtoUploaded && onProtoUploaded([], e);
+
+    if (!onProtoUploaded) {
+      throw e;
+    }
+
+    return []
+  }
 }
 
 /**
