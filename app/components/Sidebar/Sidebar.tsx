@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import { Button, Icon, Modal, Tooltip, Tree, Input } from 'antd';
+import {Menu, Button, Icon, Dropdown, Modal, Tooltip, Tree, Input} from 'antd';
 import { Badge } from '../Badge/Badge';
-import { OnProtoUpload, ProtoFile, ProtoService, importProtos } from '../../behaviour';
+import {OnProtoUpload, ProtoFile, ProtoService, importProtos, importProtosFromServerReflection} from '../../behaviour';
 import { PathResolution } from "./PathResolution";
 import { getImportPaths } from "../../storage";
+import {UrlResolution} from "./UrlResolution";
 
 interface SidebarProps {
   protos: ProtoFile[]
@@ -21,6 +22,7 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
   const [importPathVisible, setImportPathsVisible] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
   const [filterMatch, setFilterMatch] = useState<string|null>(null);
+  const [importReflectionVisible, setImportReflectionVisible] = useState(false);
 
   useEffect(() => {
     setImportPaths(getImportPaths());
@@ -65,18 +67,38 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
   return (
     <>
       <div style={styles.sidebarTitleContainer}>
-        <h3 style={styles.sidebarTitle}>Protos</h3>
+        <div>
+          <h3 style={styles.sidebarTitle}>Protos</h3>
+        </div>
 
-        <Tooltip placement="bottom" title="Import protos">
-          <Icon
+        <div
+          style={{display: "flex", flexDirection: "column", justifyContent: "center"}}
+        >
+          <Dropdown.Button
+            type="primary"
             onClick={() => {
               importProtos(onProtoUpload, importPaths)
             }}
-            type="plus-circle"
-            theme="filled"
-            style={styles.icon}
-          />
-        </Tooltip>
+            overlay={
+              <Menu>
+                <Menu.Item key="1" onClick={() => {
+                  importProtos(onProtoUpload, importPaths)
+                }}>
+                  <Icon type="file" />
+                  Import from file
+                </Menu.Item>
+                <Menu.Item key="2" onClick={() => {
+                  setImportReflectionVisible(true)
+                }}>
+                  <Icon type="eye" />
+                  Import from server reflection
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <Icon type="plus" />
+          </Dropdown.Button>
+        </div>
       </div>
 
       <div style={styles.optionsContainer}>
@@ -130,6 +152,29 @@ export function Sidebar({ protos, onMethodSelected, onProtoUpload, onDeleteAll, 
             <PathResolution
                 onImportsChange={setImportPaths}
                 importPaths={importPaths}
+            />
+          </Modal>
+
+          <Modal
+            title={(
+              <div>
+                <Icon type="eye" />
+                <span style={{marginLeft: 10}}> Import from server reflection </span>
+              </div>
+            )}
+            visible={importReflectionVisible}
+            onCancel={() => setImportReflectionVisible(false)}
+            onOk={() => setImportReflectionVisible(false)}
+            width={750}
+            footer={[
+              <Button key="back" onClick={() => setImportReflectionVisible(false)}>Close</Button>
+            ]}
+          >
+            <UrlResolution
+              onImportFromUrl={(url) => {
+                importProtosFromServerReflection(onProtoUpload, url)
+                setImportReflectionVisible(false)
+              }}
             />
           </Modal>
         </div>
@@ -219,14 +264,16 @@ const styles = {
   sidebarTitleContainer: {
     display: "flex",
     justifyContent: "space-between",
-    paddingTop: 14,
+    paddingTop: 6,
     paddingBottom: 4,
     paddingLeft: 20,
+    paddingRight: 10,
     borderBottom: "1px solid #eee",
     background: "#001529"
   },
   sidebarTitle: {
     color: "#fff",
+    marginTop: "0.5em"
   },
   icon: {
     fontSize: 23,

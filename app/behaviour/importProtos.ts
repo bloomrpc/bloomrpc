@@ -1,11 +1,12 @@
 import {remote} from 'electron';
 import {fromFileName, mockRequestMethods, Proto, walkServices} from 'bloomrpc-mock';
-import * as path from "path";
+import * as path from 'path';
 import {ProtoFile, ProtoService} from './protobuf';
 import {Service} from 'protobufjs';
 import {Client} from 'grpc-reflection-js';
 import {credentials} from '@grpc/grpc-js';
-import * as grpc from "grpc";
+import * as grpc from 'grpc';
+import isURL from 'validator/lib/isURL';
 
 const commonProtosPath = [
   // @ts-ignore
@@ -32,7 +33,7 @@ export async function importProtos(onProtoUploaded: OnProtoUpload, importPaths?:
   if (!filePaths) {
     return;
   }
-  await loadProtos(filePaths, importPaths, onProtoUploaded);
+  await loadProtosFromFile(filePaths, importPaths, onProtoUploaded);
 }
 
 /**
@@ -41,7 +42,38 @@ export async function importProtos(onProtoUploaded: OnProtoUpload, importPaths?:
  * @param host
  */
 export async function importProtosFromServerReflection(onProtoUploaded: OnProtoUpload, host: string) {
-  await loadProtoReflection(host, onProtoUploaded)
+  await loadProtoFromReflection(host, onProtoUploaded)
+}
+
+/**
+ * Load protocol buffer files
+ * @param filePaths
+ * @param importPaths
+ * @param onProtoUploaded
+ */
+export async function loadProtos(protoPaths: string[], importPaths?: string[], onProtoUploaded?: OnProtoUpload): Promise<ProtoFile[]> {
+  let validateOptions = {
+    require_tld: false,
+    require_protocol: false,
+    require_host: false,
+    require_valid_protocol: false,
+  }
+  const protoUrls = protoPaths.filter((protoPath) => {
+    return isURL(protoPath, validateOptions)
+  })
+
+  const protoFiles = protoPaths.filter((protoPath) => {
+    return !isURL(protoPath, validateOptions)
+  })
+
+  const protoFileFromFiles = await loadProtosFromFile(protoFiles, importPaths, onProtoUploaded);
+
+  let protoFileFromReflection: ProtoFile[] = [];
+  for (const protoUrl of protoUrls) {
+    protoFileFromReflection = protoFileFromReflection.concat(await loadProtoFromReflection(protoUrl, onProtoUploaded));
+  }
+
+  return protoFileFromFiles.concat(protoFileFromReflection);
 }
 
 /**
@@ -49,7 +81,7 @@ export async function importProtosFromServerReflection(onProtoUploaded: OnProtoU
  * @param host
  * @param onProtoUploaded
  */
-export async function loadProtoReflection(host: string, onProtoUploaded?: OnProtoUpload): Promise<ProtoFile[]> {
+export async function loadProtoFromReflection(host: string, onProtoUploaded?: OnProtoUpload): Promise<ProtoFile[]> {
   try {
     const reflectionClient = new Client(host, credentials.createInsecure());
     const services = (await reflectionClient.listServices()) as string[];
@@ -99,12 +131,12 @@ export async function loadProtoReflection(host: string, onProtoUploaded?: OnProt
 }
 
 /**
- * Load protocol buffer files
+ * Load protocol buffer files from proto files
  * @param filePaths
  * @param importPaths
  * @param onProtoUploaded
  */
-export async function loadProtos(filePaths: string[], importPaths?: string[], onProtoUploaded?: OnProtoUpload): Promise<ProtoFile[]> {
+export async function loadProtosFromFile(filePaths: string[], importPaths?: string[], onProtoUploaded?: OnProtoUpload): Promise<ProtoFile[]> {
   try {
     const protos = await Promise.all(filePaths.map((fileName) =>
       fromFileName(fileName, [
