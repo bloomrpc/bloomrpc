@@ -24,5 +24,8 @@
     "grpc": "1.24.2",
     "grpc-reflection-js": "^0.1.1",
     "validator": "^13.5.2"
+  },
+  "resolutions": {
+    "bloomrpc-mock/**/protobufjs": "^6.9.0"
   }
 }
