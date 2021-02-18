@@ -42,7 +42,7 @@ export async function importProtos(onProtoUploaded: OnProtoUpload, importPaths?:
  * @param host
  */
 export async function importProtosFromServerReflection(onProtoUploaded: OnProtoUpload, host: string) {
-  await loadProtoFromReflection(host, onProtoUploaded)
+  await loadProtoFromReflection(host, onProtoUploaded);
 }
 
 /**
@@ -59,11 +59,11 @@ export async function loadProtos(protoPaths: string[], importPaths?: string[], o
     require_valid_protocol: false,
   }
   const protoUrls = protoPaths.filter((protoPath) => {
-    return isURL(protoPath, validateOptions)
+    return isURL(protoPath, validateOptions);
   })
 
   const protoFiles = protoPaths.filter((protoPath) => {
-    return !isURL(protoPath, validateOptions)
+    return !isURL(protoPath, validateOptions);
   })
 
   const protoFileFromFiles = await loadProtosFromFile(protoFiles, importPaths, onProtoUploaded);
