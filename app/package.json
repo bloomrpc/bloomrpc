@@ -22,7 +22,7 @@
     "@types/validator": "^13.1.3",
     "bloomrpc-mock": "0.3.2",
     "grpc": "1.24.2",
-    "grpc-reflection-js": "^0.1.0",
+    "grpc-reflection-js": "^0.1.1",
     "validator": "^13.5.2"
   }
 }
