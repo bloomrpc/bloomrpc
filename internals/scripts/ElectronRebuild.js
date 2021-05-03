@@ -10,7 +10,7 @@ if (
   fs.existsSync(nodeModulesPath)
 ) {
   const electronRebuildCmd =
-    '../node_modules/.bin/electron-rebuild --parallel --force --types prod,dev,optional --version 3.0.14 --module-dir .';
+    'npm rebuild --target=3.0.14 --runtime=electron --dist-url=https://atom.io/download/electron';
 
   const cmd =
     process.platform === 'win32'
