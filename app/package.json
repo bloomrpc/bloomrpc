@@ -1,7 +1,7 @@
 {
   "name": "bloomrpc",
   "productName": "bloom-rpc-client",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "GRPC GUI client",
   "main": "./main.prod.js",
   "author": {
@@ -18,7 +18,7 @@
   ],
   "license": "LGPL3",
   "dependencies": {
-    "bloomrpc-mock": "0.3.2",
-    "grpc": "1.24.2"
+    "bloomrpc-mock": "^0.3.4",
+    "grpc": "1.24.7"
   }
 }
