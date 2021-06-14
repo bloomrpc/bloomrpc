@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./resources/logo.svg" style="width:256px;" />
+  <img src="./resources/logo.svg" style="width:256px;height:256px" />
 </p>
 <h1 align="center">BloomRPC</h1>
 
