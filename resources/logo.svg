@@ -3,29 +3,31 @@
 <svg width="256px" height="256px" version="1.1" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
  <title>BloomRPC Logo</title>
  <defs>
-  <linearGradient id="linearGradient90769" x1="40.679" x2="40.679" y1="91.008" y2="218.27" gradientUnits="userSpaceOnUse">
+  <linearGradient id="linearGradient1" x1="40" x2="40" y1="91.008" y2="218.27" gradientUnits="userSpaceOnUse">
    <stop stop-color="#42ec62" offset="0"/>
-   <stop stop-color="#3386f9" stop-opacity=".99608" offset="1"/>
+   <stop stop-color="#3386f9" offset="1"/>
   </linearGradient>
-  <linearGradient id="linearGradient84531" x1="102.15" x2="102.15" y1="86.142" y2="219.66" gradientUnits="userSpaceOnUse">
+  <linearGradient id="linearGradient2" x1="102" x2="102" y1="86.142" y2="219.66" gradientUnits="userSpaceOnUse">
    <stop stop-color="#2c88fb" offset="0"/>
    <stop stop-color="#39ea64" offset="1"/>
   </linearGradient>
-  <linearGradient id="linearGradient147577" x1="159.32" x2="159.32" y1="218.52" y2="91.256" gradientUnits="userSpaceOnUse">
+  <linearGradient id="linearGradient3" x1="159" x2="159" y1="218.52" y2="91.256" gradientUnits="userSpaceOnUse">
    <stop stop-color="#4bb5f5" offset="0"/>
    <stop stop-color="#42ed65" offset="1"/>
   </linearGradient>
  </defs>
  <g transform="matrix(2.7065 0 0 2.7065 -70.629 -214.84)">
-  <path d="m98.802 218.53c-81.733-14.898-60.957-120.18-58.123-127.52 46.294 26.34 58.325 97.705 58.123 127.52z" fill="url(#linearGradient90769)"/>
-  <path d="m69.646 86.882c-30.6 49.65-34.776 111.65 32.503 132.78 67.279-21.13 63.249-83.13 32.649-132.78-8.3243 3.6983-20.769 6.5189-32.575 18.343-11.807-11.824-24.252-14.645-32.576-18.343z" fill="url(#linearGradient84531)" style="mix-blend-mode:normal"/>
-  <path d="m101.15 218.57c81.733-14.898 61.004-119.97 58.17-127.31-46.294 26.34-58.372 97.495-58.17 127.31z" fill="url(#linearGradient147577)"/>
+  <path d="m98.802 218.53c-81.733-14.898-60.957-120.18-58.123-127.52 46.294 26.34 58.325 97.705 58.123 127.52z" fill="url(#linearGradient1)"/>
+  <path d="m69.646 86.882c-30.6 49.65-34.776 111.65 32.503 132.78 67.279-21.13 63.249-83.13 32.649-132.78-8.3243 3.6983-20.769 6.5189-32.575 18.343-11.807-11.824-24.252-14.645-32.576-18.343z" fill="url(#linearGradient2)"/>
+  <path d="m101.15 218.57c81.733-14.898 61.004-119.97 58.17-127.31-46.294 26.34-58.372 97.495-58.17 127.31z" fill="url(#linearGradient3)"/>
  </g>
  <metadata>
-  <rdf:RDF>
-   <cc:Work rdf:about="">
-    <dc:title>BloomRPC Logo</dc:title>
-   </cc:Work>
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/" >
+    <rdf:Description 
+      about="https://github.com/uw-labs/bloomrpc"
+      dc:title="BloomRPC Logo"
+      dc:description="Bloom RPC, BloomRPC, gRPC, RPC, Protobuf, Protocol Buffer, Postman">
+    </rdf:Description>
   </rdf:RDF>
  </metadata>
 </svg>
