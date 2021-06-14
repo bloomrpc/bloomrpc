@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="./resources/logo.svg"/>
+  <img src="./resources/logo.svg" width="256" height="256"/>
 </p>
 <h1 align="center">BloomRPC</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/github/release/uw-labs/bloomrpc.svg" />
+  <img src="https://img.shields.io/github/release/uw-labs/bloomrpc.svg"/>
   <a href="https://uw-labs.slack.com/">
     <img src="https://img.shields.io/badge/Join-Slack-e44a61.svg" />
   </a>
