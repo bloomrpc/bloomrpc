@@ -1,143 +1,31 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="256px"
-   height="256px"
-   viewBox="0 0 400 400"
-   version="1.1"
-   id="svg5"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-   sodipodi:docname="bloom.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview7"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:document-units="px"
-     showgrid="false"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="712.76363"
-     inkscape:cy="482.24682"
-     inkscape:window-width="1680"
-     inkscape:window-height="987"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:snap-page="true"
-     inkscape:snap-midpoints="true"
-     inkscape:snap-object-midpoints="true"
-     inkscape:snap-center="true">
-    <sodipodi:guide
-       position="200,200"
-       orientation="0,-1"
-       id="guide252122" />
-    <sodipodi:guide
-       position="200,200"
-       orientation="1,0"
-       id="guide252124" />
-  </sodipodi:namedview>
-  <defs
-     id="defs2">
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient148363">
-      <stop
-         style="stop-color:#4bb5f5;stop-opacity:1"
-         offset="0"
-         id="stop148359" />
-      <stop
-         style="stop-color:#42ed65;stop-opacity:1"
-         offset="1"
-         id="stop148361" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient90767">
-      <stop
-         style="stop-color:#42ec62;stop-opacity:1"
-         offset="0"
-         id="stop90763" />
-      <stop
-         style="stop-color:#3386f9;stop-opacity:0.99607843"
-         offset="1"
-         id="stop90765" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient83480-1-5">
-      <stop
-         style="stop-color:#2c88fb;stop-opacity:1"
-         offset="0"
-         id="stop83489" />
-      <stop
-         style="stop-color:#39ea64;stop-opacity:1"
-         offset="1"
-         id="stop83491" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient83480-1-5"
-       id="linearGradient84531"
-       gradientUnits="userSpaceOnUse"
-       x1="102.14933"
-       y1="86.14183"
-       x2="102.14933"
-       y2="219.66234"
-       spreadMethod="pad" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient90767"
-       id="linearGradient90769"
-       x1="40.67897"
-       y1="91.008194"
-       x2="40.67897"
-       y2="218.26984"
-       gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient148363"
-       id="linearGradient147577"
-       x1="159.3176"
-       y1="218.5228"
-       x2="159.3176"
-       y2="91.256241"
-       gradientUnits="userSpaceOnUse" />
-  </defs>
-  <g
-     inkscape:label="Camada 1"
-     inkscape:groupmode="layer"
-     id="layer1">
-    <g
-       id="g251899"
-       transform="matrix(2.8273307,0,0,2.8273307,-82.708452,-230.17584)">
-      <path
-         style="fill:url(#linearGradient90769);fill-opacity:1;stroke:none;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="M 98.80223,218.53147 C 17.06972,203.63339 37.844742,98.352593 40.678972,91.008193 86.972772,117.34779 99.00446,188.71326 98.80223,218.53147 Z"
-         id="path2174-8"
-         sodipodi:nodetypes="ccc" />
-      <path
-         id="path356-3"
-         style="opacity:1;mix-blend-mode:normal;fill:url(#linearGradient84531);fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         inkscape:transform-center-x="26.820789"
-         inkscape:transform-center-y="-66.43726"
-         d="M 69.64639,86.881815 C 39.046452,136.53228 34.869923,198.53257 102.14933,219.66234 169.42869,198.53257 165.39792,136.53228 134.79798,86.881815 126.47366,90.58007 114.02922,93.400706 102.22269,105.22488 90.415351,93.400706 77.970677,90.58007 69.64639,86.881815 Z" />
-      <path
-         style="fill:url(#linearGradient147577);fill-opacity:1;stroke:none;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="M 101.14757,218.56905 C 182.88008,203.67097 162.15183,98.600639 159.3176,91.256243 113.0238,117.59584 100.94534,188.75084 101.14757,218.56905 Z"
-         id="path2174"
-         sodipodi:nodetypes="ccc" />
-    </g>
-  </g>
+<svg width="256px" height="256px" version="1.1" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>BloomRPC logo</title>
+ <defs>
+  <linearGradient id="linearGradient84531" x1="102.15" x2="102.15" y1="86.142" y2="219.66" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#2c88fb" offset="0"/>
+   <stop stop-color="#39ea64" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient90769" x1="40.679" x2="40.679" y1="91.008" y2="218.27" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#42ec62" offset="0"/>
+   <stop stop-color="#3386f9" stop-opacity=".99608" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient147577" x1="159.32" x2="159.32" y1="218.52" y2="91.256" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#4bb5f5" offset="0"/>
+   <stop stop-color="#42ed65" offset="1"/>
+  </linearGradient>
+ </defs>
+ <g transform="matrix(2.9654 0 0 2.9654 -96.515 -254.52)">
+  <path d="m98.802 218.53c-81.733-14.898-60.957-120.18-58.123-127.52 46.294 26.34 58.325 97.705 58.123 127.52z" fill="url(#linearGradient90769)"/>
+  <path d="m69.646 86.882c-30.6 49.65-34.776 111.65 32.503 132.78 67.279-21.13 63.249-83.13 32.649-132.78-8.3243 3.6983-20.769 6.5189-32.575 18.343-11.807-11.824-24.252-14.645-32.576-18.343z" fill="url(#linearGradient84531)" style="mix-blend-mode:normal"/>
+  <path d="m101.15 218.57c81.733-14.898 61.004-119.97 58.17-127.31-46.294 26.34-58.372 97.495-58.17 127.31z" fill="url(#linearGradient147577)"/>
+ </g>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:title>BloomRPC logo</dc:title>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
 </svg>
