@@ -26,7 +26,7 @@
     "validator": "^13.5.2"
   },
   "resolutions": {
-    "bloomrpc-mock/**/protobufjs": "^6.9.0"
+    "bloomrpc-mock/**/protobufjs": "^6.9.0",
     "bloomrpc-mock": "^0.3.4",
     "grpc": "1.24.7"
   }
