@@ -90,7 +90,7 @@ export class GRPCRequest extends EventEmitter {
           }
         }
 
-        md.add(key, Buffer.from(value, encoding as BufferEncoding));
+        md.add(key, Buffer.from(value, encoding as any));
       } else {
         md.add(key, metadata[key]);
       }

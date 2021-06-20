@@ -1,7 +1,7 @@
 {
   "name": "bloomrpc",
   "productName": "BloomRPC",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "GRPC GUI client",
   "main": "main.js",
   "scripts": {
@@ -180,7 +180,7 @@
     "jest": "^24.3.0",
     "mini-css-extract-plugin": "^0.5.0",
     "minimist": "^1.2.3",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "npm-logical-tree": "^1.2.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "prettier": "^1.16.4",
