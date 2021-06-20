@@ -18,6 +18,15 @@
   ],
   "license": "LGPL3",
   "dependencies": {
+    "@grpc/grpc-js": "^1.2.6",
+    "@types/validator": "^13.1.3",
+    "bloomrpc-mock": "0.3.2",
+    "grpc": "1.24.2",
+    "grpc-reflection-js": "^0.1.1",
+    "validator": "^13.5.2"
+  },
+  "resolutions": {
+    "bloomrpc-mock/**/protobufjs": "^6.9.0",
     "bloomrpc-mock": "^0.3.4",
     "grpc": "1.24.7"
   }

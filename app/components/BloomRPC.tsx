@@ -4,7 +4,7 @@ import { Layout, notification } from 'antd';
 import arrayMove from 'array-move';
 import { Sidebar } from './Sidebar';
 import { TabData, TabList } from './TabList';
-import { loadProtos, ProtoFile, ProtoService } from '../behaviour';
+import {loadProtos, ProtoFile, ProtoService} from '../behaviour';
 import {
   EditorTabsStorage,
   deleteRequestInfo,

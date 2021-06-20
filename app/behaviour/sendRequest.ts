@@ -420,7 +420,7 @@ export class GRPCWebRequest extends EventEmitter {
         inputs,
         metadata,
         methodDescriptor,
-        (err: grpcWeb.Error, response: any) => 
+        (err: grpcWeb.Error, response: any) =>
           this.handleUnaryResponse(err, response, requestStartTime)
       )
     }
@@ -461,19 +461,19 @@ export class GRPCWebRequest extends EventEmitter {
       this.emit(GRPCEventType.DATA, data, responseMetaInformation);
       streamStartTime = new Date();
     });
-  
+
     call.on('error', (err: grpcWeb.Error) => {
       const responseMetaInformation = this.responseMetaInformation(streamStartTime, true);
       if (err && err.code !== 1) {
         this.emit(GRPCEventType.ERROR, this.betterErr(err), responseMetaInformation);
-  
+
         if (err.code === 2 || err.code === 14) { // Stream Removed.
           this.emit(GRPCEventType.END, call);
         }
       }
       streamStartTime = new Date();
     });
-  
+
     call.on('end', () => {
       this.emit(GRPCEventType.END, this);
     });
@@ -487,7 +487,7 @@ export class GRPCWebRequest extends EventEmitter {
    */
   private handleUnaryResponse(err: grpcWeb.Error, response: any, requestStartTime?: Date) {
     const responseMetaInformation = this.responseMetaInformation(requestStartTime);
-  
+
     // Client side streaming handler
     if (err) {
       // Request cancelled do nothing
@@ -513,7 +513,7 @@ export class GRPCWebRequest extends EventEmitter {
    */
   private responseMetaInformation(startTime?: Date, stream?: boolean) {
     const responseDate = new Date();
-  
+
     return {
       responseTime: startTime && (responseDate.getTime() - startTime.getTime()) / 1000,
       stream,
