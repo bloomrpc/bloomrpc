@@ -11,7 +11,7 @@
 </p>
 <p align="center">The missing GUI Client for GRPC services. 🌸 </p>
 
-<p align="center">Inspired by <b>Postman</b> and <b>GraphQL Playground</b> <br/>
+<p align="center">Inspired by <b>Postman</b> and <b>GraphQL Playground</b><br/>
   <b>BloomRPC</b> aims to provide the simplest and most efficient developer experience for exploring
 and querying your GRPC services.
 </p>
@@ -20,32 +20,32 @@ and querying your GRPC services.
 
 <p align="center">
   Install the client, select your protobuf files and start making requests! <br/>
-  <b>No extra</b> steps or configuration <b>needed</b>.
+  No extra steps or configuration needed.
 </p>
 
 ## Features
 
 - Native GRPC calls
-- Unary Calls and Server Side Streaming Support
-- Client side and Bi-directional Streaming
-- Automatic Input recognition
-- Multi tabs operations
+- Unary calls
+- Server, client, and bidrectional streaming
+- Input feedback
+- Multi-tab operations
 - Metadata support
-- Persistent Workspace
-- Request Cancellation
-- Much more...
+- Workspace persistence
+- Request cancellation
+- Many more!
 
 ### Shortcuts
 
-<kbd>CTRL</kbd>+<kbd>w</kbd> or <kbd>CMD</kbd>+<kbd>w</kbd>: close tab
+<kbd>Ctrl-w</kbd>/<kbd>Command-w</kbd>: Closes the tab.
 
-<kbd>ESC</kbd>: focos editor
+<kbd>Esc</kbd>: Focuses on the editor.
 
-<kbd>CTRL</kbd>+<kbd>Enter</kbd> or <kbd>CMD</kbd>+<kbd>Enter</kbd>: send request
+<kbd>Ctrl-Enter</kbd>/<kbd>Command-Enter</kbd>: Ends the request.
 
 ### GRPC Web
 
-GRPC Web is now supported! Just toggle the `GRPC` switch to `WEB`.
+GRPC Web is now supported! Just flip the toggle from `GRPC` to `WEB`.
 
 Note on https:
 
@@ -54,26 +54,22 @@ Note on https:
 - self-signed certificate not supported at the moment
 
 ## Installation
-We support all the major operation systems, **MacOS / Windows / Linux Deb - Arch Linux**
+Windows, macOS, and Linux are supported.
 
-You can install the client downloading the installer directly from the [Releases Page](https://github.com/uw-labs/bloomrpc/releases)
+To download the installer, go to the [Releases Page](https://github.com/uw-labs/bloomrpc/releases).
 
-#### For MacOS and Homebrew users:
-
+Alternatively, package managers can be used.
+#### macOS/Homebrew
 ```
 brew install --cask bloomrpc
 ```
-The app will get installed and copied to the path `/Applications/BloomRPC.app`
 
-#### For Windows and chocolatey users:
-
+#### Windows/Chocolatey
 ```
 choco install bloomrpc
 ```
-Search for bloomrpc in windows search.
 
-### Build from source:
-
+### To build from source:
 ```
 git clone https://github.com/uw-labs/bloomrpc.git
 cd bloomrpc
@@ -81,33 +77,25 @@ cd bloomrpc
 yarn install && ./node_modules/.bin/electron-rebuild
 npm run package
 ```
-The installer will be located in the `release` folder
+The installer will be located in the `release` folder.
 
 ## Preview
 
 <img src="./resources/editor-preview.gif" />
 
-
-## Planned Features
-
-- [x] Client-Side Streaming and Bi-Directional Streaming Support
-- [x] Draggable tabs
-- [x] Web Version with GRPC-WEB
-
 ## Contributing
 
-We are welcome to any kind of feedback and contributions.
+`CONTRIBUTING.md` coming soon!
 
-#### Development Mode:
+#### Development Mode
 
-Run this 2 commands in two different terminals
+Run the two commands below in separate terminals:
 ```
 npm run start-server-dev
 npm run start-main-dev
 ```
 
-## Built with amazing technologies
-
+## Acknowledgements
 <p float="left">
   <img src="./resources/thirdparties/electron-logo.png" width="100"/>
   <img src="./resources/thirdparties/react-logo.png" width="120" />
