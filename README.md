@@ -53,6 +53,10 @@ Note on https:
 - or turn on "TLS" -> Server certificate (default port will change to 443)
 - self-signed certificate not supported at the moment
 
+When the `GRPC` toggle is grey, it means to use the vanilla GRPC binary protocol. The address input should be the `host:port`. You can't include path in this mode.
+
+When it's toggled to `WEB`, it uses _GRPC-WEB_ protocol. The address input can be an URL _or_ the address (`host:port`), so you can include the scheme, host, port and path.
+
 ## Installation
 Windows, macOS, and Linux are supported.
 
