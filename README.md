@@ -62,6 +62,8 @@ Alternatively, package managers can be used.
 #### macOS/Homebrew
 ```
 brew install --cask bloomrpc
+
+open -a bloomrpc 
 ```
 
 #### Windows/Chocolatey
