@@ -23,6 +23,9 @@ cache:
   - $HOME/.cache/electron-builder
   - $HOME/.npm/_prebuilds
 
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm i yarn -g; fi
+
 install:
 - yarn
 - ./node_modules/.bin/electron-rebuild
