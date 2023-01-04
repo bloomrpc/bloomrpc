@@ -5,103 +5,28 @@
 
 <p align="center">
   <img src="https://img.shields.io/github/release/uw-labs/bloomrpc.svg" />
-  <a href="https://uw-labs.slack.com/">
-    <img src="https://img.shields.io/badge/Join-Slack-e44a61.svg" />
-  </a>
 </p>
-<p align="center">The missing GUI Client for GRPC services. 🌸 </p>
+<p align="center">The missing GUI Client for gRPC services 🌸 </p>
 
 <p align="center">Inspired by <b>Postman</b> and <b>GraphQL Playground</b><br/>
   <b>BloomRPC</b> aims to provide the simplest and most efficient developer experience for exploring
 and querying your GRPC services.
 </p>
 
-<br/>
+## This project was archived in Jan 2023. Its usage is no longer recommended.
 
-<p align="center">
-  Install the client, select your protobuf files and start making requests! <br/>
-  No extra steps or configuration needed.
-</p>
 
-## Features
+## Why was this project archived?
 
-- Native GRPC calls
-- Unary calls
-- Server, client, and bidrectional streaming
-- Input feedback
-- Multi-tab operations
-- Metadata support
-- Workspace persistence
-- Request cancellation
-- Many more!
+When BloomRPC was first released in Dec 2018, there were very few GUI gRPC tools available, hence the project tagline: "The missing GUI client for gRPC services". It was a good tool for a few years. Unfortunately, the project stalled in development and issues piled up, leaving users frustrated when things weren't working. We no longer felt that BloomRPC offered a good experience, so we decided to archive it.
 
-### Shortcuts
 
-<kbd>Ctrl-w</kbd>/<kbd>Command-w</kbd>: Closes the tab.
+## What should I use instead?
 
-<kbd>Esc</kbd>: Focuses on the editor.
+Check out the list of current gRPC tools at [awesome-grpc](https://github.com/grpc-ecosystem/awesome-grpc#tools).
 
-<kbd>Ctrl-Enter</kbd>/<kbd>Command-Enter</kbd>: Ends the request.
+##
 
-### GRPC Web
-
-GRPC Web is now supported! Just flip the toggle from `GRPC` to `WEB`.
-
-Note on https:
-
-- add https to the url, note for GRPC-Web it also supports path, e.g. https://example.com/grpcweb/v1
-- or turn on "TLS" -> Server certificate (default port will change to 443)
-- self-signed certificate not supported at the moment
-
-When the `GRPC` toggle is grey, it means to use the vanilla GRPC binary protocol. The address input should be the `host:port`. You can't include path in this mode.
-
-When it's toggled to `WEB`, it uses _GRPC-WEB_ protocol. The address input can be an URL _or_ the address (`host:port`), so you can include the scheme, host, port and path.
-
-## Installation
-Windows, macOS, and Linux are supported.
-
-To download the installer, go to the [Releases Page](https://github.com/uw-labs/bloomrpc/releases).
-
-Alternatively, package managers can be used.
-#### macOS/Homebrew
-```
-brew install --cask bloomrpc
-```
-
-#### Windows/Chocolatey
-```
-choco install bloomrpc
-```
-
-### To build from source:
-```
-git clone https://github.com/uw-labs/bloomrpc.git
-cd bloomrpc
-
-yarn install && ./node_modules/.bin/electron-rebuild
-npm run package
-```
-The installer will be located in the `release` folder.
-
-## Preview
+So long, and thanks for all the fish
 
 <img src="./resources/editor-preview.gif" />
-
-## Contributing
-
-`CONTRIBUTING.md` coming soon!
-
-#### Development Mode
-
-Run the two commands below in separate terminals:
-```
-npm run start-server-dev
-npm run start-main-dev
-```
-
-## Acknowledgements
-<p float="left">
-  <img src="./resources/thirdparties/electron-logo.png" width="100"/>
-  <img src="./resources/thirdparties/react-logo.png" width="120" />
-  <img src="./resources/thirdparties/grpc-logo.png" width="160" />
-</p>
